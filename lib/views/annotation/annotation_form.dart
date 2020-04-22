@@ -447,6 +447,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
         TextEditingController(text: "");
 
     File file = await getFile(fileType);
+    
     if (file == null) return;
 
     final fileWidget =
