@@ -7,11 +7,11 @@ import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/views/widgets/app_alert.dart';
+import 'package:potato_notes/views/widgets/app_raised_button.dart';
+import 'package:potato_notes/views/widgets/app_text.dart';
+import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:video_player/video_player.dart';
-import 'widgets/app_alert.dart';
-import 'widgets/app_raised_button.dart';
-import 'widgets/app_text.dart';
-import 'widgets/app_text_form_field.dart';
 
 class AnnotationForm extends StatefulWidget {
   final Think think;

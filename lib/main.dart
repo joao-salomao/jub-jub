@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/views/think_list.dart';
-
-void main() => runApp(MyApp());
+import 'package:potato_notes/views/think/think_list.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -15,3 +13,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+void main() => runApp(MyApp());
