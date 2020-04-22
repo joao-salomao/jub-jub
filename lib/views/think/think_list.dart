@@ -33,7 +33,7 @@ class _ThinkListState extends State<ThinkList> {
             children: List.generate(
               state.thinks.length,
               (i) => ThinkCard(
-                Key(state.thinks[i].id),
+                Key("${state.thinks[i].id}"),
                 state.thinks[i],
               ),
             ),
@@ -57,10 +57,6 @@ class _ThinkListState extends State<ThinkList> {
       color: color,
       createdAt: DateTime.now(),
     );
-    state.addThink(think).then(
-      (_) {
-        state.getData();
-      },
-    );
+    state.addThink(think);
   }
 }

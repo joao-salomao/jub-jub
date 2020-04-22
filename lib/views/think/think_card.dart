@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
+import 'package:potato_notes/utils/date.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
 import 'package:potato_notes/views/think/think_page.dart';
@@ -16,6 +17,9 @@ class ThinkCard extends StatefulWidget {
 }
 
 class _ThinkCard extends State<ThinkCard> {
+
+  String get createdAt => formatDate(widget.think.createdAt);
+
   _onClickZoom() {
     push(context, ThinkPage());
   }
@@ -24,11 +28,7 @@ class _ThinkCard extends State<ThinkCard> {
     push(
       context,
       AnnotationForm(
-        Think(
-          title: "teste",
-          color: Colors.greenAccent,
-          listIndex: 1,
-        ),
+        widget.think,
       ),
     );
   }
@@ -37,7 +37,7 @@ class _ThinkCard extends State<ThinkCard> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(5),
-      color: Colors.blueAccent,
+      color: widget.think.color,
       elevation: 30,
       child: InkWell(
         splashColor: Colors.white,
@@ -49,7 +49,7 @@ class _ThinkCard extends State<ThinkCard> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               AppText(
-                "Think aaa",
+                widget.think.title,
                 fontSize: 20,
                 bold: true,
               ),
@@ -58,7 +58,7 @@ class _ThinkCard extends State<ThinkCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    AppText("Data de Criação: 29/01/1999"),
+                    AppText("Data de Criação: $createdAt"),
                   ],
                 ),
               ),

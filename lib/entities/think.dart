@@ -3,7 +3,7 @@ import 'annotation.dart';
 import 'package:flutter/material.dart';
 
 class Think extends Entity {
-  String id;
+  int id;
   int listIndex;
   String title;
   Color color;
@@ -21,9 +21,9 @@ class Think extends Entity {
   Think.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
     this.title = map['title'];
-    this.color = map['color'];
+    this.color = Color(map['color']);
     this.listIndex = map['listIndex'];
-    this.createdAt = map['createdAt'];
+    this.createdAt =  DateTime.parse(map['createdAt']);
   }
 
   @override
@@ -33,7 +33,7 @@ class Think extends Entity {
       "color": color.value,
       "title": title,
       "listIndex": listIndex,
-      "createdAt": createdAt,
+      "createdAt": createdAt.toString(),
     };
   }
 }

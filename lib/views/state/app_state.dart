@@ -21,7 +21,7 @@ abstract class _AppStateBase with Store {
 
   @action
   addThink(Think think) async {
-    return await thinkDAO.save(think);
+    await thinkDAO.save(think).then((_) => getData());
   }
 
   @action
