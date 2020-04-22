@@ -20,12 +20,14 @@ abstract class _AppStateBase with Store {
   }
 
   @action
-  addThink(Think think) async {
+  saveThink(Think think) async {
     await thinkDAO.save(think).then((_) => getData());
   }
 
   @action
-  deleteThink(Think think) {}
+  deleteThink(Think think) async {
+    thinkDAO.delete(think.id).then((_) => getData());
+  }
 
   @action
   updateThink(Think think) {}

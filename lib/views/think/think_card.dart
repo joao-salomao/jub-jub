@@ -21,7 +21,7 @@ class _ThinkCard extends State<ThinkCard> {
   String get createdAt => formatDate(widget.think.createdAt);
 
   _onClickZoom() {
-    push(context, ThinkPage());
+    push(context, ThinkPage(widget.think));
   }
 
   _onClickAddAnnotation() {

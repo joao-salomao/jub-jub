@@ -33,25 +33,22 @@ mixin _$AppState on _AppStateBase, Store {
     return _$getDataAsyncAction.run(() => super.getData());
   }
 
-  final _$addThinkAsyncAction = AsyncAction('addThink');
+  final _$saveThinkAsyncAction = AsyncAction('saveThink');
 
   @override
-  Future addThink(Think think) {
-    return _$addThinkAsyncAction.run(() => super.addThink(think));
+  Future saveThink(Think think) {
+    return _$saveThinkAsyncAction.run(() => super.saveThink(think));
+  }
+
+  final _$deleteThinkAsyncAction = AsyncAction('deleteThink');
+
+  @override
+  Future deleteThink(Think think) {
+    return _$deleteThinkAsyncAction.run(() => super.deleteThink(think));
   }
 
   final _$_AppStateBaseActionController =
       ActionController(name: '_AppStateBase');
-
-  @override
-  dynamic deleteThink(Think think) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
-    try {
-      return super.deleteThink(think);
-    } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   dynamic updateThink(Think think) {

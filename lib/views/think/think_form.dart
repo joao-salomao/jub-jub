@@ -73,7 +73,6 @@ showThinkForm({
           FlatButton(
             child: Text("Fechar"),
             onPressed: () {
-              _titleController.dispose();
               if (onCancel != null) {
                 onCancel();
               }

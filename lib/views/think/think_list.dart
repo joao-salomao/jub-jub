@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_card.dart';
@@ -11,7 +12,7 @@ class ThinkList extends StatefulWidget {
 }
 
 class _ThinkListState extends State<ThinkList> {
-  final state = AppState();
+  final state = GetIt.I<AppState>();
 
   @override
   void initState() {
@@ -57,6 +58,6 @@ class _ThinkListState extends State<ThinkList> {
       color: color,
       createdAt: DateTime.now(),
     );
-    state.addThink(think);
+    state.saveThink(think);
   }
 }
