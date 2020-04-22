@@ -82,12 +82,12 @@ showThinkForm({
           ),
           FlatButton(
             child: Text("Salvar"),
-            onPressed: () => {
+            onPressed: () {
               onSubmit(
                 _titleController.text,
                 _color,
-              ),
-              pop(context),
+              );
+              pop(context);
             },
           ),
         ],

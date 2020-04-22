@@ -7,8 +7,9 @@ import 'package:potato_notes/views/widgets/app_text.dart';
 
 class ThinkCard extends StatefulWidget {
   final Key key;
+  final Think think;
 
-  ThinkCard(this.key);
+  ThinkCard(this.key, this.think);
 
   @override
   _ThinkCard createState() => _ThinkCard();
@@ -21,7 +22,15 @@ class _ThinkCard extends State<ThinkCard> {
 
   _onClickAddAnnotation() {
     push(
-        context, AnnotationForm(Think("teste", "data", Colors.greenAccent, 1)));
+      context,
+      AnnotationForm(
+        Think(
+          title: "teste",
+          color: Colors.greenAccent,
+          listIndex: 1,
+        ),
+      ),
+    );
   }
 
   @override
