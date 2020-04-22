@@ -1,17 +1,13 @@
+import 'views/app.dart';
+import 'package:get_it/get_it.dart';
+import 'views/state/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/views/think/think_list.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ThinkList(),
-    );
-  }
+void setup() {
+  GetIt.I.registerSingleton<AppState>(AppState());
 }
 
-void main() => runApp(MyApp());
+void main() {
+  setup();
+  runApp(App());
+}
