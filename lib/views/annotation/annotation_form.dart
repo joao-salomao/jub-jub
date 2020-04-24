@@ -7,6 +7,7 @@ import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/views/widgets/app_raised_button.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
@@ -447,26 +448,25 @@ class _AnnotationFormState extends State<AnnotationForm> {
         TextEditingController(text: "");
 
     File file = await getFile(fileType);
-    
+
     if (file == null) return;
 
-    final fileWidget =
-        _getFileWidget(AnnotationFile("temp", file, type: fileType));
+    final tempAnnotationFile = AnnotationFile("temp", file, type: fileType);
 
     return showDialog(
         context: context,
         builder: (_) {
           return Dialog(
             child: Container(
-                height: 430,
-                padding: EdgeInsets.all(16),
+                height: 450,
+                padding: EdgeInsets.all(10),
                 child: Form(
                   key: formKey,
                   child: Column(
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(
-                          bottom: 16,
+                          bottom: 5,
                         ),
                         child: AppTextFormField(
                           "Título",
@@ -482,19 +482,22 @@ class _AnnotationFormState extends State<AnnotationForm> {
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                          bottom: 16,
+                          bottom: 5,
                         ),
                         child: AppTextFormField(
                           "Descrição",
                           "",
-                          maxLines: 3,
+                          maxLines: fileType == 'audio' ? 7 : 2,
                           controller: fileDescription,
                         ),
                       ),
                       Container(
+                        height: fileType == 'audio' ? 50 : 150,
                         width: double.infinity,
-                        margin: EdgeInsets.only(bottom: 16),
-                        child: fileWidget,
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: AnnotationFileWidget(
+                          tempAnnotationFile,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
