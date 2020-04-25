@@ -45,7 +45,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                           margin: EdgeInsets.only(bottom: 5),
                           child: AppText(
                             annotation.title,
-                            fontSize: 20,
+                            fontSize: 18,
                             bold: true,
                           ),
                         ),

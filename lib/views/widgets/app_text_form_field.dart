@@ -52,7 +52,7 @@ class AppTextFormField extends StatelessWidget {
         }
       },
       style: TextStyle(
-        fontSize: 20,
+        fontSize: 16,
       ),
       decoration: InputDecoration(
         labelText: label,

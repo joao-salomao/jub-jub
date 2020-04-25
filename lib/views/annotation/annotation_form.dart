@@ -9,7 +9,6 @@ import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/entities/annotation.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
-import 'package:potato_notes/views/widgets/app_raised_button.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
@@ -62,17 +61,63 @@ class _AnnotationFormState extends State<AnnotationForm> {
           think.title,
           style: TextStyle(
             color: Colors.white,
+            fontSize: 16,
           ),
         ),
         centerTitle: true,
         backgroundColor: _color,
         actions: <Widget>[
-          FlatButton(
-            child: Icon(
-              Icons.brush,
-              color: Colors.white,
-            ),
-            onPressed: _showColorPickerDialog,
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _onClickSave,
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'color') _showColorPickerDialog();
+              if (value == 'photo') _addFile('image');
+              if (value == 'video') _addFile('video');
+              if (value == 'audio') _addFile('audio');
+            },
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  value: "color",
+                  child: Center(
+                    child: Icon(
+                      Icons.brush,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "image",
+                  child: Center(
+                    child: Icon(
+                      Icons.filter,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "video",
+                  child: Center(
+                    child: Icon(
+                      Icons.video_library,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "audio",
+                  child: Center(
+                    child: Icon(
+                      Icons.audiotrack,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ];
+            },
           ),
         ],
       ),
@@ -126,7 +171,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                     child: Text(
                                       _files[index].title,
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
@@ -141,7 +186,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                 child: Container(
                                   height: _files[index].type == 'audio' ||
                                           _files[index].type == 'pdf'
-                                      ? 100
+                                      ? 80
                                       : 300,
                                   child: AnnotationFileWidget(
                                     _files[index],
@@ -154,7 +199,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                     Container(
                                       height: _files[index].type == 'audio' ||
                                               _files[index].type == 'pdf'
-                                          ? 50
+                                          ? 40
                                           : 150,
                                       color: Colors.black12,
                                       child: FlatButton(
@@ -168,7 +213,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                     Container(
                                       height: _files[index].type == 'audio' ||
                                               _files[index].type == 'pdf'
-                                          ? 50
+                                          ? 40
                                           : 150,
                                       color: Colors.redAccent,
                                       child: FlatButton(
@@ -192,7 +237,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                   ? Text(
                                       _files[index].description,
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                       ),
                                     )
                                   : Container(),
@@ -219,55 +264,6 @@ class _AnnotationFormState extends State<AnnotationForm> {
                 maxLines: 100000000000000,
                 cursorColor: _color,
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                bottom: 10,
-                top: 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FlatButton(
-                    child: Icon(
-                      Icons.filter,
-                      size: 35,
-                    ),
-                    onPressed: () => _addFile('image'),
-                  ),
-                  FlatButton(
-                    child: Icon(
-                      Icons.video_library,
-                      size: 35,
-                    ),
-                    onPressed: () => _addFile('video'),
-                  ),
-                  FlatButton(
-                    child: Icon(
-                      Icons.audiotrack,
-                      size: 35,
-                    ),
-                    onPressed: () => _addFile('audio'),
-                  ),
-                  // FlatButton(
-                  //   child: Icon(
-                  //     Icons.folder,
-                  //     size: 35,
-                  //   ),
-                  //   onPressed: () => _addFile('pdf'),
-                  // ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                AppRaisedButton(
-                  "Salvar",
-                  onPressed: _onClickSave,
-                  color: _color,
-                ),
-              ],
             ),
           ],
         ),
