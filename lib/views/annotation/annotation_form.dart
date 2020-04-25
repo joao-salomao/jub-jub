@@ -2,12 +2,15 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:get_it/get_it.dart';
 import 'package:potato_notes/entities/annotation.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/entities/think.dart';
+import 'package:potato_notes/utils/date.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
+import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/views/widgets/app_raised_button.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
@@ -25,16 +28,17 @@ class AnnotationForm extends StatefulWidget {
 }
 
 class _AnnotationFormState extends State<AnnotationForm> {
+  final state = GetIt.I<AppState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
 
   Color _color;
-  List<AnnotationFile> files = [];
+  List<AnnotationFile> _files = [];
+  List<AnnotationFile> _deletedFiles = [];
   List<VideoPlayerController> videoPlayerControllers = [];
 
   Think get think => widget.think;
-
   Annotation get annotation => widget.annotation;
 
   @override
@@ -44,7 +48,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
       _titleController.text = annotation.title;
       _textController.text = annotation.text;
       _color = annotation.color;
-      files = annotation.files;
+      _files = annotation.files;
     } else {
       _color = Colors.black;
     }
@@ -171,12 +175,13 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   }
                   return null;
                 },
+                cursorColor: _color,
               ),
             ),
             Container(
               child: Column(
-                children: List.generate(files.length, (index) {
-                  final widget = _getFileWidget(files[index]);
+                children: List.generate(_files.length, (index) {
+                  final widget = _getFileWidget(_files[index]);
                   return Container(
                     margin: EdgeInsets.only(
                       bottom: 20,
@@ -194,7 +199,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      files[index].title,
+                                      _files[index].title,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -204,9 +209,9 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                 Container(
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: files[index].description.length > 0
+                                    child: _files[index].description.length > 0
                                         ? Text(
-                                            files[index].description,
+                                            _files[index].description,
                                             style: TextStyle(
                                               fontSize: 20,
                                             ),
@@ -228,8 +233,8 @@ class _AnnotationFormState extends State<AnnotationForm> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: files[index].type == 'audio' ||
-                                            files[index].type == 'pdf'
+                                    height: _files[index].type == 'audio' ||
+                                            _files[index].type == 'pdf'
                                         ? 50
                                         : 150,
                                     color: Colors.black12,
@@ -238,12 +243,12 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                         Icons.edit,
                                       ),
                                       onPressed: () =>
-                                          _updateFile(files[index]),
+                                          _updateFile(_files[index]),
                                     ),
                                   ),
                                   Container(
-                                    height: files[index].type == 'audio' ||
-                                            files[index].type == 'pdf'
+                                    height: _files[index].type == 'audio' ||
+                                            _files[index].type == 'pdf'
                                         ? 50
                                         : 150,
                                     color: Colors.redAccent,
@@ -252,7 +257,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                         Icons.delete,
                                       ),
                                       onPressed: () =>
-                                          _deleteFile(files[index]),
+                                          _removeFile(_files[index]),
                                     ),
                                   ),
                                 ],
@@ -269,15 +274,16 @@ class _AnnotationFormState extends State<AnnotationForm> {
             Container(
               child: AppTextFormField(
                 "Anotação",
-                "Digite o que você está pensando agora",
+                "Deixe as palavras fluirem através dos seus dedos",
                 controller: _textController,
                 validator: (value) {
                   return value.isEmpty
                       ? "Dê corpo ao seu pensamento e escreva algo na sua anotação"
                       : null;
                 },
-                minLines: 2,
+                minLines: 4,
                 maxLines: 100000000000000,
+                cursorColor: _color,
               ),
             ),
             Container(
@@ -416,28 +422,10 @@ class _AnnotationFormState extends State<AnnotationForm> {
         });
   }
 
-  _deleteFile(AnnotationFile annotationFile) async {
-    if (annotationFile.file == null) {
-      await alert(
-        context,
-        "Você tem certeza ?",
-        "Esse arquivo será permanentemente deletado",
-        callback: () {
-          setState(() {
-            files.remove(annotationFile);
-          });
-          // databaseService.deleteAnnotationFile(
-          //   think.id,
-          //   annotation.id,
-          //   annotationFile.id,
-          //   annotationFile.path,
-          // );
-        },
-      );
-      return;
-    }
+  _removeFile(AnnotationFile annotationFile) async {
     setState(() {
-      files.remove(annotationFile);
+      _files.remove(annotationFile);
+      _deletedFiles.add(annotationFile);
     });
   }
 
@@ -451,7 +439,11 @@ class _AnnotationFormState extends State<AnnotationForm> {
 
     if (file == null) return;
 
-    final tempAnnotationFile = AnnotationFile("temp", file, type: fileType);
+    final tempAnnotationFile = AnnotationFile(
+      title: "temp",
+      file: file,
+      type: fileType,
+    );
 
     return showDialog(
         context: context,
@@ -513,12 +505,16 @@ class _AnnotationFormState extends State<AnnotationForm> {
                             onPressed: () {
                               if (formKey.currentState.validate()) {
                                 setState(() {
-                                  files.add(
+                                  _files.add(
                                     AnnotationFile(
-                                      fileTitle.text,
-                                      file,
-                                      description: fileDescription.text,
+                                      file: file,
                                       type: fileType,
+                                      path: file.path,
+                                      title: fileTitle.text,
+                                      description: fileDescription.text,
+                                      annotationId: annotation != null
+                                          ? annotation.id
+                                          : null,
                                     ),
                                   );
                                   pop(context);
@@ -574,25 +570,26 @@ class _AnnotationFormState extends State<AnnotationForm> {
   _onClickSave() {
     if (_formKey.currentState.validate()) {
       if (annotation == null) {
-        // databaseService.addAnnotation(
-        //   think.id,
-        //   _titleController.text,
-        //   _textController.text,
-        //   _color.value,
-        //   Timestamp.now(),
-        //   files,
-        // );
+        final newAnnotation = Annotation(
+          thinkId: think.id,
+          title: _titleController.text,
+          text: _textController.text,
+          color: _color,
+          files: _files,
+          createdAt: formatDate(DateTime.now()),
+        );
+        setState(() {
+          think.annotations.add(newAnnotation);
+        });
+        state.saveAnnotation(newAnnotation);
       } else {
-        final annotationFiles =
-            files.where((file) => file.file != null).toList();
-        // databaseService.updateAnnotation(
-        //   think.id,
-        //   annotation.id,
-        //   _titleController.text,
-        //   _textController.text,
-        //   _color.value,
-        //   annotationFiles,
-        // );
+        setState(() {
+          annotation.title = _titleController.text;
+          annotation.text = _textController.text;
+          annotation.color = _color;
+          annotation.files = _files;
+        });
+        state.saveAnnotation(annotation, deletedFiles: _deletedFiles);
       }
       pop(context);
     }
