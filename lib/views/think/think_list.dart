@@ -41,15 +41,19 @@ class _ThinkListState extends State<ThinkList> {
         centerTitle: true,
       ),
       drawer: DrawerList(),
-      body: ReorderableListView(
-        onReorder: (int oldIndex, int newIndex) => {},
-        children: List.generate(
-          state.thinks.length,
-          (i) => ThinkCard(
-            Key("${state.thinks[i].id}"),
-            state.thinks[i],
-          ),
-        ),
+      body: Observer(
+        builder: (_) {
+          return ReorderableListView(
+            onReorder: (int oldIndex, int newIndex) => {},
+            children: List.generate(
+              state.thinks.length,
+              (i) => ThinkCard(
+                Key("${state.thinks[i].id}"),
+                state.thinks[i],
+              ),
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,

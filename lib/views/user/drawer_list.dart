@@ -134,16 +134,13 @@ class _DrawerListState extends State<DrawerList> {
 
   _changeMainTitle(String text) {
     state.updateMainTitle(text);
-    pop(context);
-    pop(context);
+    _pop();
   }
 
   _changeBrightness(Brightness value) {
-    DynamicTheme.of(context).setBrightness(value).then(
-          (_) => setState(
-            () => pop(context),
-          ),
-        );
+    DynamicTheme.of(context).setBrightness(value).then((_) {
+      setState(() => _pop());
+    });
   }
 
   _changeColor(Color color) async {
@@ -154,8 +151,12 @@ class _DrawerListState extends State<DrawerList> {
         ThemeData(
             primaryColor: color, brightness: Theme.of(context).brightness),
       );
-      pop(context);
-      pop(context);
+      _pop();
     });
+  }
+
+  _pop() {
+    pop(context);
+    pop(context);
   }
 }
