@@ -47,34 +47,39 @@ mixin _$AppState on _AppStateBase, Store {
     return _$deleteThinkAsyncAction.run(() => super.deleteThink(think));
   }
 
+  final _$getThinkAnnotationsAsyncAction = AsyncAction('getThinkAnnotations');
+
+  @override
+  Future getThinkAnnotations(int thinkId) {
+    return _$getThinkAnnotationsAsyncAction
+        .run(() => super.getThinkAnnotations(thinkId));
+  }
+
+  final _$getAnnotationFilesAsyncAction = AsyncAction('getAnnotationFiles');
+
+  @override
+  Future getAnnotationFiles(int annotationId) {
+    return _$getAnnotationFilesAsyncAction
+        .run(() => super.getAnnotationFiles(annotationId));
+  }
+
+  final _$deleteAnnotationAsyncAction = AsyncAction('deleteAnnotation');
+
+  @override
+  Future deleteAnnotation(Annotation annotation) {
+    return _$deleteAnnotationAsyncAction
+        .run(() => super.deleteAnnotation(annotation));
+  }
+
   final _$_AppStateBaseActionController =
       ActionController(name: '_AppStateBase');
 
   @override
-  dynamic updateThink(Think think) {
+  dynamic saveAnnotation(Annotation annotation,
+      {List<AnnotationFile> deletedFiles}) {
     final _$actionInfo = _$_AppStateBaseActionController.startAction();
     try {
-      return super.updateThink(think);
-    } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic addAnnotation(Annotation annotation) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
-    try {
-      return super.addAnnotation(annotation);
-    } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic deleteAnnotation(Annotation annotation) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
-    try {
-      return super.deleteAnnotation(annotation);
+      return super.saveAnnotation(annotation, deletedFiles: deletedFiles);
     } finally {
       _$_AppStateBaseActionController.endAction(_$actionInfo);
     }
