@@ -13,6 +13,7 @@ class AppTextFormField extends StatelessWidget {
   final int minLines;
   final int maxLines;
   final bool expands;
+  final Color cursorColor;
 
   AppTextFormField(
     this.label,
@@ -27,11 +28,15 @@ class AppTextFormField extends StatelessWidget {
     this.maxLines = 1,
     this.minLines,
     this.expands = false,
+    this.cursorColor = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: cursorColor,
+      cursorRadius: Radius.circular(16.0),
+      cursorWidth: 5,
       controller: controller,
       validator: validator,
       obscureText: obscureText,
