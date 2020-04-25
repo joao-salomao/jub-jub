@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/date.dart';
 import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/views/annotation/annotation_form.dart';
 import 'package:potato_notes/views/think/think_page.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
 
@@ -46,32 +45,24 @@ class _ThinkCard extends State<ThinkCard> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      AppText("Data de Criação: $createdAt"),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: Icon(
+                              Icons.format_align_center,
+                              color: Colors.white,
+                            ),
+                          ),
+                          AppText("${widget.think.annotations.length}"),
+                        ],
+                      ),
+                      AppText("~ $createdAt"),
                     ],
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: <Widget>[
-                //     FlatButton(
-                //       child: Icon(
-                //         Icons.zoom_in,
-                //         color: Colors.white,
-                //         size: 28,
-                //       ),
-                //       onPressed: _onClickZoom,
-                //     ),
-                //     FlatButton(
-                //       child: Icon(
-                //         Icons.add_circle_outline,
-                //         color: Colors.white,
-                //       ),
-                //       onPressed: _onClickAddAnnotation,
-                //     ),
-                //   ],
-                // )
               ],
             ),
           ),
