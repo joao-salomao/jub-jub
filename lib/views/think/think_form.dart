@@ -23,7 +23,7 @@ showThinkForm({
     });
   }
 
-  final formTitle = think == null ? "Criando Think" : "Editando Think";
+  final formTitle = think == null ? "Criando Pasta" : "Editando Pasta";
 
   return showDialog(
     context: context,
@@ -33,18 +33,18 @@ showThinkForm({
       return AlertDialog(
         title: Center(child: Text(formTitle)),
         content: Container(
-          height: 280,
+          height: 300,
           child: Column(
             children: <Widget>[
               Form(
                 key: _formKey,
                 child: AppTextFormField(
                   "Título",
-                  "Digite o título do seu pensamento",
+                  "Digite o título da pasta",
                   controller: _titleController,
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "É obrigatório dar um título ao seu Pensamento";
+                      return "É obrigatório dar um título para a pasta";
                     }
                     return null;
                   },
