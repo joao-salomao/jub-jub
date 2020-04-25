@@ -6,6 +6,7 @@ import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
+import 'annotation_file_list.dart';
 import 'annotation_form.dart';
 
 class AnnotationListPage extends StatefulWidget {
@@ -40,17 +41,19 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppText(
-                          annotation.title,
-                          fontSize: 18,
-                          bold: true,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5),
+                          child: AppText(
+                            annotation.title,
+                            fontSize: 20,
+                            bold: true,
+                          ),
                         ),
-                        // Container(
-                        //   child: AnnotationFileList(
-                        //     think,
-                        //     annotation,
-                        //   ),
-                        // ),
+                        Container(
+                          child: AnnotationFileList(
+                            annotation,
+                          ),
+                        ),
                         AppText(
                           annotation.text,
                           textAlign: TextAlign.justify,
@@ -63,7 +66,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             IconButton(
                               icon: Icon(

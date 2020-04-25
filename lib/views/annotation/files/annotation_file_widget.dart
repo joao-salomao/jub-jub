@@ -24,22 +24,21 @@ class _AnnotationFileWidgetState extends State<AnnotationFileWidget> {
     }
 
     if (annotationFile.type == 'video') {
-      if (annotationFile.controller == null) {
-        final controller = VideoPlayerController.file(annotationFile.file);
-        controller.setLooping(true);
-        controller.initialize();
-        annotationFile.controller = controller;
-      }
+      final controller = VideoPlayerController.file(annotationFile.file);
+      controller.initialize();
+      annotationFile.controller = controller;
+
+      final toogleVideoState = () {
+        final f = annotationFile.controller.value.isPlaying
+            ? annotationFile.controller.pause
+            : annotationFile.controller.play;
+
+        f().then((_) => setState(() {}));
+      };
 
       return Container(
         child: InkWell(
-          onTap: () {
-            setState(() {
-              annotationFile.controller.value.isPlaying
-                  ? annotationFile.controller.pause()
-                  : annotationFile.controller.play();
-            });
-          },
+          onTap: toogleVideoState,
           child: AspectRatio(
             aspectRatio: annotationFile.controller.value.aspectRatio,
             child: VideoPlayer(annotationFile.controller),
@@ -60,22 +59,29 @@ class _AnnotationFileWidgetState extends State<AnnotationFileWidget> {
                 Icons.play_arrow,
                 size: 50,
               ),
-              onPressed: () =>
-                  setState(() => audioPlayer.play(annotationFile.file.path)),
+              onPressed: () {
+                audioPlayer
+                    .play(annotationFile.file.path)
+                    .then((_) => setState(() => {}));
+              },
             ),
             FlatButton(
               child: Icon(
                 Icons.pause,
                 size: 50,
               ),
-              onPressed: () => setState(() => audioPlayer.pause()),
+              onPressed: () {
+                audioPlayer.pause().then((_) => setState(() => {}));
+              },
             ),
             FlatButton(
               child: Icon(
                 Icons.stop,
                 size: 50,
               ),
-              onPressed: () => setState(() => audioPlayer.stop()),
+              onPressed: () {
+                audioPlayer.stop().then((_) => setState(() => {}));
+              },
             ),
           ],
         ),
