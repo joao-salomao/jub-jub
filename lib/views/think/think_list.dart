@@ -24,7 +24,7 @@ class _ThinkListState extends State<ThinkList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Potatos Notes"),
+        title: Text("Potato Notes"),
         centerTitle: true,
       ),
       body: Observer(

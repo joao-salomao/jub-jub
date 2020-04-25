@@ -54,9 +54,12 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                             annotation,
                           ),
                         ),
-                        AppText(
-                          annotation.text,
-                          textAlign: TextAlign.justify,
+                        Container(
+                          margin: EdgeInsets.only(bottom: 5),
+                          child: AppText(
+                            annotation.text,
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                         Container(
                           width: double.infinity,
