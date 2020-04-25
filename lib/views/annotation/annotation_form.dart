@@ -247,27 +247,19 @@ class _AnnotationFormState extends State<AnnotationForm> {
                     ),
                     onPressed: () => _addFile('audio'),
                   ),
-                  FlatButton(
-                    child: Icon(
-                      Icons.folder,
-                      size: 35,
-                    ),
-                    onPressed: () => _addFile('pdf'),
-                  ),
+                  // FlatButton(
+                  //   child: Icon(
+                  //     Icons.folder,
+                  //     size: 35,
+                  //   ),
+                  //   onPressed: () => _addFile('pdf'),
+                  // ),
                 ],
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                AppRaisedButton(
-                  "Limpar",
-                  onPressed: _onClickClean,
-                  color: _color,
-                ),
-                SizedBox(
-                  width: 15,
-                ),
                 AppRaisedButton(
                   "Salvar",
                   onPressed: _onClickSave,
