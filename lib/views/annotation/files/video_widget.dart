@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
-  final File file;
-  VideoWidget(this.file);
+  final AnnotationFile annotationFile;
+  VideoWidget(this.annotationFile);
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -16,7 +17,8 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.file(widget.file);
+    controller = VideoPlayerController.file(widget.annotationFile.file);
+    widget.annotationFile.controller = controller;
     init();
   }
 

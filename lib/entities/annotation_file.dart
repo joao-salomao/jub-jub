@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'entity.dart';
-import 'package:video_player/video_player.dart';
 
 class AnnotationFile extends Entity {
   int id;
@@ -10,7 +9,7 @@ class AnnotationFile extends Entity {
   String title;
   int annotationId;
   String description;
-  VideoPlayerController controller;
+  var controller;
 
   AnnotationFile({
     this.file,
@@ -41,5 +40,11 @@ class AnnotationFile extends Entity {
       "description": description,
       "annotation_id": annotationId
     };
+  }
+
+  disposeController() {
+    if (controller != null) {
+      controller.dispose();
+    }
   }
 }

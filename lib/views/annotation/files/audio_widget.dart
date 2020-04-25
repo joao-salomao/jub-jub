@@ -1,16 +1,24 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_notes/entities/annotation_file.dart';
 
 class AudioWidget extends StatefulWidget {
-  final File file;
-  AudioWidget(this.file);
+  final AnnotationFile annotationFile;
+  AudioWidget(this.annotationFile);
   @override
   _AudioWidgetState createState() => _AudioWidgetState();
 }
 
 class _AudioWidgetState extends State<AudioWidget> {
-  final audioPlayer = AudioPlayer();
+  AudioPlayer audioPlayer;
+
+  @override
+  void initState() {
+    audioPlayer = AudioPlayer();
+    widget.annotationFile.controller = audioPlayer;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class _AudioWidgetState extends State<AudioWidget> {
             ),
             onPressed: () {
               audioPlayer
-                  .play(widget.file.path)
+                  .play(widget.annotationFile.file.path)
                   .then((_) => setState(() => {}));
             },
           ),

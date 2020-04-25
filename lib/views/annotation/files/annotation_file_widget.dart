@@ -15,11 +15,11 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'video') {
-      return VideoWidget(annotationFile.file);
+      return VideoWidget(annotationFile);
     }
 
     if (annotationFile.type == 'audio') {
-      return AudioWidget(annotationFile.file);
+      return AudioWidget(annotationFile);
     }
 
     return Container(
