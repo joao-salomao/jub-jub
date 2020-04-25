@@ -17,72 +17,63 @@ class ThinkCard extends StatefulWidget {
 }
 
 class _ThinkCard extends State<ThinkCard> {
-
   String get createdAt => formatDate(widget.think.createdAt);
-
-  _onClickZoom() {
-    push(context, ThinkPage(widget.think));
-  }
-
-  _onClickAddAnnotation() {
-    push(
-      context,
-      AnnotationForm(
-        widget.think,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(5),
-      color: widget.think.color,
-      elevation: 30,
-      child: InkWell(
-        splashColor: Colors.white,
-        onTap: _onClickZoom,
-        child: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          padding: EdgeInsets.all(5),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              AppText(
-                widget.think.title,
-                fontSize: 20,
-                bold: true,
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    AppText("Data de Criação: $createdAt"),
-                  ],
+    return Container(
+      padding: EdgeInsets.all(5),
+      child: Card(
+        elevation: 10,
+        color: widget.think.color,
+        child: InkWell(
+          splashColor: Colors.white,
+          onTap: () => push(
+            context,
+            ThinkPage(widget.think),
+          ),
+          child: Container(
+            margin: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.all(5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                AppText(
+                  widget.think.title,
+                  fontSize: 20,
+                  bold: true,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  FlatButton(
-                    child: Icon(
-                      Icons.zoom_in,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                    onPressed: _onClickZoom,
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      AppText("Data de Criação: $createdAt"),
+                    ],
                   ),
-                  FlatButton(
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.white,
-                    ),
-                    onPressed: _onClickAddAnnotation,
-                  ),
-                ],
-              )
-            ],
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: <Widget>[
+                //     FlatButton(
+                //       child: Icon(
+                //         Icons.zoom_in,
+                //         color: Colors.white,
+                //         size: 28,
+                //       ),
+                //       onPressed: _onClickZoom,
+                //     ),
+                //     FlatButton(
+                //       child: Icon(
+                //         Icons.add_circle_outline,
+                //         color: Colors.white,
+                //       ),
+                //       onPressed: _onClickAddAnnotation,
+                //     ),
+                //   ],
+                // )
+              ],
+            ),
           ),
         ),
       ),
