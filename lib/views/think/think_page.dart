@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/views/annotation/annotation_list_page.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
@@ -17,12 +18,14 @@ class ThinkPage extends StatefulWidget {
 class _ThinkPageState extends State<ThinkPage> {
   final state = GetIt.I<AppState>();
 
+  Think get think => widget.think;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.think.title),
-        backgroundColor: widget.think.color,
+        title: Text(think.title),
+        backgroundColor: think.color,
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<String>(
@@ -36,15 +39,15 @@ class _ThinkPageState extends State<ThinkPage> {
           )
         ],
       ),
-      body: Container(),
+      body: AnnotationListPage(think),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: widget.think.color,
+        backgroundColor: think.color,
         child: Icon(
           Icons.list,
           color: Colors.white,
         ),
         onPressed: () {
-          push(context, AnnotationForm(widget.think));
+          push(context, AnnotationForm(think));
         },
       ),
     );
@@ -53,31 +56,31 @@ class _ThinkPageState extends State<ThinkPage> {
   _onClickPopupMenuItem(String value) async {
     switch (value) {
       case 'edit':
-        final originalTitle = widget.think.title;
-        final originalColor = widget.think.color;
+        final originalTitle = think.title;
+        final originalColor = think.color;
         await showThinkForm(
           context: context,
           onSubmit: (
             String title,
             Color color,
           ) {
-            state.saveThink(widget.think);
+            state.saveThink(think);
           },
-          think: widget.think,
+          think: think,
           onChangeColor: (Color newColor) {
             setState(() {
-              widget.think.color = newColor;
+              think.color = newColor;
             });
           },
           onChangeTitle: (String newTitle) {
             setState(() {
-              widget.think.title = newTitle;
+              think.title = newTitle;
             });
           },
           onCancel: () {
             setState(() {
-              widget.think.title = originalTitle;
-              widget.think.color = originalColor;
+              think.title = originalTitle;
+              think.color = originalColor;
             });
           },
         );
@@ -111,7 +114,7 @@ class _ThinkPageState extends State<ThinkPage> {
             FlatButton(
               child: Text("Sim"),
               onPressed: () {
-                state.deleteThink(widget.think);
+                state.deleteThink(think);
                 pop(_);
                 pop(_);
               },
