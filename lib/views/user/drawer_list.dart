@@ -22,21 +22,21 @@ class _DrawerListState extends State<DrawerList> {
             ListTile(
               leading: Icon(Icons.text_fields),
               title: Text("Título Principal"),
-              subtitle: Text("Alterar Título Principal"),
+              subtitle: Text("Alterar título principal"),
               trailing: Icon(Icons.arrow_forward),
               onTap: () => {},
             ),
             ListTile(
               leading: Icon(Icons.brush),
               title: Text("Cor Principal"),
-              subtitle: Text("Alterar Cor Principal"),
+              subtitle: Text("Alterar cor principal"),
               trailing: Icon(Icons.arrow_forward),
               onTap: _changeColorDialog,
             ),
             ListTile(
               leading: Icon(Icons.brightness_6),
               title: Text("Tema"),
-              subtitle: Text("Alterar Tema"),
+              subtitle: Text("Alterar tema"),
               trailing: Icon(Icons.arrow_forward),
               onTap: _changeBrightnessDialog,
             ),
@@ -51,7 +51,7 @@ class _DrawerListState extends State<DrawerList> {
       context: context,
       builder: (_) {
         return SimpleDialog(
-          title: const Text('Selecione o Tema'),
+          title: const Text('Selecione o tema'),
           children: [
             RadioListTile<Brightness>(
               value: Brightness.light,
@@ -72,21 +72,17 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    Color _color = Theme.of(context).primaryColor;
     return showDialog(
       context: context,
       builder: (_) {
         return SimpleDialog(
-          title: const Text('Selecione o Tema'),
+          title: const Text('Selecione a cor'),
           children: [
             Container(
               height: 250,
               child: MaterialColorPicker(
-                onColorChange: (Color newColor) {
-                  _color = newColor;
-                  _changeColor(newColor);
-                }, 
-                selectedColor: _color,
+                onColorChange: _changeColor,
+                selectedColor: Theme.of(context).primaryColor,
               ),
             ),
           ],
@@ -96,9 +92,11 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeBrightness(Brightness value) {
-    DynamicTheme.of(context)
-        .setBrightness(value)
-        .then((_) => setState(() => pop(context)));
+    DynamicTheme.of(context).setBrightness(value).then(
+          (_) => setState(
+            () => pop(context),
+          ),
+        );
   }
 
   _changeColor(Color color) async {
@@ -107,9 +105,10 @@ class _DrawerListState extends State<DrawerList> {
     setState(() {
       DynamicTheme.of(context).setThemeData(
         ThemeData(
-          primaryColor: color,
-        ),
+            primaryColor: color, brightness: Theme.of(context).brightness),
       );
+      pop(context);
+      pop(context);
     });
   }
 }
