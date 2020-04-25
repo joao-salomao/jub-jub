@@ -24,7 +24,15 @@ class _ThinkPageState extends State<ThinkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(think.title),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        title: Text(
+          think.title,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: think.color,
         centerTitle: true,
         actions: <Widget>[
@@ -103,7 +111,7 @@ class _ThinkPageState extends State<ThinkPage> {
               children: <Widget>[
                 Text(
                   "Essa pasta e todas as suas anotações serão permanentemente deletados.",
-                  textAlign: TextAlign.justify  ,
+                  textAlign: TextAlign.justify,
                 )
               ],
             ),

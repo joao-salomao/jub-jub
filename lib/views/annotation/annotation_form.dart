@@ -56,17 +56,21 @@ class _AnnotationFormState extends State<AnnotationForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppText(
-          think.title,
+        iconTheme: IconThemeData(
           color: Colors.white,
+        ),
+        title: Text(
+          think.title,
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         centerTitle: true,
         backgroundColor: _color,
         actions: <Widget>[
           FlatButton(
             child: Icon(
-              Icons.palette,
-              size: 30,
+              Icons.brush,
               color: Colors.white,
             ),
             onPressed: _showColorPickerDialog,

@@ -13,4 +13,4 @@ Future push(BuildContext context, Widget page, {bool replace = false}) {
   }));
 }
 
-pop(BuildContext context) async => Navigator.of(context).pop();
+pop(BuildContext context) => Navigator.of(context).pop();
