@@ -206,64 +206,67 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: _files[index].description.length > 0
-                                        ? Text(
-                                            _files[index].description,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                            ),
-                                          )
-                                        : Container(),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
-                          Row(children: [
-                            Expanded(
-                              flex: 6,
-                              child: Container(
-                                child: widget,
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  child: widget,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: _files[index].type == 'audio' ||
-                                            _files[index].type == 'pdf'
-                                        ? 50
-                                        : 150,
-                                    color: Colors.black12,
-                                    child: FlatButton(
-                                      child: Icon(
-                                        Icons.edit,
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: _files[index].type == 'audio' ||
+                                              _files[index].type == 'pdf'
+                                          ? 50
+                                          : 150,
+                                      color: Colors.black12,
+                                      child: FlatButton(
+                                        child: Icon(
+                                          Icons.edit,
+                                        ),
+                                        onPressed: () =>
+                                            _updateFile(_files[index]),
                                       ),
-                                      onPressed: () =>
-                                          _updateFile(_files[index]),
                                     ),
-                                  ),
-                                  Container(
-                                    height: _files[index].type == 'audio' ||
-                                            _files[index].type == 'pdf'
-                                        ? 50
-                                        : 150,
-                                    color: Colors.redAccent,
-                                    child: FlatButton(
-                                      child: Icon(
-                                        Icons.delete,
+                                    Container(
+                                      height: _files[index].type == 'audio' ||
+                                              _files[index].type == 'pdf'
+                                          ? 50
+                                          : 150,
+                                      color: Colors.redAccent,
+                                      child: FlatButton(
+                                        child: Icon(
+                                          Icons.delete,
+                                        ),
+                                        onPressed: () =>
+                                            _removeFile(_files[index]),
                                       ),
-                                      onPressed: () =>
-                                          _removeFile(_files[index]),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 5),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: _files[index].description.length > 0
+                                  ? Text(
+                                      _files[index].description,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    )
+                                  : Container(),
                             ),
-                          ]),
+                          ),
                         ],
                       ),
                     ),
@@ -353,19 +356,22 @@ class _AnnotationFormState extends State<AnnotationForm> {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController fileTitle =
         TextEditingController(text: annotationFile.title);
+
+    final TextEditingController fileDescription =
+        TextEditingController(text: annotationFile.description);
     return showDialog(
         context: context,
         builder: (_) {
           return Dialog(
             child: Container(
-                height: 430,
-                padding: EdgeInsets.all(16),
+                height: 450,
+                padding: EdgeInsets.all(10),
                 child: Form(
                   key: formKey,
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(bottom: 16),
+                        margin: EdgeInsets.only(bottom: 5),
                         child: AppTextFormField(
                           "Título da Imagem",
                           "Digite um título para a imagem",
@@ -379,12 +385,22 @@ class _AnnotationFormState extends State<AnnotationForm> {
                         ),
                       ),
                       Container(
-                        height: 210,
+                        margin: EdgeInsets.only(
+                          bottom: 5,
+                        ),
+                        child: AppTextFormField(
+                          "Descrição",
+                          "",
+                          maxLines: annotationFile.type == 'audio' ? 7 : 2,
+                          controller: fileDescription,
+                        ),
+                      ),
+                      Container(
+                        height: annotationFile.type == 'audio' ? 50 : 150,
                         width: double.infinity,
-                        margin: EdgeInsets.only(bottom: 16),
-                        child: Image.file(
-                          annotationFile.file,
-                          fit: BoxFit.fitWidth,
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: AnnotationFileWidget(
+                          annotationFile,
                         ),
                       ),
                       Row(
@@ -399,15 +415,9 @@ class _AnnotationFormState extends State<AnnotationForm> {
                             onPressed: () {
                               if (formKey.currentState.validate()) {
                                 setState(() {
-                                  if (annotationFile.file == null) {
-                                    // databaseService.updateAnnotationFile(
-                                    //   think.id,
-                                    //   annotation.id,
-                                    //   annotationFile.id,
-                                    //   fileTitle.text,
-                                    // );
-                                  }
                                   annotationFile.title = fileTitle.text;
+                                  annotationFile.description =
+                                      fileDescription.text;
                                   pop(context);
                                 });
                               }
