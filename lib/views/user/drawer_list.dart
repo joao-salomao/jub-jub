@@ -1,6 +1,9 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:get_it/get_it.dart';
+import 'package:potato_notes/views/state/app_state.dart';
+import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/navigation.dart';
 
@@ -10,8 +13,7 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  final defaultImageUrl =
-      "https://freeiconshop.com/wp-content/uploads/edd/person-solid.png";
+  final state = GetIt.I<AppState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _DrawerListState extends State<DrawerList> {
               title: Text("Título Principal"),
               subtitle: Text("Alterar título principal"),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () => {},
+              onTap: _changeMainTitleDialog,
             ),
             ListTile(
               leading: Icon(Icons.brush),
@@ -43,6 +45,45 @@ class _DrawerListState extends State<DrawerList> {
           ],
         ),
       ),
+    );
+  }
+
+  _changeMainTitleDialog() async {
+    final controller = TextEditingController(text: state.mainTitle);
+
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return Dialog(
+          child: Container(
+            height: 150,
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                AppTextFormField(
+                  "Título",
+                  "Digite o principal desejado",
+                  controller: controller,
+                  cursorColor: Theme.of(context).primaryColor,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () => pop(context),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.save),
+                      onPressed: () => _changeMainTitle(controller.text),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -89,6 +130,12 @@ class _DrawerListState extends State<DrawerList> {
         );
       },
     );
+  }
+
+  _changeMainTitle(String text) {
+    state.updateMainTitle(text);
+    pop(context);
+    pop(context);
   }
 
   _changeBrightness(Brightness value) {

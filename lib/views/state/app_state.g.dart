@@ -26,6 +26,23 @@ mixin _$AppState on _AppStateBase, Store {
     }, _$thinksAtom, name: '${_$thinksAtom.name}_set');
   }
 
+  final _$mainTitleAtom = Atom(name: '_AppStateBase.mainTitle');
+
+  @override
+  String get mainTitle {
+    _$mainTitleAtom.context.enforceReadPolicy(_$mainTitleAtom);
+    _$mainTitleAtom.reportObserved();
+    return super.mainTitle;
+  }
+
+  @override
+  set mainTitle(String value) {
+    _$mainTitleAtom.context.conditionallyRunInAction(() {
+      super.mainTitle = value;
+      _$mainTitleAtom.reportChanged();
+    }, _$mainTitleAtom, name: '${_$mainTitleAtom.name}_set');
+  }
+
   final _$getDataAsyncAction = AsyncAction('getData');
 
   @override
@@ -75,6 +92,16 @@ mixin _$AppState on _AppStateBase, Store {
       ActionController(name: '_AppStateBase');
 
   @override
+  dynamic updateMainTitle(String text) {
+    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    try {
+      return super.updateMainTitle(text);
+    } finally {
+      _$_AppStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic saveAnnotation(Annotation annotation,
       {List<AnnotationFile> deletedFiles}) {
     final _$actionInfo = _$_AppStateBaseActionController.startAction();
@@ -97,7 +124,8 @@ mixin _$AppState on _AppStateBase, Store {
 
   @override
   String toString() {
-    final string = 'thinks: ${thinks.toString()}';
+    final string =
+        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()}';
     return '{$string}';
   }
 }

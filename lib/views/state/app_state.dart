@@ -1,10 +1,11 @@
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/dao/annotation_dao.dart';
-import 'package:potato_notes/dao/annotation_file_dao.dart';
 import 'package:potato_notes/dao/think_dao.dart';
-import 'package:potato_notes/entities/annotation.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/entities/think.dart';
+import 'package:potato_notes/dao/annotation_dao.dart';
+import 'package:potato_notes/entities/annotation.dart';
+import 'package:potato_notes/dao/annotation_file_dao.dart';
+import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'app_state.g.dart';
 
 class AppState = _AppStateBase with _$AppState;
@@ -17,8 +18,15 @@ abstract class _AppStateBase with Store {
   @observable
   var thinks = ObservableList<Think>();
 
+  @observable
+  var mainTitle = "";
+
   @action
   getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final title = prefs.getString("mainTitle");
+    mainTitle = title == null ? "Jub-Arte" : title;
+
     final list = await thinkDAO.findAll();
     thinks.clear();
     list.forEach((think) async {
@@ -28,6 +36,13 @@ abstract class _AppStateBase with Store {
       });
       thinks.add(think);
     });
+  }
+
+  @action
+  updateMainTitle(String text) {
+    SharedPreferences.getInstance()
+        .then((prefs) => prefs.setString("mainTitle", text));
+    mainTitle = text;
   }
 
   @action

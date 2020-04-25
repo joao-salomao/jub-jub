@@ -8,7 +8,6 @@ import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/entities/annotation.dart';
 import 'package:potato_notes/views/state/app_state.dart';
-import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/views/widgets/app_raised_button.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
