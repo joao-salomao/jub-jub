@@ -19,7 +19,6 @@ abstract class _AppStateBase with Store {
 
   @action
   getData() async {
-    print("aquiii");
     final list = await thinkDAO.findAll();
     thinks.clear();
     list.forEach((think) async {

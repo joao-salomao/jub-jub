@@ -43,7 +43,7 @@ class _ThinkPageState extends State<ThinkPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: think.color,
         child: Icon(
-          Icons.list,
+          Icons.add,
           color: Colors.white,
         ),
         onPressed: () {
@@ -102,7 +102,9 @@ class _ThinkPageState extends State<ThinkPage> {
             child: ListBody(
               children: <Widget>[
                 Text(
-                    "Esse pensamento e todas as suas anotações serão permanentemente deletados.")
+                  "Essa pasta e todas as suas anotações serão permanentemente deletados.",
+                  textAlign: TextAlign.justify  ,
+                )
               ],
             ),
           ),
@@ -115,6 +117,7 @@ class _ThinkPageState extends State<ThinkPage> {
               child: Text("Sim"),
               onPressed: () {
                 state.deleteThink(think);
+                state.getData();
                 pop(_);
                 pop(_);
               },

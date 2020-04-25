@@ -24,7 +24,7 @@ class _ThinkListState extends State<ThinkList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pensamentos"),
+        title: Text("Potatos Notes"),
         centerTitle: true,
       ),
       body: Observer(
@@ -46,7 +46,6 @@ class _ThinkListState extends State<ThinkList> {
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: Colors.black,
         onPressed: () => showThinkForm(context: context, onSubmit: _addThink),
       ),
     );
@@ -59,5 +58,6 @@ class _ThinkListState extends State<ThinkList> {
       createdAt: DateTime.now(),
     );
     state.saveThink(think);
+    state.getData();
   }
 }

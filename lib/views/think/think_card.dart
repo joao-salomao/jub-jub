@@ -32,7 +32,6 @@ class _ThinkCard extends State<ThinkCard> {
             ThinkPage(widget.think),
           ),
           child: Container(
-            margin: EdgeInsets.only(bottom: 10),
             padding: EdgeInsets.all(5),
             child: Column(
               mainAxisSize: MainAxisSize.min,

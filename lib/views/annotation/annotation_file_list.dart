@@ -45,7 +45,6 @@ class _AnnotationFileListState extends State<AnnotationFileList> {
                     child: AppText(
                       file.description,
                       fontSize: 16,
-                      bold: true,
                       textAlign: TextAlign.left,
                     ),
                   ),
