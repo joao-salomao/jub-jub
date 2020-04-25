@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/utils/date.dart';
 import 'package:video_player/video_player.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/utils/file_picker.dart';
@@ -492,10 +491,6 @@ class _AnnotationFormState extends State<AnnotationForm> {
         );
       },
     );
-  }
-
-  _onClickClean() {
-    _textController.clear();
   }
 
   _onClickSave() {
