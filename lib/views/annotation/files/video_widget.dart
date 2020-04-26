@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:video_player/video_player.dart';
+import 'package:potato_notes/entities/annotation_file.dart';
 
 class VideoWidget extends StatefulWidget {
   final AnnotationFile annotationFile;
@@ -42,5 +41,11 @@ class _VideoWidgetState extends State<VideoWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }
