@@ -376,6 +376,8 @@ class _AnnotationFormState extends State<AnnotationForm> {
     File file = await getFile(fileType);
     if (file == null) return;
 
+    final fileName = await getFileNameWithExtension(file);
+
     return showDialog(
       context: context,
       builder: (_) {
@@ -390,6 +392,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                     file: file,
                     type: fileType,
                     path: file.path,
+                    fileName: fileName,
                     title: fileTitle.text,
                     description: fileDescription.text,
                     annotationId: annotation != null ? annotation.id : null,

@@ -15,9 +15,10 @@ class AnnotationFile extends Entity {
 
   AnnotationFile({
     this.file,
-    this.title,
     this.path,
     this.type,
+    this.title,
+    this.fileName,
     this.description,
     this.annotationId,
   });
