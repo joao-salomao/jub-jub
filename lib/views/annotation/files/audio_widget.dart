@@ -24,6 +24,7 @@ class AudioWidget extends StatelessWidget {
         style: TextStyle(
           decoration: TextDecoration.underline,
           fontSize: 16,
+          color: Colors.white,
         ),
       ),
       onPressed: () {

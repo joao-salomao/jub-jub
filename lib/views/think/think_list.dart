@@ -6,6 +6,7 @@ import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_card.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/user/drawer_list.dart';
+import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkList extends StatefulWidget {
   @override
@@ -55,14 +56,19 @@ class _ThinkListState extends State<ThinkList> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(bottom: 30),
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () => showThinkForm(context: context, onSubmit: _addThink),
         ),
-        onPressed: () => showThinkForm(context: context, onSubmit: _addThink),
       ),
+      bottomNavigationBar: AppBottomAudioPlayer(),
     );
   }
 

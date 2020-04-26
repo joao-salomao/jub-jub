@@ -50,15 +50,18 @@ class _ThinkPageState extends State<ThinkPage> {
       ),
       body: AnnotationListPage(think),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: think.color,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(bottom: 30),
+        child: FloatingActionButton(
+          backgroundColor: think.color,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            push(context, AnnotationForm(think));
+          },
         ),
-        onPressed: () {
-          push(context, AnnotationForm(think));
-        },
       ),
       bottomNavigationBar: AppBottomAudioPlayer(),
     );
