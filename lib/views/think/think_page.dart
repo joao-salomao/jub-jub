@@ -6,6 +6,7 @@ import 'package:potato_notes/views/annotation/annotation_list_page.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
+import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkPage extends StatefulWidget {
   final Think think;
@@ -48,6 +49,7 @@ class _ThinkPageState extends State<ThinkPage> {
         ],
       ),
       body: AnnotationListPage(think),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: think.color,
         child: Icon(
@@ -58,6 +60,7 @@ class _ThinkPageState extends State<ThinkPage> {
           push(context, AnnotationForm(think));
         },
       ),
+      bottomNavigationBar: AppBottomAudioPlayer(),
     );
   }
 

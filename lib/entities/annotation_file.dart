@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:potato_notes/utils/file_picker.dart';
-
 import 'entity.dart';
 
 class AnnotationFile extends Entity {

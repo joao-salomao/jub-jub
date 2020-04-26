@@ -34,7 +34,6 @@ class _AnnotationFormState extends State<AnnotationForm> {
   Color _color;
   List<AnnotationFile> _files = [];
   List<AnnotationFile> _deletedFiles = [];
-  List<VideoPlayerController> videoPlayerControllers = [];
 
   Think get think => widget.think;
   Annotation get annotation => widget.annotation;
@@ -338,7 +337,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                         child: Row(
                           children: [
                             Icon(Icons.update),
-                            Text("Alterar arquivo")
+                            Text(" Alterar arquivo")
                           ],
                         ),
                         onPressed: () async {
