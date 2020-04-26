@@ -149,61 +149,57 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                               ],
                             ),
                           ),
-                          expanded: Container(
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: AnnotationFileList(
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: AnnotationFileList(
+                                  annotation,
+                                ),
+                              ),
+                              Container(
+                                child: AppText(
+                                  annotation.text,
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: AppText(
+                                  "~ ${annotation.createdAt}",
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () =>
+                                        _onClickDeleteAnnotation(
                                       annotation,
                                     ),
                                   ),
-                                  Container(
-                                    child: AppText(
-                                      annotation.text,
-                                      textAlign: TextAlign.justify,
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () => push(
+                                      context,
+                                      AnnotationForm(
+                                        think,
+                                        annotation: annotation,
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    width: double.infinity,
-                                    child: AppText(
-                                      "~ ${annotation.createdAt}",
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () =>
-                                            _onClickDeleteAnnotation(
-                                          annotation,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () => push(
-                                          context,
-                                          AnnotationForm(
-                                            think,
-                                            annotation: annotation,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
                                 ],
-                              ),
-                            ),
+                              )
+                            ],
                           ),
                           builder: (_, collapsed, expanded) {
                             return Padding(

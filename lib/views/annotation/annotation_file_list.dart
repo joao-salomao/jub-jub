@@ -25,6 +25,7 @@ class _AnnotationFileListState extends State<AnnotationFileList> {
               margin: EdgeInsets.only(bottom: 16),
               width: double.infinity,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(bottom: 5),
