@@ -72,6 +72,7 @@ abstract class _AppStateBase with Store {
     List<AnnotationFile> deletedFiles,
   }) {
     annotationDAO.save(annotation).then((annotationId) {
+      annotation.id = annotationId;
       annotation.files.forEach((file) {
         file.annotationId = annotationId;
         annotationFileDAO.save(file);
