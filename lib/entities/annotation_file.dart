@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:potato_notes/utils/file_picker.dart';
+
 import 'entity.dart';
 
 class AnnotationFile extends Entity {
@@ -9,6 +11,7 @@ class AnnotationFile extends Entity {
   String title;
   int annotationId;
   String description;
+  String fileName;
   var controller;
 
   AnnotationFile({
@@ -28,6 +31,9 @@ class AnnotationFile extends Entity {
     this.path = map['path'];
     this.type = map['type'];
     this.file = File(map['path']);
+    getFileNameWithExtension(this.file).then((name) {
+      fileName = name;
+    });
   }
 
   @override
