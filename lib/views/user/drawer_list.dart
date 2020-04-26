@@ -113,20 +113,60 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
+    final originalColor = Theme.of(context).primaryColor;
+    var color = Theme.of(context).primaryColor;
     return showDialog(
       context: context,
       builder: (_) {
-        return SimpleDialog(
-          title: const Text('Selecione a cor'),
-          children: [
-            Container(
-              height: 250,
-              child: MaterialColorPicker(
-                onColorChange: _changeColor,
-                selectedColor: Theme.of(context).primaryColor,
-              ),
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            height: 320,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: MaterialColorPicker(
+                    onColorChange: (newColor) {
+                      color = newColor;
+                      _changeColor(newColor);
+                    },
+                    selectedColor: color,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          _changeColor(originalColor);
+                          _pop();
+                        },
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.save,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          _changeColor(color);
+                          _pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
@@ -151,12 +191,10 @@ class _DrawerListState extends State<DrawerList> {
         ThemeData(
             primaryColor: color, brightness: Theme.of(context).brightness),
       );
-      _pop();
     });
   }
 
   _pop() {
-    pop(context);
     pop(context);
   }
 }

@@ -32,22 +32,26 @@ showThinkForm({
     builder: (_) {
       return AlertDialog(
         title: Center(child: Text(formTitle)),
+        contentPadding: EdgeInsets.all(10),
         content: Container(
-          height: 300,
+          height: 310,
           child: Column(
             children: <Widget>[
-              Form(
-                key: _formKey,
-                child: AppTextFormField(
-                  "Título",
-                  "Digite o título da pasta",
-                  controller: _titleController,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "É obrigatório dar um título para a pasta";
-                    }
-                    return null;
-                  },
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Form(
+                  key: _formKey,
+                  child: AppTextFormField(
+                    "Título",
+                    "Digite o título da pasta",
+                    controller: _titleController,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "É obrigatório dar um título para a pasta";
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -69,25 +73,41 @@ showThinkForm({
             ],
           ),
         ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Fechar"),
-            onPressed: () {
-              if (onCancel != null) {
-                onCancel();
-              }
-              pop(_);
-            },
-          ),
-          FlatButton(
-            child: Text("Salvar"),
-            onPressed: () {
-              onSubmit(
-                _titleController.text,
-                _color,
-              );
-              pop(context);
-            },
+        actions: [
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    size: 40,
+                  ),
+                  onPressed: () {
+                    if (onCancel != null) {
+                      onCancel();
+                    }
+                    pop(_);
+                  },
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.save,
+                    size: 40,
+                  ),
+                  onPressed: () {
+                    onSubmit(
+                      _titleController.text,
+                      _color,
+                    );
+                    pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       );
