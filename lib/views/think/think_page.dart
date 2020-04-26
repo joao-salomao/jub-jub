@@ -36,16 +36,15 @@ class _ThinkPageState extends State<ThinkPage> {
         ),
         backgroundColor: think.color,
         centerTitle: true,
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: _onClickPopupMenuItem,
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(value: "edit", child: Text("Editar")),
-                PopupMenuItem(value: "delete", child: Text("Deletar")),
-              ];
-            },
-          )
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: _onClickEdit,
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: _onClickDelete,
+          ),
         ],
       ),
       body: AnnotationListPage(think),
@@ -67,45 +66,38 @@ class _ThinkPageState extends State<ThinkPage> {
     );
   }
 
-  _onClickPopupMenuItem(String value) async {
-    switch (value) {
-      case 'edit':
-        final originalTitle = think.title;
-        final originalColor = think.color;
-        await showThinkForm(
-          context: context,
-          onSubmit: (
-            String title,
-            Color color,
-          ) {
-            state.saveThink(think);
-          },
-          think: think,
-          onChangeColor: (Color newColor) {
-            setState(() {
-              think.color = newColor;
-            });
-          },
-          onChangeTitle: (String newTitle) {
-            setState(() {
-              think.title = newTitle;
-            });
-          },
-          onCancel: () {
-            setState(() {
-              think.title = originalTitle;
-              think.color = originalColor;
-            });
-          },
-        );
-        break;
-      case 'delete':
-        await _alertDeleteThink();
-        break;
-    }
+  _onClickEdit() async {
+    final originalTitle = think.title;
+    final originalColor = think.color;
+    await showThinkForm(
+      context: context,
+      onSubmit: (
+        String title,
+        Color color,
+      ) {
+        state.saveThink(think);
+      },
+      think: think,
+      onChangeColor: (Color newColor) {
+        setState(() {
+          think.color = newColor;
+        });
+      },
+      onChangeTitle: (String newTitle) {
+        setState(() {
+          think.title = newTitle;
+        });
+      },
+      onCancel: () {
+        setState(() {
+          think.title = originalTitle;
+          think.color = originalColor;
+        });
+      },
+    );
   }
 
-  _alertDeleteThink() async {
+  _onClickDelete() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
