@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 
-Future getFile(String fileType) async {
+Future<File> getFile(String fileType) async {
   File file;
   try {
     if (fileType == 'image') {

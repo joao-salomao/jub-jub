@@ -17,8 +17,8 @@ class AppAlertDialog extends StatelessWidget {
       title: Text(title),
       content: content,
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(16),
+        Container(
+          padding: EdgeInsets.only(left: 16, right: 16),
           child: Row(
             children: [
               IconButton(

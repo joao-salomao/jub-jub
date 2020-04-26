@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/utils/date.dart';
+import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
+import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:video_player/video_player.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
@@ -279,76 +281,79 @@ class _AnnotationFormState extends State<AnnotationForm> {
     final TextEditingController fileDescription =
         TextEditingController(text: annotationFile.description);
     return showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            child: Container(
-                height: 450,
-                padding: EdgeInsets.all(10),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: AppTextFormField(
-                          "Título da Imagem",
-                          "Digite um título para a imagem",
-                          controller: fileTitle,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "É obrigatório dar um título para a imagem";
-                            }
-                            return null;
-                          },
+      context: context,
+      builder: (_) {
+        return AppAlertDialog(
+          title: "Atualizando arquivo",
+          onSave: () {
+            if (formKey.currentState.validate()) {
+              setState(() {
+                annotationFile.title = fileTitle.text;
+                annotationFile.description = fileDescription.text;
+                pop(context);
+              });
+            }
+          },
+          onClose: () => pop(context),
+          content: Container(
+            height: 240,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(bottom: 5),
+                    child: AppTextFormField(
+                      "Título",
+                      "",
+                      controller: fileTitle,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "É obrigatório dar um título";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: AppTextFormField(
+                      "Descrição",
+                      "",
+                      maxLines: 3,
+                      controller: fileDescription,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Row(
+                          children: [
+                            Icon(Icons.update),
+                            Text("Alterar arquivo")
+                          ],
                         ),
+                        onPressed: () async {
+                          final file = await getFile(annotationFile.type);
+                          if (file == null) return;
+                          setState(() {
+                            annotationFile.file = file;
+                            annotationFile.path = file.path;
+                          });
+                        },
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: 5,
-                        ),
-                        child: AppTextFormField(
-                          "Descrição",
-                          "",
-                          maxLines: annotationFile.type == 'audio' ? 7 : 2,
-                          controller: fileDescription,
-                        ),
-                      ),
-                      Container(
-                        height: annotationFile.type == 'audio' ? 50 : 150,
-                        width: double.infinity,
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: AnnotationFileWidget(
-                          annotationFile,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          FlatButton(
-                            child: Text("Sair"),
-                            onPressed: () => pop(context),
-                          ),
-                          FlatButton(
-                            child: Text("Salvar"),
-                            onPressed: () {
-                              if (formKey.currentState.validate()) {
-                                setState(() {
-                                  annotationFile.title = fileTitle.text;
-                                  annotationFile.description =
-                                      fileDescription.text;
-                                  pop(context);
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      )
                     ],
                   ),
-                )),
-          );
-        });
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   _removeFile(AnnotationFile annotationFile) async {
@@ -365,107 +370,76 @@ class _AnnotationFormState extends State<AnnotationForm> {
         TextEditingController(text: "");
 
     File file = await getFile(fileType);
-
     if (file == null) return;
 
-    final tempAnnotationFile = AnnotationFile(
-      title: "temp",
-      file: file,
-      type: fileType,
-    );
-
     return showDialog(
-        context: context,
-        builder: (_) {
-          return Dialog(
-            child: Container(
-                height: 450,
-                padding: EdgeInsets.all(10),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: 5,
-                        ),
-                        child: AppTextFormField(
-                          "Título",
-                          "",
-                          controller: fileTitle,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "É obrigatório dar um título";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: 5,
-                        ),
-                        child: AppTextFormField(
-                          "Descrição",
-                          "",
-                          maxLines: fileType == 'audio' ? 7 : 2,
-                          controller: fileDescription,
-                        ),
-                      ),
-                      Container(
-                        height: fileType == 'audio' ? 50 : 150,
-                        width: double.infinity,
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: AnnotationFileWidget(
-                          tempAnnotationFile,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          FlatButton(
-                            child: Text("Sair"),
-                            onPressed: () {
-                              pop(context);
-                            },
-                          ),
-                          FlatButton(
-                            child: Text("Salvar"),
-                            onPressed: () {
-                              if (formKey.currentState.validate()) {
-                                setState(() {
-                                  _files.add(
-                                    AnnotationFile(
-                                      file: file,
-                                      type: fileType,
-                                      path: file.path,
-                                      title: fileTitle.text,
-                                      description: fileDescription.text,
-                                      annotationId: annotation != null
-                                          ? annotation.id
-                                          : null,
-                                    ),
-                                  );
-                                  pop(context);
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      )
-                    ],
+      context: context,
+      builder: (_) {
+        return AppAlertDialog(
+          title: "Adicionando arquivo",
+          onClose: () => pop(context),
+          onSave: () {
+            if (formKey.currentState.validate()) {
+              setState(() {
+                _files.add(
+                  AnnotationFile(
+                    file: file,
+                    type: fileType,
+                    path: file.path,
+                    title: fileTitle.text,
+                    description: fileDescription.text,
+                    annotationId: annotation != null ? annotation.id : null,
                   ),
-                )),
-          );
-        });
+                );
+                pop(context);
+              });
+            }
+          },
+          content: Container(
+            height: 230,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: AppTextFormField(
+                      "Título",
+                      "",
+                      controller: fileTitle,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "É obrigatório dar um título ";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Container(
+                    child: AppTextFormField(
+                      "Descrição",
+                      "",
+                      maxLines: 5,
+                      controller: fileDescription,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future _showColorPickerDialog() {
     return showDialog(
       context: context,
       builder: (_) {
-        return AlertDialog(
-          title: Text("Escolha a cor do seu Pensamento"),
+        return AppAlertDialog(
+          title: "Escolha a cor da sua anotação",
           content: Container(
             height: 205,
             child: MaterialColorPicker(
@@ -477,16 +451,8 @@ class _AnnotationFormState extends State<AnnotationForm> {
               selectedColor: _color,
             ),
           ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Fechar"),
-              onPressed: () => pop(_),
-            ),
-            FlatButton(
-              child: Text("Salvar"),
-              onPressed: () => pop(_),
-            ),
-          ],
+          onClose: () => pop(_),
+          onSave: () => pop(_),
         );
       },
     );

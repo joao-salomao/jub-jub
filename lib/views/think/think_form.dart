@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
@@ -30,9 +31,8 @@ showThinkForm({
     useRootNavigator: true,
     barrierDismissible: true,
     builder: (_) {
-      return AlertDialog(
-        title: Center(child: Text(formTitle)),
-        contentPadding: EdgeInsets.all(10),
+      return AppAlertDialog(
+        title: formTitle,
         content: Container(
           height: 310,
           child: Column(
@@ -73,43 +73,19 @@ showThinkForm({
             ],
           ),
         ),
-        actions: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    if (onCancel != null) {
-                      onCancel();
-                    }
-                    pop(_);
-                  },
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.save,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    onSubmit(
-                      _titleController.text,
-                      _color,
-                    );
-                    pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+        onClose: () {
+          if (onCancel != null) {
+            onCancel();
+          }
+          pop(_);
+        },
+        onSave: () {
+          onSubmit(
+            _titleController.text,
+            _color,
+          );
+          pop(_);
+        },
       );
     },
   );

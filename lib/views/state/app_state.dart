@@ -75,7 +75,9 @@ abstract class _AppStateBase with Store {
       annotation.id = annotationId;
       annotation.files.forEach((file) {
         file.annotationId = annotationId;
-        annotationFileDAO.save(file);
+        annotationFileDAO.save(file).then((annotationFileId) {
+          file.id = annotationFileId;
+        });
       });
     });
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:potato_notes/views/state/app_state.dart';
+import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/navigation.dart';
@@ -54,10 +55,10 @@ class _DrawerListState extends State<DrawerList> {
     return showDialog(
       context: context,
       builder: (_) {
-        return Dialog(
-          child: Container(
-            height: 150,
-            padding: EdgeInsets.all(10),
+        return AppAlertDialog(
+          title: "Atualizando título",
+          content: Container(
+            height: 60,
             child: Column(
               children: [
                 AppTextFormField(
@@ -66,22 +67,11 @@ class _DrawerListState extends State<DrawerList> {
                   controller: controller,
                   cursorColor: Theme.of(context).primaryColor,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () => pop(context),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () => _changeMainTitle(controller.text),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
+          onClose: _pop,
+          onSave: () => _changeMainTitle(controller.text),
         );
       },
     );
@@ -118,10 +108,19 @@ class _DrawerListState extends State<DrawerList> {
     return showDialog(
       context: context,
       builder: (_) {
-        return Dialog(
-          child: Container(
+        return AppAlertDialog(
+          title: "Alterando cor principal",
+          onClose: () {
+            _changeColor(originalColor);
+            _pop();
+          },
+          onSave: () {
+            _changeColor(color);
+            _pop();
+          },
+          content: Container(
             padding: EdgeInsets.all(10),
-            height: 320,
+            height: 205,
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -131,37 +130,6 @@ class _DrawerListState extends State<DrawerList> {
                       _changeColor(newColor);
                     },
                     selectedColor: color,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          size: 40,
-                        ),
-                        onPressed: () {
-                          _changeColor(originalColor);
-                          _pop();
-                        },
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.save,
-                          size: 40,
-                        ),
-                        onPressed: () {
-                          _changeColor(color);
-                          _pop();
-                        },
-                      ),
-                    ],
                   ),
                 ),
               ],
