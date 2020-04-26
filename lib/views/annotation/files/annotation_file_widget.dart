@@ -1,3 +1,4 @@
+import 'file_not_found_widget.dart';
 import 'video_widget.dart';
 import 'audio_widget.dart';
 import 'image_widget.dart';
@@ -10,6 +11,10 @@ class AnnotationFileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (annotationFile.file == null) {
+      return FileNotFoundWidget(annotationFile.type);
+    }
+
     if (annotationFile.type == 'image') {
       return ImageWidget(annotationFile.file);
     }
