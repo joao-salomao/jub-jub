@@ -54,6 +54,11 @@ class _AnnotationFormState extends State<AnnotationForm> {
 
   @override
   Widget build(BuildContext context) {
+    final popupMenuButtonColor =
+        Theme.of(context).brightness == Brightness.light
+            ? Colors.black87
+            : Colors.white;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -87,7 +92,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   child: Center(
                     child: Icon(
                       Icons.brush,
-                      color: Colors.black87,
+                      color: popupMenuButtonColor,
                     ),
                   ),
                 ),
@@ -96,7 +101,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   child: Center(
                     child: Icon(
                       Icons.filter,
-                      color: Colors.black87,
+                      color: popupMenuButtonColor,
                     ),
                   ),
                 ),
@@ -105,7 +110,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   child: Center(
                     child: Icon(
                       Icons.video_library,
-                      color: Colors.black87,
+                      color: popupMenuButtonColor,
                     ),
                   ),
                 ),
@@ -114,7 +119,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   child: Center(
                     child: Icon(
                       Icons.audiotrack,
-                      color: Colors.black87,
+                      color: popupMenuButtonColor,
                     ),
                   ),
                 ),
