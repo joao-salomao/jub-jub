@@ -74,7 +74,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'color') _showColorPickerDialog();
-              if (value == 'photo') _addFile('image');
+              if (value == 'image') _addFile('image');
               if (value == 'video') _addFile('video');
               if (value == 'audio') _addFile('audio');
             },
@@ -261,7 +261,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                       : null;
                 },
                 minLines: 4,
-                maxLines: 100000000000000,
+                maxLines: 1000000000000000000,
                 cursorColor: _color,
               ),
             ),

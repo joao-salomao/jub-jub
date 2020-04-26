@@ -31,7 +31,6 @@ class _AnnotationFileListState extends State<AnnotationFileList> {
                     width: double.infinity,
                     child: AppText(
                       file.title,
-                      fontSize: 16,
                       bold: true,
                       textAlign: TextAlign.left,
                     ),
@@ -44,7 +43,6 @@ class _AnnotationFileListState extends State<AnnotationFileList> {
                     width: double.infinity,
                     child: AppText(
                       file.description,
-                      fontSize: 16,
                       textAlign: TextAlign.left,
                     ),
                   ),
