@@ -104,8 +104,8 @@ class _DrawerListState extends State<DrawerList> {
   _changeColorDialog() {
     final originalColor = state.primaryColor;
     var color = state.primaryColor;
-    final changeColor = (Color color) {
-      _changeColor(originalColor);
+    final changeColor = (Color newColor) {
+      _changeColor(newColor);
       _pop();
     };
 
