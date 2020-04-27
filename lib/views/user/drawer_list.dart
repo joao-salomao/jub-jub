@@ -1,12 +1,11 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:get_it/get_it.dart';
+import '../../utils/navigation.dart';
+import 'package:flutter/material.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../utils/navigation.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class DrawerList extends StatefulWidget {
   @override
