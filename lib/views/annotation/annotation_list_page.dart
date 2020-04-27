@@ -179,24 +179,24 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                       Icons.delete,
                                       color: Colors.white,
                                     ),
-                                    onPressed: () =>
-                                        _onClickDeleteAnnotation(
+                                    onPressed: () => _onClickDeleteAnnotation(
                                       annotation,
                                     ),
                                   ),
                                   IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () => push(
-                                      context,
-                                      AnnotationForm(
-                                        think,
-                                        annotation: annotation,
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
                                       ),
-                                    ),
-                                  ),
+                                      onPressed: () {
+                                        push(
+                                          context,
+                                          AnnotationForm(
+                                            think,
+                                            annotation: annotation,
+                                          ),
+                                        );
+                                      }),
                                 ],
                               )
                             ],
@@ -232,7 +232,8 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
 
   _getAnnotationTotalWords(Annotation annotation) {
     int count = annotation.text.trim().split(" ").length;
-    annotation.files.forEach((f) => count += f.description.trim().split(" ").length);
+    annotation.files
+        .forEach((f) => count += f.description.trim().split(" ").length);
     return count;
   }
 

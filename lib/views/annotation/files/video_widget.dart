@@ -11,22 +11,27 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  VideoPlayerController controller;
+  AnnotationFile get annotationFile => widget.annotationFile;
 
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.file(widget.annotationFile.file);
-    widget.annotationFile.controller = controller;
-    init();
+    if (annotationFile.controller == null) {
+      final controller = VideoPlayerController.file(widget.annotationFile.file);
+      controller.setLooping(true);
+      annotationFile.controller = controller;
+      init();
+    }
   }
 
   init() {
-    controller.initialize().then((_) => setState(() {}));
+    annotationFile.controller.initialize().then((_) => setState(() {}));
   }
 
   toogleVideoState() {
-    final f = controller.value.isPlaying ? controller.pause : controller.play;
+    final f = annotationFile.controller.value.isPlaying
+        ? annotationFile.controller.pause
+        : annotationFile.controller.play;
     f().then((_) => setState(() {}));
   }
 
@@ -36,16 +41,10 @@ class _VideoWidgetState extends State<VideoWidget> {
       child: InkWell(
         onTap: toogleVideoState,
         child: AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: VideoPlayer(controller),
+          aspectRatio: annotationFile.controller.value.aspectRatio,
+          child: VideoPlayer(annotationFile.controller),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 }

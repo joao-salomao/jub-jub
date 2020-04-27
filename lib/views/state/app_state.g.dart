@@ -160,16 +160,6 @@ mixin _$AppState on _AppStateBase, Store {
   }
 
   @override
-  dynamic updateAnnotation(Annotation annotation) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
-    try {
-      return super.updateAnnotation(annotation);
-    } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     final string =
         'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},primaryColor: ${primaryColor.toString()}';

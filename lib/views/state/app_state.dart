@@ -128,7 +128,4 @@ abstract class _AppStateBase with Store {
   deleteAnnotation(Annotation annotation) async {
     await annotationDAO.delete(annotation.id);
   }
-
-  @action
-  updateAnnotation(Annotation annotation) {}
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/utils/date.dart';
+import 'package:video_player/video_player.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/utils/file_picker.dart';
@@ -10,6 +11,8 @@ import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
+import 'package:potato_notes/views/state/app_audio_player_state.dart';
+import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
@@ -25,9 +28,10 @@ class AnnotationForm extends StatefulWidget {
 
 class _AnnotationFormState extends State<AnnotationForm> {
   final state = GetIt.I<AppState>();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _textController = TextEditingController();
+  final audioState = GetIt.I<AppAudioPlayerState>();
+  final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _textController = TextEditingController();
 
   Color _color;
   List<AnnotationFile> _files = [];
@@ -126,6 +130,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
         ],
       ),
       body: _body(),
+      bottomNavigationBar: AppBottomAudioPlayer(),
     );
   }
 
@@ -138,7 +143,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(
-                bottom: 10,
+                bottom: 20,
               ),
               child: AppTextFormField(
                 "Título da Anotação",
@@ -210,8 +215,10 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                         child: Icon(
                                           Icons.edit,
                                         ),
-                                        onPressed: () =>
-                                            _updateFile(_files[index]),
+                                        onPressed: () {
+                                          _updateFile(_files[index])
+                                              .then((_) => setState(() => {}));
+                                        },
                                       ),
                                     ),
                                     Container(
@@ -275,7 +282,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
     );
   }
 
-  _updateFile(AnnotationFile annotationFile) {
+  Future _updateFile(AnnotationFile annotationFile) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController fileTitle =
         TextEditingController(text: annotationFile.title);
@@ -345,6 +352,25 @@ class _AnnotationFormState extends State<AnnotationForm> {
                             annotationFile.file = file;
                             annotationFile.path = file.path;
                           });
+                          if (annotationFile.type == 'video') {
+                            annotationFile.controller.pause();
+                            annotationFile.controller =
+                                VideoPlayerController.file(annotationFile.file);
+                            annotationFile.controller.initialize().then((_) {
+                              setState(() {});
+                            });
+                          }
+
+                          if (annotationFile.type == 'audio') {
+                            if (file.path != audioState.filePath) {
+                              audioState.pause();
+                            }
+                            getFileNameWithExtension(file).then((name) {
+                              setState(() {
+                                annotationFile.fileName = name;
+                              });
+                            });
+                          }
                         },
                       ),
                     ],
@@ -359,6 +385,9 @@ class _AnnotationFormState extends State<AnnotationForm> {
   }
 
   _removeFile(AnnotationFile annotationFile) async {
+    if (annotationFile.controller != null) {
+      annotationFile.controller.pause();
+    }
     setState(() {
       _files.remove(annotationFile);
       _deletedFiles.add(annotationFile);
