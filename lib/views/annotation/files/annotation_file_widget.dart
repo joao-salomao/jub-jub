@@ -7,7 +7,11 @@ import 'package:potato_notes/entities/annotation_file.dart';
 
 class AnnotationFileWidget extends StatelessWidget {
   final AnnotationFile annotationFile;
-  AnnotationFileWidget(this.annotationFile);
+  final bool shouldPauseOnDispose;
+  AnnotationFileWidget(
+    this.annotationFile, {
+    this.shouldPauseOnDispose = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'video') {
-      return VideoWidget(annotationFile);
+      return VideoWidget(annotationFile, shouldPauseOnDispose);
     }
 
     if (annotationFile.type == 'audio') {

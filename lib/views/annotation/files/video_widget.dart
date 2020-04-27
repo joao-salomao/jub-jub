@@ -1,10 +1,15 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
 
 class VideoWidget extends StatefulWidget {
+  final bool shouldPauseOnDispose;
   final AnnotationFile annotationFile;
-  VideoWidget(this.annotationFile);
+  VideoWidget(
+    this.annotationFile,
+    this.shouldPauseOnDispose,
+  );
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -12,45 +17,55 @@ class VideoWidget extends StatefulWidget {
 
 class _VideoWidgetState extends State<VideoWidget> {
   AnnotationFile get annotationFile => widget.annotationFile;
+  bool get shouldPauseOnDispose => widget.shouldPauseOnDispose;
+  ChewieController chewieController;
 
   @override
   void initState() {
-    super.initState();
     if (annotationFile.controller == null) {
       final controller = VideoPlayerController.file(widget.annotationFile.file);
-      controller.setLooping(true);
       annotationFile.controller = controller;
-      init();
+      annotationFile.controller.initialize();
     }
+    _setChewieController();
+    super.initState();
   }
 
-  init() {
-    annotationFile.controller.initialize().then((_) => setState(() {}));
-  }
-
-  toogleVideoState() {
-    final f = annotationFile.controller.value.isPlaying
-        ? annotationFile.controller.pause
-        : annotationFile.controller.play;
-    f().then((_) => setState(() {}));
+  _setChewieController() {
+    if (chewieController == null) {
+      chewieController = ChewieController(
+        videoPlayerController: annotationFile.controller,
+        aspectRatio: 1,
+        autoPlay: false,
+        looping: true,
+      );
+      return;
+    }
+    if (chewieController.videoPlayerController != annotationFile.controller) {
+      chewieController = ChewieController(
+        videoPlayerController: annotationFile.controller,
+        aspectRatio: 1,
+        autoPlay: false,
+        looping: true,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _setChewieController();
     return Container(
-      child: InkWell(
-        onTap: toogleVideoState,
-        child: AspectRatio(
-          aspectRatio: annotationFile.controller.value.aspectRatio,
-          child: VideoPlayer(annotationFile.controller),
-        ),
+      child: Chewie(
+        controller: chewieController,
       ),
     );
   }
 
   @override
   void dispose() {
-    annotationFile.controller.pause();
+    if (shouldPauseOnDispose) {
+      chewieController.pause();
+    }
     super.dispose();
   }
 }

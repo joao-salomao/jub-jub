@@ -199,6 +199,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                       : 300,
                                   child: AnnotationFileWidget(
                                     _files[index],
+                                    shouldPauseOnDispose: false,
                                   ),
                                 ),
                               ),
@@ -356,9 +357,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                             annotationFile.controller.pause();
                             annotationFile.controller =
                                 VideoPlayerController.file(annotationFile.file);
-                            annotationFile.controller.initialize().then((_) {
-                              setState(() {});
-                            });
+                            annotationFile.controller.initialize();
                           }
 
                           if (annotationFile.type == 'audio') {
