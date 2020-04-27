@@ -47,4 +47,10 @@ class _VideoWidgetState extends State<VideoWidget> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    annotationFile.controller.pause();
+    super.dispose();
+  }
 }
