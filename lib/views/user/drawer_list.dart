@@ -82,19 +82,19 @@ class _DrawerListState extends State<DrawerList> {
       context: context,
       builder: (_) {
         return SimpleDialog(
-          title: const Text('Selecione o tema'),
+          title: Text('Selecione o tema'),
           children: [
             RadioListTile<Brightness>(
               value: Brightness.light,
               groupValue: Theme.of(context).brightness,
               onChanged: _changeBrightness,
-              title: const Text('Claro'),
+              title: Text('Claro'),
             ),
             RadioListTile<Brightness>(
               value: Brightness.dark,
               groupValue: Theme.of(context).brightness,
               onChanged: _changeBrightness,
-              title: const Text('Escuro'),
+              title: Text('Escuro'),
             ),
           ],
         );
@@ -103,21 +103,20 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    final originalColor = Theme.of(context).primaryColor;
-    var color = Theme.of(context).primaryColor;
+    final originalColor = state.primaryColor;
+    var color = state.primaryColor;
+    final changeColor = (Color color) {
+      _changeColor(originalColor);
+      _pop();
+    };
+
     return showDialog(
       context: context,
       builder: (_) {
         return AppAlertDialog(
           title: "Alterando cor principal",
-          onClose: () {
-            _changeColor(originalColor);
-            _pop();
-          },
-          onSave: () {
-            _changeColor(color);
-            _pop();
-          },
+          onClose: () => changeColor(originalColor),
+          onSave: () => changeColor(color),
           content: Container(
             padding: EdgeInsets.all(10),
             height: 205,
@@ -152,14 +151,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColor(Color color) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt("primaryColor", color.value);
-    setState(() {
-      DynamicTheme.of(context).setThemeData(
-        ThemeData(
-            primaryColor: color, brightness: Theme.of(context).brightness),
-      );
-    });
+    state.updatePrimaryColor(color);
   }
 
   _pop() {

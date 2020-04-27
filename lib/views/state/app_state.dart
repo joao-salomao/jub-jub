@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:potato_notes/dao/think_dao.dart';
 import 'package:potato_notes/entities/think.dart';
@@ -14,6 +15,7 @@ abstract class _AppStateBase with Store {
   final thinkDAO = ThinkDAO();
   final annotationDAO = AnnotationDAO();
   final annotationFileDAO = AnnotationFileDAO();
+  SharedPreferences sharedPreferences;
 
   @observable
   var thinks = ObservableList<Think>();
@@ -21,21 +23,57 @@ abstract class _AppStateBase with Store {
   @observable
   var mainTitle = "";
 
+  @observable
+  Color primaryColor;
+
   @action
   getData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final title = prefs.getString("mainTitle");
-    mainTitle = title == null ? "Jub-Arte" : title;
+    final thinksFuture = thinkDAO.findAll();
+    final annotationsFuture = annotationDAO.findAll();
+    final annotationFilesFuture = annotationFileDAO.findAll();
+    final result = await Future.wait(
+      [
+        thinksFuture,
+        annotationsFuture,
+        annotationFilesFuture,
+      ],
+    );
 
-    final list = await thinkDAO.findAll();
+    final List<Think> thinkList = result[0];
+    final List<Annotation> annotations = result[1];
+    final List<AnnotationFile> annotationFiles = result[2];
+
     thinks.clear();
-    list.forEach((think) async {
-      think.annotations = await getThinkAnnotations(think.id);
-      think.annotations.forEach((annotation) async {
-        annotation.files = await getAnnotationFiles(annotation.id);
+    thinkList.forEach((think) {
+      think.annotations = annotations
+          .where((annotation) => annotation.thinkId == think.id)
+          .toList();
+
+      think.annotations.forEach((annotation) {
+        annotation.files = annotationFiles
+            .where((file) => file.annotationId == annotation.id)
+            .toList();
       });
       thinks.add(think);
     });
+  }
+
+  @action
+  getMainTitle() {
+    final title = sharedPreferences.getString("mainTitle");
+    mainTitle = title == null ? "Jub-Arte" : title;
+  }
+
+  @action
+  getPrimaryColor() {
+    final colorValue = sharedPreferences.getInt("primaryColor");
+    primaryColor = Color(colorValue != null ? colorValue : 4280391411);
+  }
+
+  @action
+  updatePrimaryColor(Color color) {
+    primaryColor = color;
+    sharedPreferences.setInt("primaryColor", color.value);
   }
 
   @action

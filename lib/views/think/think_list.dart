@@ -17,58 +17,58 @@ class _ThinkListState extends State<ThinkList> {
   final state = GetIt.I<AppState>();
 
   @override
-  void initState() {
-    state.getData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        title: Observer(
-          builder: (_) {
-            return Text(
-              state.mainTitle,
-              style: TextStyle(
+    return Observer(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: state.primaryColor,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            title: Observer(
+              builder: (_) {
+                return Text(
+                  state.mainTitle,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+            centerTitle: true,
+          ),
+          drawer: DrawerList(),
+          body: Observer(
+            builder: (_) {
+              return ReorderableListView(
+                onReorder: (int oldIndex, int newIndex) => {},
+                children: List.generate(
+                  state.thinks.length,
+                  (i) => ThinkCard(
+                    Key("${state.thinks[i].id}"),
+                    state.thinks[i],
+                  ),
+                ),
+              );
+            },
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          floatingActionButton: Container(
+            margin: EdgeInsets.only(bottom: 30),
+            child: FloatingActionButton(
+              backgroundColor: state.primaryColor,
+              child: Icon(
+                Icons.add,
                 color: Colors.white,
               ),
-            );
-          },
-        ),
-        centerTitle: true,
-      ),
-      drawer: DrawerList(),
-      body: Observer(
-        builder: (_) {
-          return ReorderableListView(
-            onReorder: (int oldIndex, int newIndex) => {},
-            children: List.generate(
-              state.thinks.length,
-              (i) => ThinkCard(
-                Key("${state.thinks[i].id}"),
-                state.thinks[i],
-              ),
+              onPressed: () =>
+                  showThinkForm(context: context, onSubmit: _addThink),
             ),
-          );
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 30),
-        child: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
           ),
-          onPressed: () => showThinkForm(context: context, onSubmit: _addThink),
-        ),
-      ),
-      bottomNavigationBar: AppBottomAudioPlayer(),
+          bottomNavigationBar: AppBottomAudioPlayer(),
+        );
+      },
     );
   }
 

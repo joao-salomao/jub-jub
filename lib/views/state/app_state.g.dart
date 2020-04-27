@@ -43,6 +43,23 @@ mixin _$AppState on _AppStateBase, Store {
     }, _$mainTitleAtom, name: '${_$mainTitleAtom.name}_set');
   }
 
+  final _$primaryColorAtom = Atom(name: '_AppStateBase.primaryColor');
+
+  @override
+  Color get primaryColor {
+    _$primaryColorAtom.context.enforceReadPolicy(_$primaryColorAtom);
+    _$primaryColorAtom.reportObserved();
+    return super.primaryColor;
+  }
+
+  @override
+  set primaryColor(Color value) {
+    _$primaryColorAtom.context.conditionallyRunInAction(() {
+      super.primaryColor = value;
+      _$primaryColorAtom.reportChanged();
+    }, _$primaryColorAtom, name: '${_$primaryColorAtom.name}_set');
+  }
+
   final _$getDataAsyncAction = AsyncAction('getData');
 
   @override
@@ -92,6 +109,36 @@ mixin _$AppState on _AppStateBase, Store {
       ActionController(name: '_AppStateBase');
 
   @override
+  dynamic getMainTitle() {
+    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    try {
+      return super.getMainTitle();
+    } finally {
+      _$_AppStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getPrimaryColor() {
+    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    try {
+      return super.getPrimaryColor();
+    } finally {
+      _$_AppStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updatePrimaryColor(Color color) {
+    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    try {
+      return super.updatePrimaryColor(color);
+    } finally {
+      _$_AppStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateMainTitle(String text) {
     final _$actionInfo = _$_AppStateBaseActionController.startAction();
     try {
@@ -125,7 +172,7 @@ mixin _$AppState on _AppStateBase, Store {
   @override
   String toString() {
     final string =
-        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()}';
+        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},primaryColor: ${primaryColor.toString()}';
     return '{$string}';
   }
 }

@@ -1,6 +1,7 @@
-import 'think/think_list.dart';
+
 import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:potato_notes/views/user/splash_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
@@ -35,9 +36,10 @@ class _AppState extends State<App> {
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Jub-Arte',
           theme: theme,
-          home: ThinkList(),
+          home: SplashPage(),
         );
       },
     );
