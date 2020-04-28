@@ -85,7 +85,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(right: 5),
+                                            margin: EdgeInsets.only(right: 3),
                                             child: Icon(
                                               Icons.local_parking,
                                               color: Colors.white,
@@ -97,11 +97,10 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(5),
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(right: 5),
+                                            margin: EdgeInsets.only(right: 3),
                                             child: Icon(
                                               Icons.filter,
                                               color: Colors.white,
@@ -117,7 +116,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(right: 5),
+                                            margin: EdgeInsets.only(right: 3),
                                             child: Icon(
                                               Icons.video_library,
                                               color: Colors.white,
@@ -133,7 +132,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(right: 5),
+                                            margin: EdgeInsets.only(right: 3),
                                             child: Icon(
                                               Icons.audiotrack,
                                               color: Colors.white,
@@ -146,6 +145,36 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
                                     ),
                                   ],
                                 ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => _onClickDeleteAnnotation(
+                                        annotation,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        push(
+                                          context,
+                                          AnnotationForm(
+                                            think,
+                                            annotation: annotation,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -245,7 +274,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
     alert(
       context,
       "Você tem certeza ?",
-      "Esse pensamento será deletado permanentemente.",
+      "Essa anotação será deletada permanentemente.",
       callback: () {
         setState(() {
           think.annotations.remove(annotation);
