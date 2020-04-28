@@ -34,6 +34,7 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: TextAlign.justify,
       cursorColor: cursorColor,
       cursorRadius: Radius.circular(16.0),
       cursorWidth: 5,
