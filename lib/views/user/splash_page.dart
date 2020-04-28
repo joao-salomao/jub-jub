@@ -1,10 +1,11 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../../utils/navigation.dart';
+import 'package:flutter/material.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../utils/navigation.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -22,13 +23,14 @@ class _SplashPageState extends State<SplashPage> {
 
   void redirect() {
     final futureData = state.getData();
-    final getItFuture = GetIt.I.isReady<SharedPreferences>();
-    
-    Future.wait([futureData, getItFuture]).then((_) {
+    final futureDelay = Future.delayed(Duration(seconds: 3));
+    final futureGetIt = GetIt.I.isReady<SharedPreferences>();
+
+    Future.wait([futureData, futureGetIt, futureDelay]).then((_) {
       state.sharedPreferences = GetIt.I<SharedPreferences>();
       state.getMainTitle();
       state.getPrimaryColor();
-      
+
       DynamicTheme.of(context).setThemeData(
         ThemeData(
           primaryColor: state.primaryColor,
@@ -42,9 +44,13 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: JumpingDotsProgressIndicator(
+            fontSize: 50,
+          ),
+        ),
       ),
     );
   }

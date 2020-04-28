@@ -31,6 +31,7 @@ dependencies:
   audioplayers: ^0.15.1
   dynamic_theme: ^1.0.1
   shared_preferences: ^0.5.7
+  progress_indicators: ^0.1.5
   form_field_validator: ^1.0.1
 
   flutter_material_color_picker: ^1.0.5
