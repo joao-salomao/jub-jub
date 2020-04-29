@@ -28,7 +28,7 @@ abstract class _AppStateBase with Store {
 
   @action
   getData() async {
-    final thinksFuture = thinkDAO.findAll();
+    final thinksFuture = thinkDAO.findAllOrderBy('listIndex', false);
     final annotationsFuture = annotationDAO.findAll();
     final annotationFilesFuture = annotationFileDAO.findAll();
     final result = await Future.wait(
@@ -56,6 +56,28 @@ abstract class _AppStateBase with Store {
       });
       thinks.add(think);
     });
+  }
+
+  reOrderThinks(int oldIndex, int newIndex) {
+    final isLast = newIndex == thinks.length;
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+
+    final otherThink = thinks.elementAt(newIndex);
+    final think = thinks.removeAt(oldIndex);
+
+    think.listIndex = newIndex;
+    otherThink.listIndex = oldIndex;
+
+    saveThink(think);
+    saveThink(otherThink);
+
+    if (isLast) {
+      thinks.add(think);
+      return;
+    }
+    thinks.insert(newIndex, think);
   }
 
   @action

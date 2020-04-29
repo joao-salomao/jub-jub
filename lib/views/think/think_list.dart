@@ -42,7 +42,7 @@ class _ThinkListState extends State<ThinkList> {
           body: Observer(
             builder: (_) {
               return ReorderableListView(
-                onReorder: (int oldIndex, int newIndex) => {},
+                onReorder: state.reOrderThinks,
                 children: List.generate(
                   state.thinks.length,
                   (i) => ThinkCard(
@@ -72,10 +72,11 @@ class _ThinkListState extends State<ThinkList> {
     );
   }
 
-  _addThink(String title, Color color) async {
+  _addThink(String title, Color color) {
     final think = Think(
       title: title,
       color: color,
+      listIndex: state.thinks.length,
       createdAt: DateTime.now(),
     );
     state.saveThink(think);
