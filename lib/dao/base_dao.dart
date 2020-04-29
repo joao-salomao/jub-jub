@@ -7,7 +7,7 @@ import 'package:potato_notes/services/database_service.dart';
 abstract class BaseDAO<T extends Entity> {
   Future<Database> get db => DatabaseService.getInstance().db;
   String get table;
-  
+
   T fromMap(Map<String, dynamic> map);
 
   Future<int> save(T entity) async {
@@ -25,6 +25,14 @@ abstract class BaseDAO<T extends Entity> {
 
     final list = await dbClient.rawQuery('select * from $table');
 
+    return list.map<T>((json) => fromMap(json)).toList();
+  }
+
+  Future<List<T>> findAllOrderBy(String column, bool desc) async {
+    final dbClient = await db;
+    final order = desc ? "desc" : "asc";
+    final list =
+        await dbClient.rawQuery('select * from $table order by $column $order');
     return list.map<T>((json) => fromMap(json)).toList();
   }
 
