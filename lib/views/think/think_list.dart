@@ -2,10 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:potato_notes/entities/think.dart';
-import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_card.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/user/drawer_list.dart';
+import 'package:potato_notes/views/app_state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkList extends StatefulWidget {

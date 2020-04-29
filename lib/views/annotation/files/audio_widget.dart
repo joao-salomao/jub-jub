@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
-import 'package:potato_notes/views/state/app_audio_player_state.dart';
+import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
 
 class AudioWidget extends StatelessWidget {
   final AppAudioPlayerState audioState = GetIt.I<AppAudioPlayerState>();

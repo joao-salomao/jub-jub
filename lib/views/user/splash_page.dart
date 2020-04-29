@@ -2,9 +2,9 @@ import 'package:get_it/get_it.dart';
 import '../../utils/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:potato_notes/views/app_state/app_state.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class SplashPage extends StatefulWidget {

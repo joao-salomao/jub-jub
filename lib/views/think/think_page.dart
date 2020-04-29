@@ -2,10 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/views/annotation/annotation_list_page.dart';
-import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/think/think_form.dart';
+import 'package:potato_notes/views/app_state/app_state.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
+import 'package:potato_notes/views/annotation/annotation_list_page.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkPage extends StatefulWidget {

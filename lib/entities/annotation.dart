@@ -8,6 +8,7 @@ class Annotation extends Entity {
   String title;
   String text;
   Color color;
+  int listIndex;
   String createdAt;
   List<AnnotationFile> files = [];
 
@@ -38,7 +39,8 @@ class Annotation extends Entity {
       "title": title,
       "text": text,
       "color": color.value,
-      "createdAt": createdAt
+      "createdAt": createdAt,
+      "listIndex": listIndex,
     };
   }
 }

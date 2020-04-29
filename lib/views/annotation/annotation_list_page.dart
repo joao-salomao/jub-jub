@@ -6,9 +6,9 @@ import 'package:expandable/expandable.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/entities/annotation.dart';
-import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
+import 'package:potato_notes/views/app_state/app_state.dart';
 
 class AnnotationListPage extends StatefulWidget {
   final Think think;

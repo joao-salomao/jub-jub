@@ -7,12 +7,12 @@ import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/entities/annotation.dart';
-import 'package:potato_notes/views/state/app_state.dart';
 import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:potato_notes/views/app_state/app_state.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
-import 'package:potato_notes/views/state/app_audio_player_state.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
+import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
