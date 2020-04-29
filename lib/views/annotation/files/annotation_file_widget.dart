@@ -20,7 +20,7 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'image') {
-      return ImageWidget(annotationFile.file);
+      return ImageWidget(annotationFile);
     }
 
     if (annotationFile.type == 'video') {
