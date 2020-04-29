@@ -47,10 +47,79 @@ class _AnnotationFormState extends State<AnnotationForm> {
       _titleController.text = annotation.title;
       _textController.text = annotation.text;
       _color = annotation.color;
-      _files = annotation.files;
+      annotation.files.forEach((f) => _files.add(f));
     } else {
       _color = Colors.black;
     }
+  }
+
+  Future<bool> _onWillPop() async {
+    bool shouldPop = false;
+
+    if (
+      (_titleController.text.isEmpty &&
+      _textController.text.isEmpty &&
+      _files.isEmpty) ||
+      (
+        annotation != null &&
+        annotation.title == _titleController.text &&
+        annotation.text == _textController.text && 
+        annotation.files.length == _files.length &&
+        _deletedFiles.isEmpty
+      )
+    ) {
+      return Future(() {
+        return true;
+      });
+    }
+
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return SimpleDialog(
+          title: Text('Deseja salvar as alterações ?'),
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      shouldPop = true;
+                      pop(context);
+                    },
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.save,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        _onClickSave();
+                        shouldPop = true;
+                      } else {
+                        pop(context);
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      return shouldPop;
+    });
   }
 
   @override
@@ -60,77 +129,80 @@ class _AnnotationFormState extends State<AnnotationForm> {
             ? Colors.black87
             : Colors.white;
 
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        title: Text(
-          think.title,
-          style: TextStyle(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
             color: Colors.white,
-            fontSize: 16,
           ),
+          title: Text(
+            think.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: _color,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: _onClickSave,
+            ),
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'color') _showColorPickerDialog();
+                if (value == 'image') _addFile('image');
+                if (value == 'video') _addFile('video');
+                if (value == 'audio') _addFile('audio');
+              },
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: "color",
+                    child: Center(
+                      child: Icon(
+                        Icons.brush,
+                        color: popupMenuButtonColor,
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "image",
+                    child: Center(
+                      child: Icon(
+                        Icons.filter,
+                        color: popupMenuButtonColor,
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "video",
+                    child: Center(
+                      child: Icon(
+                        Icons.video_library,
+                        color: popupMenuButtonColor,
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: "audio",
+                    child: Center(
+                      child: Icon(
+                        Icons.audiotrack,
+                        color: popupMenuButtonColor,
+                      ),
+                    ),
+                  ),
+                ];
+              },
+            ),
+          ],
         ),
-        centerTitle: true,
-        backgroundColor: _color,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _onClickSave,
-          ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'color') _showColorPickerDialog();
-              if (value == 'image') _addFile('image');
-              if (value == 'video') _addFile('video');
-              if (value == 'audio') _addFile('audio');
-            },
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  value: "color",
-                  child: Center(
-                    child: Icon(
-                      Icons.brush,
-                      color: popupMenuButtonColor,
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "image",
-                  child: Center(
-                    child: Icon(
-                      Icons.filter,
-                      color: popupMenuButtonColor,
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "video",
-                  child: Center(
-                    child: Icon(
-                      Icons.video_library,
-                      color: popupMenuButtonColor,
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: "audio",
-                  child: Center(
-                    child: Icon(
-                      Icons.audiotrack,
-                      color: popupMenuButtonColor,
-                    ),
-                  ),
-                ),
-              ];
-            },
-          ),
-        ],
+        body: _body(),
+        bottomNavigationBar: AppBottomAudioPlayer(),
       ),
-      body: _body(),
-      bottomNavigationBar: AppBottomAudioPlayer(),
     );
   }
 
