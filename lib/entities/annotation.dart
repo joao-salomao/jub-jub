@@ -20,6 +20,7 @@ class Annotation extends Entity {
     this.title,
     this.thinkId,
     this.createdAt,
+    this.listIndex,
   });
 
   Annotation.fromMap(Map<String, dynamic> map) {

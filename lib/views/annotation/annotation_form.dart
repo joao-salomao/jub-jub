@@ -56,18 +56,14 @@ class _AnnotationFormState extends State<AnnotationForm> {
   Future<bool> _onWillPop() async {
     bool shouldPop = false;
 
-    if (
-      (_titleController.text.isEmpty &&
-      _textController.text.isEmpty &&
-      _files.isEmpty) ||
-      (
-        annotation != null &&
-        annotation.title == _titleController.text &&
-        annotation.text == _textController.text && 
-        annotation.files.length == _files.length &&
-        _deletedFiles.isEmpty
-      )
-    ) {
+    if ((_titleController.text.isEmpty &&
+            _textController.text.isEmpty &&
+            _files.isEmpty) ||
+        (annotation != null &&
+            annotation.title == _titleController.text &&
+            annotation.text == _textController.text &&
+            annotation.files.length == _files.length &&
+            _deletedFiles.isEmpty)) {
       return Future(() {
         return true;
       });
@@ -572,6 +568,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
           text: _textController.text,
           color: _color,
           files: _files,
+          listIndex: think.annotations.length,
           createdAt: formatDate(DateTime.now()),
         );
         setState(() {
