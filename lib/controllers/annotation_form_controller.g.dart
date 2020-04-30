@@ -9,12 +9,17 @@ part of 'annotation_form_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
-  Computed<dynamic> _$hasChangesComputed;
+  Computed<dynamic> _$popupMenuButtonColorComputed;
 
   @override
-  dynamic get hasChanges =>
-      (_$hasChangesComputed ??= Computed<dynamic>(() => super.hasChanges))
-          .value;
+  dynamic get popupMenuButtonColor => (_$popupMenuButtonColorComputed ??=
+          Computed<dynamic>(() => super.popupMenuButtonColor))
+      .value;
+  Computed<bool> _$hasChangesComputed;
+
+  @override
+  bool get hasChanges =>
+      (_$hasChangesComputed ??= Computed<bool>(() => super.hasChanges)).value;
 
   final _$thinkAtom = Atom(name: '_AnnotationFormControllerBase.think');
 
@@ -118,9 +123,53 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
   }
 
   @override
+  dynamic setColor(Color color) {
+    final _$actionInfo =
+        _$_AnnotationFormControllerBaseActionController.startAction();
+    try {
+      return super.setColor(color);
+    } finally {
+      _$_AnnotationFormControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic _addAnnotationToThink(AnnotationModel ant) {
+    final _$actionInfo =
+        _$_AnnotationFormControllerBaseActionController.startAction();
+    try {
+      return super._addAnnotationToThink(ant);
+    } finally {
+      _$_AnnotationFormControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic _persistAnnotation(AnnotationModel annotation) {
+    final _$actionInfo =
+        _$_AnnotationFormControllerBaseActionController.startAction();
+    try {
+      return super._persistAnnotation(annotation);
+    } finally {
+      _$_AnnotationFormControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic save() {
+    final _$actionInfo =
+        _$_AnnotationFormControllerBaseActionController.startAction();
+    try {
+      return super.save();
+    } finally {
+      _$_AnnotationFormControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'think: ${think.toString()},annotation: ${annotation.toString()},color: ${color.toString()},files: ${files.toString()},deletedFiles: ${deletedFiles.toString()},hasChanges: ${hasChanges.toString()}';
+        'think: ${think.toString()},annotation: ${annotation.toString()},color: ${color.toString()},files: ${files.toString()},deletedFiles: ${deletedFiles.toString()},popupMenuButtonColor: ${popupMenuButtonColor.toString()},hasChanges: ${hasChanges.toString()}';
     return '{$string}';
   }
 }
