@@ -1,8 +1,8 @@
-import 'entity.dart';
 import 'annotation.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_notes/models/model.dart';
 
-class Think extends Entity {
+class Think extends Model {
   int id;
   int listIndex;
   String title;

@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:potato_notes/utils/date.dart';
+import 'package:potato_notes/utils/formatters.dart';
 part 'app_audio_player_state.g.dart';
 
 class AppAudioPlayerState = _AppAudioPlayerStateBase with _$AppAudioPlayerState;

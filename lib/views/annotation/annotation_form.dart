@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/utils/date.dart';
+import 'package:potato_notes/utils/formatters.dart';
 import 'package:video_player/video_player.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';

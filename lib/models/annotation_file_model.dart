@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/entities/entity.dart';
+import 'package:potato_notes/models/model.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 part 'annotation_file_model.g.dart';
 
 class AnnotationFileModel = _AnnotationFileModelBase with _$AnnotationFileModel;
 
-abstract class _AnnotationFileModelBase extends Entity with Store {
+abstract class _AnnotationFileModelBase extends Model with Store {
   @observable
   int id;
 

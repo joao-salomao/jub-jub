@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/entities/entity.dart';
 import 'package:potato_notes/models/annotation_model.dart';
+import 'package:potato_notes/models/model.dart';
 part 'think_model.g.dart';
 
 class ThinkModel = _ThinkModelBase with _$ThinkModel;
 
-abstract class _ThinkModelBase extends Entity with Store {
+abstract class _ThinkModelBase extends Model with Store {
   @observable
   int id;
   

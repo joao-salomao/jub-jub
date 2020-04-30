@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:potato_notes/models/model.dart';
 import 'package:potato_notes/utils/file_picker.dart';
-import 'entity.dart';
 
-class AnnotationFile extends Entity {
+class AnnotationFile extends Model {
   int id;
   File file;
   String path;

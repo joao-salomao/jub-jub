@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_notes/entities/think.dart';
-import 'package:potato_notes/utils/date.dart';
+import 'package:potato_notes/utils/formatters.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/views/think/think_page.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';

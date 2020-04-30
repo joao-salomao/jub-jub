@@ -1,3 +1,3 @@
-abstract class Entity {
+abstract class Model {
   Map<String, dynamic> toMap();
 }

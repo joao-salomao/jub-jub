@@ -1,8 +1,8 @@
-import 'entity.dart';
 import 'annotation_file.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_notes/models/model.dart';
 
-class Annotation extends Entity {
+class Annotation extends Model {
   int id;
   int thinkId;
   String title;

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:potato_notes/entities/entity.dart';
+import 'package:potato_notes/models/model.dart';
 import 'package:potato_notes/services/database_service.dart';
 
 // Data Access Object
-abstract class BaseDAO<T extends Entity> {
+abstract class BaseDAO<T extends Model> {
   Future<Database> get db => DatabaseService.getInstance().db;
   String get table;
 

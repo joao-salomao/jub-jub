@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/entities/entity.dart';
+import 'package:flutter/material.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:potato_notes/models/model.dart';
 part 'annotation_model.g.dart';
 
 class AnnotationModel = _AnnotationModelBase with _$AnnotationModel;
 
-abstract class _AnnotationModelBase extends Entity with Store {
+abstract class _AnnotationModelBase extends Model with Store {
   @observable
   int id;
 
