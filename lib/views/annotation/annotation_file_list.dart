@@ -1,58 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 
-class AnnotationFileList extends StatefulWidget {
+class AnnotationFileList extends StatelessWidget {
   final AnnotationModel annotation;
   AnnotationFileList(this.annotation);
 
   @override
-  _AnnotationFileListState createState() => _AnnotationFileListState();
-}
-
-class _AnnotationFileListState extends State<AnnotationFileList> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: List.generate(
-          widget.annotation.files.length,
-          (i) {
-            AnnotationFileModel file = widget.annotation.files[i];
-            return Container(
-              margin: EdgeInsets.only(bottom: 16),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    width: double.infinity,
-                    child: AppText(
-                      file.title,
-                      bold: true,
-                      textAlign: TextAlign.left,
-                    ),
+    return Observer(
+      builder: (_) {
+        return Container(
+          child: Column(
+            children: List.generate(
+              annotation.files.length,
+              (i) {
+                AnnotationFileModel file = annotation.files[i];
+                return Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        width: double.infinity,
+                        child: AppText(
+                          file.title,
+                          bold: true,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: AnnotationFileWidget(file),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: AppText(
+                          file.description,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    child: AnnotationFileWidget(file),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: AppText(
-                      file.description,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

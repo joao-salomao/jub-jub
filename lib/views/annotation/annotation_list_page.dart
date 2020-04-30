@@ -19,12 +19,12 @@ class AnnotationListPage extends StatefulWidget {
 }
 
 class _AnnotationListPageState extends State<AnnotationListPage> {
-  AnnotationListPageController controller;
+  AnnotationListPageController pageController;
   ThinkModel get think => widget.think;
 
   @override
   void initState() {
-    controller = AnnotationListPageController(think);
+    pageController = AnnotationListPageController(think);
     super.initState();
   }
 
@@ -281,7 +281,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
       "Você tem certeza ?",
       "Essa anotação será deletada permanentemente.",
       callback: () {
-        controller.deleteAnnotation(annotation);
+        pageController.deleteAnnotation(annotation);
       },
     );
   }

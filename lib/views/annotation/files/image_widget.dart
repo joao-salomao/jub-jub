@@ -17,9 +17,11 @@ class ImageWidget extends StatelessWidget {
         );
       },
       child: Container(
+        height: 300,
+        width: double.infinity,
         child: Image.file(
           annotationFile.file,
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
     );
