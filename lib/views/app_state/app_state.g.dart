@@ -77,7 +77,7 @@ mixin _$AppState on _AppStateBase, Store {
   final _$deleteThinkAsyncAction = AsyncAction('deleteThink');
 
   @override
-  Future deleteThink(Think think) {
+  Future deleteThink(ThinkModel think) {
     return _$deleteThinkAsyncAction.run(() => super.deleteThink(think));
   }
 

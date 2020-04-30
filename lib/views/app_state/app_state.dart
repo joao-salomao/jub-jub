@@ -1,7 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/dao/think_dao.dart';
-import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/dao/annotation_dao.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/dao/annotation_file_dao.dart';
@@ -116,7 +115,7 @@ abstract class _AppStateBase with Store {
   }
 
   @action
-  deleteThink(Think think) async {
+  deleteThink(ThinkModel think) async {
     thinkDAO.delete(think.id);
   }
 
