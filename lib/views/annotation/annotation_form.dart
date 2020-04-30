@@ -272,10 +272,8 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                         child: Icon(
                                           Icons.edit,
                                         ),
-                                        onPressed: () {
-                                          _updateFile(files[index])
-                                              .then((_) => setState(() => {}));
-                                        },
+                                        onPressed: () =>
+                                            _updateFile(files[index]),
                                       ),
                                     ),
                                     Container(
@@ -463,63 +461,59 @@ class _AnnotationFormState extends State<AnnotationForm> {
     return showDialog(
       context: context,
       builder: (_) {
-        return Observer(
-          builder: (_) {
-            return AppAlertDialog(
-              title: "Adicionando arquivo",
-              onClose: () => pop(context),
-              onSave: () {
-                if (formKey.currentState.validate()) {
-                  files.add(
-                    AnnotationFileModel(
-                      file: file,
-                      type: fileType,
-                      path: file.path,
-                      fileName: fileName,
-                      title: fileTitle.text,
-                      description: fileDescription.text,
-                      annotationId: annotation != null ? annotation.id : null,
-                    ),
-                  );
-                  pop(context);
-                }
-              },
-              content: Container(
-                height: 230,
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                          bottom: 5,
-                        ),
-                        child: AppTextFormField(
-                          "Título",
-                          "",
-                          controller: fileTitle,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "É obrigatório dar um título ";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        child: AppTextFormField(
-                          "Descrição",
-                          "",
-                          maxLines: 5,
-                          controller: fileDescription,
-                        ),
-                      ),
-                    ],
-                  ),
+        return AppAlertDialog(
+          title: "Adicionando arquivo",
+          onClose: () => pop(context),
+          onSave: () {
+            if (formKey.currentState.validate()) {
+              files.add(
+                AnnotationFileModel(
+                  file: file,
+                  type: fileType,
+                  path: file.path,
+                  fileName: fileName,
+                  title: fileTitle.text,
+                  description: fileDescription.text,
+                  annotationId: annotation != null ? annotation.id : null,
                 ),
-              ),
-            );
+              );
+              pop(context);
+            }
           },
+          content: Container(
+            height: 230,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: AppTextFormField(
+                      "Título",
+                      "",
+                      controller: fileTitle,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "É obrigatório dar um título ";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Container(
+                    child: AppTextFormField(
+                      "Descrição",
+                      "",
+                      maxLines: 5,
+                      controller: fileDescription,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
