@@ -1,10 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/controllers/app_audio_player_controller.dart';
 
 class AudioWidget extends StatelessWidget {
-  final AppAudioPlayerController audioState = GetIt.I<AppAudioPlayerController>();
+  final AppController appController = GetIt.I<AppController>();
+  final AppAudioPlayerController appAudioPlayerController =
+      GetIt.I<AppAudioPlayerController>();
   final AnnotationFileModel annotationFile;
   final Color textColor;
 
@@ -16,7 +19,6 @@ class AudioWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      hoverColor: Colors.yellowAccent,
       splashColor: Colors.white70,
       child: Text(
         annotationFile.fileName,
@@ -24,18 +26,20 @@ class AudioWidget extends StatelessWidget {
         style: TextStyle(
           decoration: TextDecoration.underline,
           fontSize: 16,
-          color: Colors.white,
+          color: appController.brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
         ),
       ),
       onPressed: () {
-        if (audioState.filePath == annotationFile.file.path) {
-          if (audioState.isPlaying) {
-            audioState.pause();
+        if (appAudioPlayerController.filePath == annotationFile.file.path) {
+          if (appAudioPlayerController.isPlaying) {
+            appAudioPlayerController.pause();
           } else {
-            audioState.play();
+            appAudioPlayerController.play();
           }
         } else {
-          audioState.playAudio(annotationFile.file.path);
+          appAudioPlayerController.playAudio(annotationFile.file.path);
         }
       },
     );
