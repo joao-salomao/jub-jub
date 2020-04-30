@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
 import 'package:potato_notes/views/think/state/think_page_state.dart';
