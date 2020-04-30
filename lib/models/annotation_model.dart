@@ -29,7 +29,8 @@ abstract class _AnnotationModelBase extends Model with Store {
   String createdAt;
 
   @observable
-  ObservableList<AnnotationFileModel> files = ObservableList<AnnotationFileModel>();
+  ObservableList<AnnotationFileModel> files =
+      ObservableList<AnnotationFileModel>();
 
   _AnnotationModelBase({
     this.id,
@@ -62,5 +63,15 @@ abstract class _AnnotationModelBase extends Model with Store {
       "createdAt": createdAt,
       "listIndex": listIndex,
     };
+  }
+
+  getAnnotationTotalWords() {
+    int count = text.trim().split(" ").length;
+    files.forEach((f) => count += f.description.trim().split(" ").length);
+    return count;
+  }
+
+  getAnnotationFilesCountByType(String type) {
+    return files.where((f) => f.type == type).length;
   }
 }
