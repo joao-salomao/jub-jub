@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import '../../utils/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:potato_notes/views/app_state/app_state.dart';
+import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
@@ -13,7 +13,7 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  final state = GetIt.I<AppState>();
+  final controller = GetIt.I<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitleDialog() async {
-    final controller = TextEditingController(text: state.mainTitle);
+    final controller = TextEditingController(text: this.controller.mainTitle);
 
     return showDialog(
       context: context,
@@ -102,8 +102,8 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    final originalColor = state.primaryColor;
-    var color = state.primaryColor;
+    final originalColor = controller.primaryColor;
+    var color = controller.primaryColor;
     final changeColor = (Color newColor) {
       _changeColor(newColor);
       _pop();
@@ -139,7 +139,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitle(String text) {
-    state.updateMainTitle(text);
+    controller.updateMainTitle(text);
     _pop();
   }
 
@@ -150,7 +150,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColor(Color color) async {
-    state.updatePrimaryColor(color);
+    controller.updatePrimaryColor(color);
   }
 
   _pop() {

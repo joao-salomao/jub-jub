@@ -4,7 +4,7 @@ import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
-import 'package:potato_notes/views/think/state/think_page_state.dart';
+import 'package:potato_notes/controllers/think_page_controller.dart';
 import 'package:potato_notes/views/annotation/annotation_list_page.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
@@ -17,13 +17,13 @@ class ThinkPage extends StatefulWidget {
 }
 
 class _ThinkPageState extends State<ThinkPage> {
-  ThinkPageState pageState;
+  ThinkPageController controller;
 
   ThinkModel get think => widget.think;
 
   @override
   void initState() {
-    pageState = ThinkPageState(think);
+    controller = ThinkPageController(think);
     super.initState();
   }
 
@@ -85,18 +85,18 @@ class _ThinkPageState extends State<ThinkPage> {
         String title,
         Color color,
       ) {
-        pageState.saveThink();
+        controller.saveThink();
       },
       think: think,
       onChangeColor: (Color newColor) {
-        pageState.setColor(newColor);
+        controller.setColor(newColor);
       },
       onChangeTitle: (String newTitle) {
-        pageState.setTitle(newTitle);
+        controller.setTitle(newTitle);
       },
       onCancel: () {
-        pageState.setTitle(originalTitle);
-        pageState.setColor(originalColor);
+        controller.setTitle(originalTitle);
+        controller.setColor(originalColor);
       },
     );
   }
@@ -126,7 +126,7 @@ class _ThinkPageState extends State<ThinkPage> {
             FlatButton(
               child: Text("Sim"),
               onPressed: () {
-                pageState.deleteThink();
+                controller.deleteThink();
                   pop(_);
                   pop(_);
               },

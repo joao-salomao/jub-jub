@@ -3,15 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/views/app_state/app_state.dart';
-part 'think_page_state.g.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
+part 'think_page_controller.g.dart';
 
-class ThinkPageState = _ThinkPageStateBase with _$ThinkPageState;
+class ThinkPageController = _ThinkPageControllerBase with _$ThinkPageController;
 
-abstract class _ThinkPageStateBase with Store {
-  final appState = GetIt.I<AppState>();
+abstract class _ThinkPageControllerBase with Store {
+  final appController = GetIt.I<AppController>();
 
-  _ThinkPageStateBase(ThinkModel think) {
+  _ThinkPageControllerBase(ThinkModel think) {
     this.think = think;
     think.annotations.forEach((a) => this.annotations.add(a));
   }
@@ -24,12 +24,14 @@ abstract class _ThinkPageStateBase with Store {
 
   @action
   deleteThink() async {
-    await appState.thinkDAO.delete(think.id).then((_) => appState.getData());
+    await appController.thinkDAO
+        .delete(think.id)
+        .then((_) => appController.getData());
   }
 
   @action
   saveThink() async {
-    await appState.thinkDAO.save(think);
+    await appController.thinkDAO.save(think);
   }
 
   @action

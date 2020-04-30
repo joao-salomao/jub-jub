@@ -7,11 +7,11 @@ import 'package:potato_notes/dao/annotation_file_dao.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
-part 'app_state.g.dart';
+part 'app_controller.g.dart';
 
-class AppState = _AppStateBase with _$AppState;
+class AppController = _AppControllerBase with _$AppController;
 
-abstract class _AppStateBase with Store {
+abstract class _AppControllerBase with Store {
   final thinkDAO = ThinkDAO();
   final annotationDAO = AnnotationDAO();
   final annotationFileDAO = AnnotationFileDAO();

@@ -5,7 +5,7 @@ import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/think/think_card.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/user/drawer_list.dart';
-import 'package:potato_notes/views/app_state/app_state.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkList extends StatefulWidget {
@@ -14,7 +14,7 @@ class ThinkList extends StatefulWidget {
 }
 
 class _ThinkListState extends State<ThinkList> {
-  final state = GetIt.I<AppState>();
+  final appController = GetIt.I<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,14 @@ class _ThinkListState extends State<ThinkList> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: state.primaryColor,
+            backgroundColor: appController.primaryColor,
             iconTheme: IconThemeData(
               color: Colors.white,
             ),
             title: Observer(
               builder: (_) {
                 return Text(
-                  state.mainTitle,
+                  appController.mainTitle,
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -42,12 +42,12 @@ class _ThinkListState extends State<ThinkList> {
           body: Observer(
             builder: (_) {
               return ReorderableListView(
-                onReorder: state.reOrderThinks,
+                onReorder: appController.reOrderThinks,
                 children: List.generate(
-                  state.thinks.length,
+                  appController.thinks.length,
                   (i) => ThinkCard(
-                    Key("${state.thinks[i].id}"),
-                    state.thinks[i],
+                    Key("${appController.thinks[i].id}"),
+                    appController.thinks[i],
                   ),
                 ),
               );
@@ -57,7 +57,7 @@ class _ThinkListState extends State<ThinkList> {
           floatingActionButton: Container(
             margin: EdgeInsets.only(bottom: 30),
             child: FloatingActionButton(
-              backgroundColor: state.primaryColor,
+              backgroundColor: appController.primaryColor,
               child: Icon(
                 Icons.add,
                 color: Colors.white,
@@ -76,10 +76,10 @@ class _ThinkListState extends State<ThinkList> {
     final think = ThinkModel(
       title: title,
       color: color,
-      listIndex: state.thinks.length,
+      listIndex: appController.thinks.length,
       createdAt: DateTime.now(),
     );
-    state.saveThink(think);
-    state.getData();
+    appController.saveThink(think);
+    appController.getData();
   }
 }

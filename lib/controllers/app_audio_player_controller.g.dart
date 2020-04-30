@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_audio_player_state.dart';
+part of 'app_audio_player_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,7 +8,7 @@ part of 'app_audio_player_state.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
+mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
   Computed<String> _$formatedTotaldDurationComputed;
 
   @override
@@ -27,7 +27,7 @@ mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
   bool get showPlayer =>
       (_$showPlayerComputed ??= Computed<bool>(() => super.showPlayer)).value;
 
-  final _$isPlayingAtom = Atom(name: '_AppAudioPlayerStateBase.isPlaying');
+  final _$isPlayingAtom = Atom(name: '_AppAudioPlayerControllerBase.isPlaying');
 
   @override
   bool get isPlaying {
@@ -44,7 +44,7 @@ mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
     }, _$isPlayingAtom, name: '${_$isPlayingAtom.name}_set');
   }
 
-  final _$filePathAtom = Atom(name: '_AppAudioPlayerStateBase.filePath');
+  final _$filePathAtom = Atom(name: '_AppAudioPlayerControllerBase.filePath');
 
   @override
   String get filePath {
@@ -62,7 +62,7 @@ mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
   }
 
   final _$totaldDurationAtom =
-      Atom(name: '_AppAudioPlayerStateBase.totaldDuration');
+      Atom(name: '_AppAudioPlayerControllerBase.totaldDuration');
 
   @override
   Duration get totaldDuration {
@@ -80,7 +80,7 @@ mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
   }
 
   final _$currentDurationAtom =
-      Atom(name: '_AppAudioPlayerStateBase.currentDuration');
+      Atom(name: '_AppAudioPlayerControllerBase.currentDuration');
 
   @override
   Duration get currentDuration {
@@ -105,94 +105,94 @@ mixin _$AppAudioPlayerState on _AppAudioPlayerStateBase, Store {
         .run(() => super.setAudioDuration(value));
   }
 
-  final _$_AppAudioPlayerStateBaseActionController =
-      ActionController(name: '_AppAudioPlayerStateBase');
+  final _$_AppAudioPlayerControllerBaseActionController =
+      ActionController(name: '_AppAudioPlayerControllerBase');
 
   @override
   dynamic _setIsPlaying(bool value) {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super._setIsPlaying(value);
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic _setFilePath(String value) {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super._setFilePath(value);
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic _setTotaldDuration(Duration value) {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super._setTotaldDuration(value);
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic _setCurrentDuration(Duration value) {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super._setCurrentDuration(value);
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic playAudio(String path) {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super.playAudio(path);
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic play() {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super.play();
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic pause() {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super.pause();
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic stop() {
     final _$actionInfo =
-        _$_AppAudioPlayerStateBaseActionController.startAction();
+        _$_AppAudioPlayerControllerBaseActionController.startAction();
     try {
       return super.stop();
     } finally {
-      _$_AppAudioPlayerStateBaseActionController.endAction(_$actionInfo);
+      _$_AppAudioPlayerControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_state.dart';
+part of 'app_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'app_state.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AppState on _AppStateBase, Store {
-  final _$thinksAtom = Atom(name: '_AppStateBase.thinks');
+mixin _$AppController on _AppControllerBase, Store {
+  final _$thinksAtom = Atom(name: '_AppControllerBase.thinks');
 
   @override
   ObservableList<ThinkModel> get thinks {
@@ -26,7 +26,7 @@ mixin _$AppState on _AppStateBase, Store {
     }, _$thinksAtom, name: '${_$thinksAtom.name}_set');
   }
 
-  final _$mainTitleAtom = Atom(name: '_AppStateBase.mainTitle');
+  final _$mainTitleAtom = Atom(name: '_AppControllerBase.mainTitle');
 
   @override
   String get mainTitle {
@@ -43,7 +43,7 @@ mixin _$AppState on _AppStateBase, Store {
     }, _$mainTitleAtom, name: '${_$mainTitleAtom.name}_set');
   }
 
-  final _$primaryColorAtom = Atom(name: '_AppStateBase.primaryColor');
+  final _$primaryColorAtom = Atom(name: '_AppControllerBase.primaryColor');
 
   @override
   Color get primaryColor {
@@ -105,57 +105,57 @@ mixin _$AppState on _AppStateBase, Store {
         .run(() => super.deleteAnnotation(annotation));
   }
 
-  final _$_AppStateBaseActionController =
-      ActionController(name: '_AppStateBase');
+  final _$_AppControllerBaseActionController =
+      ActionController(name: '_AppControllerBase');
 
   @override
   dynamic getMainTitle() {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.getMainTitle();
     } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic getPrimaryColor() {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.getPrimaryColor();
     } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic updatePrimaryColor(Color color) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.updatePrimaryColor(color);
     } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic updateMainTitle(String text) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.updateMainTitle(text);
     } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic saveAnnotation(AnnotationModel annotation,
       {List<AnnotationFileModel> deletedFiles}) {
-    final _$actionInfo = _$_AppStateBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.saveAnnotation(annotation, deletedFiles: deletedFiles);
     } finally {
-      _$_AppStateBaseActionController.endAction(_$actionInfo);
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

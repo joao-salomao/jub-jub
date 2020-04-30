@@ -7,12 +7,12 @@ import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/utils/file_picker.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/views/app_state/app_state.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
-import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
+import 'package:potato_notes/controllers/app_audio_player_controller.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
@@ -27,8 +27,8 @@ class AnnotationForm extends StatefulWidget {
 }
 
 class _AnnotationFormState extends State<AnnotationForm> {
-  final state = GetIt.I<AppState>();
-  final audioState = GetIt.I<AppAudioPlayerState>();
+  final state = GetIt.I<AppController>();
+  final audioState = GetIt.I<AppAudioPlayerController>();
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _textController = TextEditingController();

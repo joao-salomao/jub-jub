@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'think_page_state.dart';
+part of 'think_page_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'think_page_state.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ThinkPageState on _ThinkPageStateBase, Store {
-  final _$thinkAtom = Atom(name: '_ThinkPageStateBase.think');
+mixin _$ThinkPageController on _ThinkPageControllerBase, Store {
+  final _$thinkAtom = Atom(name: '_ThinkPageControllerBase.think');
 
   @override
   ThinkModel get think {
@@ -26,7 +26,7 @@ mixin _$ThinkPageState on _ThinkPageStateBase, Store {
     }, _$thinkAtom, name: '${_$thinkAtom.name}_set');
   }
 
-  final _$annotationsAtom = Atom(name: '_ThinkPageStateBase.annotations');
+  final _$annotationsAtom = Atom(name: '_ThinkPageControllerBase.annotations');
 
   @override
   ObservableList<AnnotationModel> get annotations {
@@ -57,26 +57,28 @@ mixin _$ThinkPageState on _ThinkPageStateBase, Store {
     return _$saveThinkAsyncAction.run(() => super.saveThink());
   }
 
-  final _$_ThinkPageStateBaseActionController =
-      ActionController(name: '_ThinkPageStateBase');
+  final _$_ThinkPageControllerBaseActionController =
+      ActionController(name: '_ThinkPageControllerBase');
 
   @override
   dynamic setColor(Color newColor) {
-    final _$actionInfo = _$_ThinkPageStateBaseActionController.startAction();
+    final _$actionInfo =
+        _$_ThinkPageControllerBaseActionController.startAction();
     try {
       return super.setColor(newColor);
     } finally {
-      _$_ThinkPageStateBaseActionController.endAction(_$actionInfo);
+      _$_ThinkPageControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setTitle(String newtitle) {
-    final _$actionInfo = _$_ThinkPageStateBaseActionController.startAction();
+    final _$actionInfo =
+        _$_ThinkPageControllerBaseActionController.startAction();
     try {
       return super.setTitle(newtitle);
     } finally {
-      _$_ThinkPageStateBaseActionController.endAction(_$actionInfo);
+      _$_ThinkPageControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 

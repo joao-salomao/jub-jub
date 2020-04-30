@@ -1,14 +1,14 @@
 import 'package:mobx/mobx.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:potato_notes/utils/formatters.dart';
-part 'app_audio_player_state.g.dart';
+part 'app_audio_player_controller.g.dart';
 
-class AppAudioPlayerState = _AppAudioPlayerStateBase with _$AppAudioPlayerState;
+class AppAudioPlayerController = _AppAudioPlayerControllerBase with _$AppAudioPlayerController;
 
-abstract class _AppAudioPlayerStateBase with Store {
+abstract class _AppAudioPlayerControllerBase with Store {
   var audioPlayer = AudioPlayer();
 
-  _AppAudioPlayerStateBase() {
+  _AppAudioPlayerControllerBase() {
     audioPlayer.onDurationChanged.listen((value) {
       _setTotaldDuration(value);
     });

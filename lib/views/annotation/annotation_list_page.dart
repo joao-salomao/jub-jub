@@ -8,7 +8,7 @@ import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
-import 'package:potato_notes/views/annotation/state/annotation_list_page_controller.dart';
+import 'package:potato_notes/controllers/annotation_list_page_controller.dart';
 
 class AnnotationListPage extends StatefulWidget {
   final ThinkModel think;
@@ -19,12 +19,12 @@ class AnnotationListPage extends StatefulWidget {
 }
 
 class _AnnotationListPageState extends State<AnnotationListPage> {
-  AnnotationListPageController state;
+  AnnotationListPageController controller;
   ThinkModel get think => widget.think;
 
   @override
   void initState() {
-    state = AnnotationListPageController(think);
+    controller = AnnotationListPageController(think);
     super.initState();
   }
 
@@ -281,7 +281,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
       "Você tem certeza ?",
       "Essa anotação será deletada permanentemente.",
       callback: () {
-        state.deleteAnnotation(annotation);
+        controller.deleteAnnotation(annotation);
       },
     );
   }

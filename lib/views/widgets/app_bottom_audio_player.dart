@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
+import 'package:potato_notes/controllers/app_audio_player_controller.dart';
 
 class AppBottomAudioPlayer extends StatefulWidget {
   @override
@@ -9,13 +9,13 @@ class AppBottomAudioPlayer extends StatefulWidget {
 }
 
 class _AppBottomAudioPlayerState extends State<AppBottomAudioPlayer> {
-  final audioState = GetIt.I<AppAudioPlayerState>();
+  final controller = GetIt.I<AppAudioPlayerController>();
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        if (!audioState.showPlayer) {
+        if (!controller.showPlayer) {
           return Container(
             height: 0,
           );
@@ -34,13 +34,13 @@ class _AppBottomAudioPlayerState extends State<AppBottomAudioPlayer> {
                 ),
                 IconButton(
                   icon: Icon(
-                    audioState.isPlaying ? Icons.pause : Icons.play_arrow,
+                    controller.isPlaying ? Icons.pause : Icons.play_arrow,
                     size: 40,
                   ),
                   onPressed: () {
-                    audioState.isPlaying
-                        ? audioState.pause()
-                        : audioState.play();
+                    controller.isPlaying
+                        ? controller.pause()
+                        : controller.play();
                   },
                 ),
                 SizedBox(
@@ -54,28 +54,26 @@ class _AppBottomAudioPlayerState extends State<AppBottomAudioPlayer> {
                     Icons.close,
                     size: 40,
                   ),
-                  onPressed: () => audioState.stop(),
+                  onPressed: () => controller.stop(),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Row(
                   children: [
-                    Text(audioState.formatedCurrentDuration),
+                    Text(controller.formatedCurrentDuration),
                     Container(
                       width: 170,
                       child: Slider(
                         min: 0,
-                        max: audioState.totaldDuration.inSeconds.toDouble() ==
-                                0
+                        max: controller.totaldDuration.inSeconds.toDouble() == 0
                             ? 100
-                            : audioState.totaldDuration.inSeconds.toDouble(),
-                        onChanged: audioState.setAudioDuration,
-                        value:
-                            audioState.currentDuration.inSeconds.toDouble(),
+                            : controller.totaldDuration.inSeconds.toDouble(),
+                        onChanged: controller.setAudioDuration,
+                        value: controller.currentDuration.inSeconds.toDouble(),
                       ),
                     ),
-                    Text(audioState.formatedTotaldDuration),
+                    Text(controller.formatedTotaldDuration),
                   ],
                 ),
               ],

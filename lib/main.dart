@@ -1,13 +1,14 @@
+
 import 'views/app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'views/app_state/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
+import 'package:potato_notes/controllers/app_controller.dart';
+import 'package:potato_notes/controllers/app_audio_player_controller.dart';
 
 void setup() async {
-  GetIt.I.registerSingleton<AppState>(AppState());
-  GetIt.I.registerSingleton<AppAudioPlayerState>(AppAudioPlayerState());
+  GetIt.I.registerSingleton<AppController>(AppController());
+  GetIt.I.registerSingleton<AppAudioPlayerController>(AppAudioPlayerController());
   GetIt.I.registerSingletonAsync<SharedPreferences>(() => SharedPreferences.getInstance());
 }
 
