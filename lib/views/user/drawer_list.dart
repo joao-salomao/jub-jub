@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/controllers/app_controller.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
@@ -13,7 +13,7 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  final controller = GetIt.I<AppController>();
+  final appController = GetIt.I<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +49,33 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitleDialog() async {
-    final controller = TextEditingController(text: this.controller.mainTitle);
+    final _titleController =
+        TextEditingController(text: appController.mainTitle);
 
     return showDialog(
       context: context,
       builder: (_) {
-        return AppAlertDialog(
-          title: "Atualizando título",
-          content: Container(
-            height: 60,
-            child: Column(
-              children: [
-                AppTextFormField(
-                  "Título",
-                  "Digite o principal desejado",
-                  controller: controller,
-                  cursorColor: Theme.of(context).primaryColor,
+        return Observer(
+          builder: (_) {
+            return AppAlertDialog(
+              title: "Atualizando título",
+              content: Container(
+                height: 60,
+                child: Column(
+                  children: [
+                    AppTextFormField(
+                      "Título",
+                      "Digite o principal desejado",
+                      controller: _titleController,
+                      cursorColor: appController.primaryColor,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          onClose: _pop,
-          onSave: () => _changeMainTitle(controller.text),
+              ),
+              onClose: _pop,
+              onSave: () => _changeMainTitle(_titleController.text),
+            );
+          },
         );
       },
     );
@@ -80,30 +85,34 @@ class _DrawerListState extends State<DrawerList> {
     return showDialog(
       context: context,
       builder: (_) {
-        return SimpleDialog(
-          title: Text('Selecione o tema'),
-          children: [
-            RadioListTile<Brightness>(
-              value: Brightness.light,
-              groupValue: Theme.of(context).brightness,
-              onChanged: _changeBrightness,
-              title: Text('Claro'),
-            ),
-            RadioListTile<Brightness>(
-              value: Brightness.dark,
-              groupValue: Theme.of(context).brightness,
-              onChanged: _changeBrightness,
-              title: Text('Escuro'),
-            ),
-          ],
+        return Observer(
+          builder: (_) {
+            return SimpleDialog(
+              title: Text('Selecione o tema'),
+              children: [
+                RadioListTile<Brightness>(
+                  value: Brightness.light,
+                  groupValue: appController.brightness,
+                  onChanged: _changeBrightness,
+                  title: Text('Claro'),
+                ),
+                RadioListTile<Brightness>(
+                  value: Brightness.dark,
+                  groupValue: appController.brightness,
+                  onChanged: _changeBrightness,
+                  title: Text('Escuro'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
   }
 
   _changeColorDialog() {
-    final originalColor = controller.primaryColor;
-    var color = controller.primaryColor;
+    final originalColor = appController.primaryColor;
+    var color = appController.primaryColor;
     final changeColor = (Color newColor) {
       _changeColor(newColor);
       _pop();
@@ -139,18 +148,17 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitle(String text) {
-    controller.updateMainTitle(text);
+    appController.updateMainTitle(text);
     _pop();
   }
 
   _changeBrightness(Brightness value) {
-    DynamicTheme.of(context).setBrightness(value).then((_) {
-      setState(() => _pop());
-    });
+    appController.setBrightness(value, context);
+    _pop();
   }
 
   _changeColor(Color color) async {
-    controller.updatePrimaryColor(color);
+    appController.updatePrimaryColor(color);
   }
 
   _pop() {

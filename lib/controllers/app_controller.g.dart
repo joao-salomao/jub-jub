@@ -43,6 +43,23 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$mainTitleAtom, name: '${_$mainTitleAtom.name}_set');
   }
 
+  final _$brightnessAtom = Atom(name: '_AppControllerBase.brightness');
+
+  @override
+  Brightness get brightness {
+    _$brightnessAtom.context.enforceReadPolicy(_$brightnessAtom);
+    _$brightnessAtom.reportObserved();
+    return super.brightness;
+  }
+
+  @override
+  set brightness(Brightness value) {
+    _$brightnessAtom.context.conditionallyRunInAction(() {
+      super.brightness = value;
+      _$brightnessAtom.reportChanged();
+    }, _$brightnessAtom, name: '${_$brightnessAtom.name}_set');
+  }
+
   final _$primaryColorAtom = Atom(name: '_AppControllerBase.primaryColor');
 
   @override
@@ -109,6 +126,26 @@ mixin _$AppController on _AppControllerBase, Store {
       ActionController(name: '_AppControllerBase');
 
   @override
+  dynamic setBrightness(Brightness value, BuildContext context) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.setBrightness(value, context);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getBrightness(BuildContext context) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.getBrightness(context);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getMainTitle() {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
@@ -162,7 +199,7 @@ mixin _$AppController on _AppControllerBase, Store {
   @override
   String toString() {
     final string =
-        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},primaryColor: ${primaryColor.toString()}';
+        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()}';
     return '{$string}';
   }
 }

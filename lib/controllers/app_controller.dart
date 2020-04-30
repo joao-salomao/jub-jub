@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/dao/think_dao.dart';
@@ -24,7 +25,21 @@ abstract class _AppControllerBase with Store {
   var mainTitle = "";
 
   @observable
+  Brightness brightness;
+
+  @observable
   Color primaryColor;
+
+  @action
+  setBrightness(Brightness value, BuildContext context) {
+    brightness = value;
+    DynamicTheme.of(context).setBrightness(value);
+  }
+
+  @action
+  getBrightness(BuildContext context) {
+    brightness = Theme.of(context).brightness;
+  }
 
   @action
   getData() async {
