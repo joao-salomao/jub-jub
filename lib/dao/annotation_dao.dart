@@ -1,16 +1,16 @@
 import 'base_dao.dart';
-import 'package:potato_notes/entities/annotation.dart';
+import 'package:potato_notes/models/annotation_model.dart';
 
-class AnnotationDAO extends BaseDAO<Annotation> {
+class AnnotationDAO extends BaseDAO<AnnotationModel> {
   @override
   String get table => 'annotations';
 
   @override
   fromMap(Map<String, dynamic> map) {
-    return Annotation.fromMap(map);
+    return AnnotationModel.fromMap(map);
   }
 
-  Future<List<Annotation>> getAnnotationsByThinkId(int thinkId) async {
+  Future<List<AnnotationModel>> getAnnotationsByThinkId(int thinkId) async {
     var dbClient = await db;
     final list = await dbClient
         .rawQuery('select * from $table where think_id = ?', [thinkId]);

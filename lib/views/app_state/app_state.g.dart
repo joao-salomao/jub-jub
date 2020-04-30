@@ -12,14 +12,14 @@ mixin _$AppState on _AppStateBase, Store {
   final _$thinksAtom = Atom(name: '_AppStateBase.thinks');
 
   @override
-  ObservableList<Think> get thinks {
+  ObservableList<ThinkModel> get thinks {
     _$thinksAtom.context.enforceReadPolicy(_$thinksAtom);
     _$thinksAtom.reportObserved();
     return super.thinks;
   }
 
   @override
-  set thinks(ObservableList<Think> value) {
+  set thinks(ObservableList<ThinkModel> value) {
     _$thinksAtom.context.conditionallyRunInAction(() {
       super.thinks = value;
       _$thinksAtom.reportChanged();
@@ -70,7 +70,7 @@ mixin _$AppState on _AppStateBase, Store {
   final _$saveThinkAsyncAction = AsyncAction('saveThink');
 
   @override
-  Future saveThink(Think think) {
+  Future saveThink(ThinkModel think) {
     return _$saveThinkAsyncAction.run(() => super.saveThink(think));
   }
 
@@ -100,7 +100,7 @@ mixin _$AppState on _AppStateBase, Store {
   final _$deleteAnnotationAsyncAction = AsyncAction('deleteAnnotation');
 
   @override
-  Future deleteAnnotation(Annotation annotation) {
+  Future deleteAnnotation(AnnotationModel annotation) {
     return _$deleteAnnotationAsyncAction
         .run(() => super.deleteAnnotation(annotation));
   }
@@ -149,8 +149,8 @@ mixin _$AppState on _AppStateBase, Store {
   }
 
   @override
-  dynamic saveAnnotation(Annotation annotation,
-      {List<AnnotationFile> deletedFiles}) {
+  dynamic saveAnnotation(AnnotationModel annotation,
+      {List<AnnotationFileModel> deletedFiles}) {
     final _$actionInfo = _$_AppStateBaseActionController.startAction();
     try {
       return super.saveAnnotation(annotation, deletedFiles: deletedFiles);

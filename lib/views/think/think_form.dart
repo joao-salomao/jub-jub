@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 showThinkForm({
   @required BuildContext context,
-  Think think,
+  ThinkModel think,
   Function onChangeColor,
   Function onChangeTitle,
   Function onCancel,

@@ -1,12 +1,12 @@
-import 'file_not_found_widget.dart';
 import 'video_widget.dart';
 import 'audio_widget.dart';
 import 'image_widget.dart';
+import 'file_not_found_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 
 class AnnotationFileWidget extends StatelessWidget {
-  final AnnotationFile annotationFile;
+  final AnnotationFileModel annotationFile;
   final bool shouldPauseOnDispose;
   AnnotationFileWidget(
     this.annotationFile, {

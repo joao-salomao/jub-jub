@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/entities/think.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/views/think/think_form.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
@@ -9,7 +9,7 @@ import 'package:potato_notes/views/annotation/annotation_list_page.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkPage extends StatefulWidget {
-  final Think think;
+  final ThinkModel think;
   ThinkPage(this.think);
 
   @override
@@ -19,7 +19,7 @@ class ThinkPage extends StatefulWidget {
 class _ThinkPageState extends State<ThinkPage> {
   ThinkPageState pageState;
 
-  Think get think => widget.think;
+  ThinkModel get think => widget.think;
 
   @override
   void initState() {
@@ -37,12 +37,12 @@ class _ThinkPageState extends State<ThinkPage> {
               color: Colors.white,
             ),
             title: Text(
-              pageState.title,
+              think.title,
               style: TextStyle(
                 color: Colors.white,
               ),
             ),
-            backgroundColor: pageState.color,
+            backgroundColor: think.color,
             centerTitle: true,
             actions: [
               IconButton(
@@ -60,7 +60,7 @@ class _ThinkPageState extends State<ThinkPage> {
           floatingActionButton: Container(
             margin: EdgeInsets.only(bottom: 30),
             child: FloatingActionButton(
-              backgroundColor: pageState.color,
+              backgroundColor: think.color,
               child: Icon(
                 Icons.add,
                 color: Colors.white,

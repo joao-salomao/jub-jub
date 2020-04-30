@@ -1,17 +1,16 @@
-import 'package:potato_notes/entities/annotation_file.dart';
-
 import 'base_dao.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 
-class AnnotationFileDAO extends BaseDAO<AnnotationFile> {
+class AnnotationFileDAO extends BaseDAO<AnnotationFileModel> {
   @override
   String get table => 'annotation_files';
 
   @override
-  AnnotationFile fromMap(Map<String, dynamic> map) {
-    return AnnotationFile.fromMap(map);
+  AnnotationFileModel fromMap(Map<String, dynamic> map) {
+    return AnnotationFileModel.fromMap(map);
   }
 
-  Future<List<AnnotationFile>> getAnnotationsFileByAnnotationId(
+  Future<List<AnnotationFileModel>> getAnnotationsFileByAnnotationId(
     int annotationId,
   ) async {
     var dbClient = await db;

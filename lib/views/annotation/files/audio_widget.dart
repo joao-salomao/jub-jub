@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:flutter/material.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/views/app_state/app_audio_player_state.dart';
 
 class AudioWidget extends StatelessWidget {
   final AppAudioPlayerState audioState = GetIt.I<AppAudioPlayerState>();
-  final AnnotationFile annotationFile;
+  final AnnotationFileModel annotationFile;
   final Color textColor;
 
   AudioWidget(

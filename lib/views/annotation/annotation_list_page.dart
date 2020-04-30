@@ -3,15 +3,15 @@ import 'annotation_file_list.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
-import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/entities/annotation.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
+import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/views/app_state/app_state.dart';
 
 class AnnotationListPage extends StatefulWidget {
-  final Think think;
+  final ThinkModel think;
   AnnotationListPage(this.think);
 
   @override
@@ -20,7 +20,7 @@ class AnnotationListPage extends StatefulWidget {
 
 class _AnnotationListPageState extends State<AnnotationListPage> {
   final state = GetIt.I<AppState>();
-  Think get think => widget.think;
+  ThinkModel get think => widget.think;
 
   @override
   Widget build(BuildContext context) {
@@ -259,18 +259,18 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
     );
   }
 
-  _getAnnotationTotalWords(Annotation annotation) {
+  _getAnnotationTotalWords(AnnotationModel annotation) {
     int count = annotation.text.trim().split(" ").length;
     annotation.files
         .forEach((f) => count += f.description.trim().split(" ").length);
     return count;
   }
 
-  _getAnnotationFilesCountByType(Annotation annotation, String type) {
+  _getAnnotationFilesCountByType(AnnotationModel annotation, String type) {
     return annotation.files.where((f) => f.type == type).length;
   }
 
-  _onClickDeleteAnnotation(Annotation annotation) {
+  _onClickDeleteAnnotation(AnnotationModel annotation) {
     alert(
       context,
       "Você tem certeza ?",

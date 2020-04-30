@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/entities/annotation.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:potato_notes/models/annotation_model.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
 
 class AnnotationFileList extends StatefulWidget {
-  final Annotation annotation;
+  final AnnotationModel annotation;
   AnnotationFileList(this.annotation);
 
   @override
@@ -20,7 +20,7 @@ class _AnnotationFileListState extends State<AnnotationFileList> {
         children: List.generate(
           widget.annotation.files.length,
           (i) {
-            AnnotationFile file = widget.annotation.files[i];
+            AnnotationFileModel file = widget.annotation.files[i];
             return Container(
               margin: EdgeInsets.only(bottom: 16),
               width: double.infinity,

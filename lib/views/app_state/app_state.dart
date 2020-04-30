@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:flutter/material.dart';
 import 'package:potato_notes/dao/think_dao.dart';
 import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/dao/annotation_dao.dart';
-import 'package:potato_notes/entities/annotation.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/dao/annotation_file_dao.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:potato_notes/models/annotation_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 part 'app_state.g.dart';
 
 class AppState = _AppStateBase with _$AppState;
@@ -18,7 +19,7 @@ abstract class _AppStateBase with Store {
   SharedPreferences sharedPreferences;
 
   @observable
-  var thinks = ObservableList<Think>();
+  var thinks = ObservableList<ThinkModel>();
 
   @observable
   var mainTitle = "";
@@ -39,20 +40,24 @@ abstract class _AppStateBase with Store {
       ],
     );
 
-    final List<Think> thinkList = result[0];
-    final List<Annotation> annotations = result[1];
-    final List<AnnotationFile> annotationFiles = result[2];
+    final List<ThinkModel> thinkList = result[0];
+    final List<AnnotationModel> annotations = result[1];
+    final List<AnnotationFileModel> annotationFiles = result[2];
 
     thinks.clear();
     thinkList.forEach((think) {
-      think.annotations = annotations
+      think.annotations.clear();
+      annotations
           .where((annotation) => annotation.thinkId == think.id)
-          .toList();
+          .toList()
+          .forEach(think.annotations.add);
 
       think.annotations.forEach((annotation) {
-        annotation.files = annotationFiles
+        annotation.files.clear();
+        annotationFiles
             .where((file) => file.annotationId == annotation.id)
-            .toList();
+            .toList()
+            .forEach(annotation.files.add);
       });
       thinks.add(think);
     });
@@ -106,7 +111,7 @@ abstract class _AppStateBase with Store {
   }
 
   @action
-  saveThink(Think think) async {
+  saveThink(ThinkModel think) async {
     await thinkDAO.save(think);
   }
 
@@ -128,8 +133,8 @@ abstract class _AppStateBase with Store {
 
   @action
   saveAnnotation(
-    Annotation annotation, {
-    List<AnnotationFile> deletedFiles,
+    AnnotationModel annotation, {
+    List<AnnotationFileModel> deletedFiles,
   }) {
     annotationDAO.save(annotation).then((annotationId) {
       annotation.id = annotationId;
@@ -147,7 +152,7 @@ abstract class _AppStateBase with Store {
   }
 
   @action
-  deleteAnnotation(Annotation annotation) async {
+  deleteAnnotation(AnnotationModel annotation) async {
     await annotationDAO.delete(annotation.id);
   }
 }

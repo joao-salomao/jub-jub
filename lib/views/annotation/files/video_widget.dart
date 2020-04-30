@@ -1,11 +1,11 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:potato_notes/entities/annotation_file.dart';
+import 'package:potato_notes/models/annotation_file_model.dart';
 
 class VideoWidget extends StatefulWidget {
   final bool shouldPauseOnDispose;
-  final AnnotationFile annotationFile;
+  final AnnotationFileModel annotationFile;
   VideoWidget(
     this.annotationFile,
     this.shouldPauseOnDispose,
@@ -16,7 +16,7 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  AnnotationFile get annotationFile => widget.annotationFile;
+  AnnotationFileModel get annotationFile => widget.annotationFile;
   bool get shouldPauseOnDispose => widget.shouldPauseOnDispose;
   ChewieController chewieController;
 

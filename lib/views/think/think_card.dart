@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/entities/think.dart';
 import 'package:potato_notes/utils/formatters.dart';
 import 'package:potato_notes/utils/navigation.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/think/think_page.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
 
-class ThinkCard extends StatefulWidget {
+class ThinkCard extends StatelessWidget {
   final Key key;
-  final Think think;
-
+  final ThinkModel think;
   ThinkCard(this.key, this.think);
-
-  @override
-  _ThinkCard createState() => _ThinkCard();
-}
-
-class _ThinkCard extends State<ThinkCard> {
-  String get createdAt => formatDate(widget.think.createdAt);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +16,12 @@ class _ThinkCard extends State<ThinkCard> {
       padding: EdgeInsets.all(5),
       child: Card(
         elevation: 10,
-        color: widget.think.color,
+        color: think.color,
         child: InkWell(
           splashColor: Colors.white,
           onTap: () => push(
             context,
-            ThinkPage(widget.think),
+            ThinkPage(think),
           ),
           child: Container(
             padding: EdgeInsets.all(5),
@@ -37,7 +29,7 @@ class _ThinkCard extends State<ThinkCard> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 AppText(
-                  widget.think.title,
+                  think.title,
                   fontSize: 20,
                   bold: true,
                 ),
@@ -55,10 +47,10 @@ class _ThinkCard extends State<ThinkCard> {
                               color: Colors.white,
                             ),
                           ),
-                          AppText("${widget.think.annotations.length}"),
+                          AppText("${think.annotations.length}"),
                         ],
                       ),
-                      AppText("~ $createdAt"),
+                      AppText("~ ${formatDate(think.createdAt)}"),
                     ],
                   ),
                 ),
