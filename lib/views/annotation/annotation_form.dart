@@ -514,25 +514,29 @@ class _AnnotationFormState extends State<AnnotationForm> {
   }
 
   Future _showColorPickerDialog() {
+    var color = formController.color;
+    final originalColor = formController.color;
     return showDialog(
       context: context,
       builder: (_) {
-        return Observer(builder: (_) {
-          return AppAlertDialog(
-            title: "Escolha a cor da sua anotação",
-            content: Container(
-              height: 205,
-              child: MaterialColorPicker(
-                onColorChange: (Color newColor) {
-                  formController.setColor(newColor);
-                },
-                selectedColor: color,
-              ),
+        return AppAlertDialog(
+          title: "Escolha a cor da sua anotação",
+          content: Container(
+            height: 205,
+            child: MaterialColorPicker(
+              onColorChange: (Color newColor) {
+                color = newColor;
+                formController.setColor(newColor);
+              },
+              selectedColor: color,
             ),
-            onClose: () => pop(_),
-            onSave: () => pop(_),
-          );
-        });
+          ),
+          onClose: () {
+            formController.setColor(originalColor);
+            pop(_);
+          },
+          onSave: () => pop(_),
+        );
       },
     );
   }

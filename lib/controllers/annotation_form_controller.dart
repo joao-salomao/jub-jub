@@ -14,6 +14,7 @@ class AnnotationFormController = _AnnotationFormControllerBase
 
 abstract class _AnnotationFormControllerBase with Store {
   var isCreate;
+  var _originalColor;
   final formKey = GlobalKey<FormState>();
   final appController = GetIt.I<AppController>();
   final textController = TextEditingController();
@@ -44,25 +45,28 @@ abstract class _AnnotationFormControllerBase with Store {
 
   @computed
   bool get hasNoChanges =>
-      (files.isEmpty &&
-          textController.text.isEmpty &&
-          titleController.text.isEmpty) ||
-      (annotation != null &&
-          deletedFiles.isEmpty &&
-          annotation.text == textController.text &&
-          annotation.files.length == files.length &&
-          annotation.title == titleController.text);
+      ((files.isEmpty &&
+              textController.text.isEmpty &&
+              titleController.text.isEmpty) ||
+          (annotation != null &&
+              deletedFiles.isEmpty &&
+              annotation.text == textController.text &&
+              annotation.files.length == files.length &&
+              annotation.title == titleController.text)) &&
+      _originalColor.value == color.value;
 
   _AnnotationFormControllerBase(this.think, this.annotation) {
     if (annotation != null) {
       isCreate = false;
       color = annotation.color;
+      _originalColor = annotation.color;
       textController.text = annotation.text;
       titleController.text = annotation.title;
       annotation.files.forEach(files.add);
     } else {
       isCreate = true;
       color = appController.primaryColor;
+      _originalColor = appController.primaryColor;
     }
   }
 
