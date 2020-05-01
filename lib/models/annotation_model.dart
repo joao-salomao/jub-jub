@@ -26,6 +26,9 @@ abstract class _AnnotationModelBase extends Model with Store {
   int listIndex;
 
   @observable
+  String password;
+
+  @observable
   String createdAt;
 
   @observable
@@ -49,6 +52,7 @@ abstract class _AnnotationModelBase extends Model with Store {
     this.title = map['title'];
     this.text = map['text'];
     this.color = Color(map['color']);
+    this.password = map['password'];
     this.createdAt = map['createdAt'];
   }
 
@@ -56,10 +60,11 @@ abstract class _AnnotationModelBase extends Model with Store {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "think_id": thinkId,
-      "title": title,
       "text": text,
+      "title": title,
+      "think_id": thinkId,
       "color": color.value,
+      "password": password,
       "createdAt": createdAt,
       "listIndex": listIndex,
     };

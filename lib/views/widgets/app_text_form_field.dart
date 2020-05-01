@@ -3,31 +3,33 @@ import 'package:flutter/material.dart';
 class AppTextFormField extends StatelessWidget {
   final String label;
   final String hint;
-  final bool obscureText;
-  final TextEditingController controller;
-  final FormFieldValidator<String> validator;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-  final FocusNode focusNode;
-  final FocusNode nextFocus;
+  final bool expands;
   final int minLines;
   final int maxLines;
-  final bool expands;
+  final bool obscureText;
   final Color cursorColor;
+  final Function onChange;
+  final FocusNode focusNode;
+  final FocusNode nextFocus;
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final TextEditingController controller;
+  final FormFieldValidator<String> validator;
 
   AppTextFormField(
     this.label,
     this.hint, {
-    this.obscureText = false,
-    this.controller,
+    this.minLines,
+    this.onChange,
     this.validator,
-    this.keyboardType,
-    this.textInputAction,
     this.focusNode,
     this.nextFocus,
+    this.controller,
+    this.keyboardType,
     this.maxLines = 1,
-    this.minLines,
+    this.textInputAction,
     this.expands = false,
+    this.obscureText = false,
     this.cursorColor = Colors.black,
   });
 
@@ -47,6 +49,7 @@ class AppTextFormField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       expands: expands,
+      onChanged: onChange,
       onFieldSubmitted: (String text) {
         if (nextFocus != null) {
           FocusScope.of(context).requestFocus(nextFocus);

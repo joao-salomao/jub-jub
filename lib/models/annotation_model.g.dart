@@ -111,6 +111,23 @@ mixin _$AnnotationModel on _AnnotationModelBase, Store {
     }, _$listIndexAtom, name: '${_$listIndexAtom.name}_set');
   }
 
+  final _$passwordAtom = Atom(name: '_AnnotationModelBase.password');
+
+  @override
+  String get password {
+    _$passwordAtom.context.enforceReadPolicy(_$passwordAtom);
+    _$passwordAtom.reportObserved();
+    return super.password;
+  }
+
+  @override
+  set password(String value) {
+    _$passwordAtom.context.conditionallyRunInAction(() {
+      super.password = value;
+      _$passwordAtom.reportChanged();
+    }, _$passwordAtom, name: '${_$passwordAtom.name}_set');
+  }
+
   final _$createdAtAtom = Atom(name: '_AnnotationModelBase.createdAt');
 
   @override
@@ -148,7 +165,7 @@ mixin _$AnnotationModel on _AnnotationModelBase, Store {
   @override
   String toString() {
     final string =
-        'id: ${id.toString()},thinkId: ${thinkId.toString()},title: ${title.toString()},text: ${text.toString()},color: ${color.toString()},listIndex: ${listIndex.toString()},createdAt: ${createdAt.toString()},files: ${files.toString()}';
+        'id: ${id.toString()},thinkId: ${thinkId.toString()},title: ${title.toString()},text: ${text.toString()},color: ${color.toString()},listIndex: ${listIndex.toString()},password: ${password.toString()},createdAt: ${createdAt.toString()},files: ${files.toString()}';
     return '{$string}';
   }
 }

@@ -5,8 +5,9 @@ import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/views/annotation/annotation_page.dart';
 import 'package:potato_notes/controllers/annotation_controller.dart';
+import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 
-class AnnotationCard extends StatelessWidget {
+class AnnotationCard extends StatefulWidget {
   final Key key;
   final AnnotationModel annotation;
   final ThinkModel think;
@@ -20,21 +21,78 @@ class AnnotationCard extends StatelessWidget {
   );
 
   @override
+  _AnnotationCardState createState() => _AnnotationCardState();
+}
+
+class _AnnotationCardState extends State<AnnotationCard> {
+  _onEnterPassword() {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: SimpleDialog(
+            title: Text('Acessando anotação privada'),
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  right: 20,
+                  left: 20,
+                  bottom: 10,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    AppTextFormField(
+                      "Digite a senha da anotação",
+                      "",
+                      obscureText: true,
+                      cursorColor: widget.annotation.color,
+                      onChange: (value) {
+                        if (value == widget.annotation.password) {
+                          pop(context);
+                          _pushAnnotationPage();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _pushAnnotationPage() {
+    push(
+      context,
+      AnnotationPage(
+        widget.annotation,
+        widget.think,
+        widget.annotationController,
+      ),
+    );
+  }
+
+  _onTapCard() {
+    print(widget.annotation.password);
+    if (widget.annotation.password == null) {
+      _pushAnnotationPage();
+      return;
+    }
+    _onEnterPassword();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 160,
       padding: EdgeInsets.all(5),
       child: InkWell(
-        onTap: () => push(
-          context,
-          AnnotationPage(
-            annotation,
-            think,
-            annotationController,
-          ),
-        ),
+        onTap: _onTapCard,
         child: Card(
-          color: annotation.color,
+          color: widget.annotation.color,
           elevation: 10,
           child: Container(
             padding: EdgeInsets.all(10),
@@ -42,14 +100,14 @@ class AnnotationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  annotation.title,
+                  widget.annotation.title,
                   bold: true,
                   fontSize: 18,
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    annotation.text,
+                    widget.annotation.text,
                     softWrap: true,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -74,7 +132,8 @@ class AnnotationCard extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          AppText("${annotation.getAnnotationTotalWords()}"),
+                          AppText(
+                              "${widget.annotation.getAnnotationTotalWords()}"),
                         ],
                       ),
                     ),
@@ -89,7 +148,7 @@ class AnnotationCard extends StatelessWidget {
                             ),
                           ),
                           AppText(
-                              "${annotation.getAnnotationFilesCountByType("image")}"),
+                              "${widget.annotation.getAnnotationFilesCountByType("image")}"),
                         ],
                       ),
                     ),
@@ -105,7 +164,7 @@ class AnnotationCard extends StatelessWidget {
                             ),
                           ),
                           AppText(
-                              "${annotation.getAnnotationFilesCountByType("video")}"),
+                              "${widget.annotation.getAnnotationFilesCountByType("video")}"),
                         ],
                       ),
                     ),
@@ -121,7 +180,7 @@ class AnnotationCard extends StatelessWidget {
                             ),
                           ),
                           AppText(
-                              "${annotation.getAnnotationFilesCountByType("audio")}"),
+                              "${widget.annotation.getAnnotationFilesCountByType("audio")}"),
                         ],
                       ),
                     ),
