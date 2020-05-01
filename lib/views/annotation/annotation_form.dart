@@ -68,31 +68,21 @@ class _AnnotationFormState extends State<AnnotationForm> {
                   fontSize: 16,
                 ),
               ),
-              centerTitle: true,
               backgroundColor: color,
-              actions: <Widget>[
+              actions: [
                 IconButton(
-                  icon: Icon(Icons.save),
-                  onPressed: _onClickSave,
+                  icon: Icon(Icons.brush),
+                  onPressed: _showColorPickerDialog,
                 ),
                 PopupMenuButton<String>(
+                  icon: Icon(Icons.attach_file),
                   onSelected: (value) {
-                    if (value == 'color') _showColorPickerDialog();
                     if (value == 'image') _addFile('image');
                     if (value == 'video') _addFile('video');
                     if (value == 'audio') _addFile('audio');
                   },
                   itemBuilder: (context) {
                     return [
-                      PopupMenuItem(
-                        value: "color",
-                        child: Center(
-                          child: Icon(
-                            Icons.brush,
-                            color: popupMenuButtonColor,
-                          ),
-                        ),
-                      ),
                       PopupMenuItem(
                         value: "image",
                         child: Center(
@@ -122,6 +112,10 @@ class _AnnotationFormState extends State<AnnotationForm> {
                       ),
                     ];
                   },
+                ),
+                IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: _onClickSave,
                 ),
               ],
             ),
