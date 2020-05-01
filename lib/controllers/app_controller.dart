@@ -30,6 +30,9 @@ abstract class _AppControllerBase with Store {
   @observable
   Color primaryColor;
 
+  @computed
+  bool get brightnessIsDark => brightness == Brightness.dark;
+
   @action
   setBrightness(Brightness value, BuildContext context) {
     brightness = value;
