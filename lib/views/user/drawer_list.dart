@@ -48,7 +48,7 @@ class _DrawerListState extends State<DrawerList> {
     );
   }
 
-  _changeMainTitleDialog() async {
+  _changeMainTitleDialog() {
     final _titleController =
         TextEditingController(text: appController.mainTitle);
 
