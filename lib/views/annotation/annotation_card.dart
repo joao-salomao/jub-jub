@@ -1,12 +1,12 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/views/annotation/annotation_file_list.dart';
-import 'package:potato_notes/views/annotation/annotation_form.dart';
+import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/widgets/app_text.dart';
+import 'package:potato_notes/models/annotation_model.dart';
+import 'package:potato_notes/views/annotation/annotation_form.dart';
+import 'package:potato_notes/views/annotation/annotation_file_list.dart';
 
 class AnnotationCard extends StatelessWidget {
   final Key key;
