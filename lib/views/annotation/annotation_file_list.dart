@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/views/widgets/app_text.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/models/annotation_file_model.dart';
 import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
@@ -28,9 +27,10 @@ class AnnotationFileList extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         width: double.infinity,
-                        child: AppText(
+                        child: Text(
                           file.title,
-                          bold: true,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -40,9 +40,12 @@ class AnnotationFileList extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        child: AppText(
+                        child: Text(
                           file.description,
                           textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],

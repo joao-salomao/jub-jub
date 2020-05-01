@@ -3,18 +3,18 @@ import 'package:get_it/get_it.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/models/annotation_model.dart';
 import 'package:potato_notes/controllers/app_controller.dart';
-part 'annotation_list_page_controller.g.dart';
+part 'annotation_controller.g.dart';
 
-class AnnotationListPageController = _AnnotationListPageControllerBase
-    with _$AnnotationListPageController;
+class AnnotationController = _AnnotationControllerBase
+    with _$AnnotationController;
 
-abstract class _AnnotationListPageControllerBase with Store {
+abstract class _AnnotationControllerBase with Store {
   final appController = GetIt.I<AppController>();
 
   @observable
   ThinkModel think;
 
-  _AnnotationListPageControllerBase(this.think);
+  _AnnotationControllerBase(this.think);
 
   @action
   deleteAnnotation(AnnotationModel annotationModel) {

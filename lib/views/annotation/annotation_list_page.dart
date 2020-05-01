@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/views/annotation/annotation_card.dart';
-import 'package:potato_notes/controllers/annotation_list_page_controller.dart';
+import 'package:potato_notes/controllers/annotation_controller.dart';
 
 class AnnotationListPage extends StatefulWidget {
   final ThinkModel think;
@@ -15,12 +13,12 @@ class AnnotationListPage extends StatefulWidget {
 }
 
 class _AnnotationListPageState extends State<AnnotationListPage> {
-  AnnotationListPageController pageController;
+  AnnotationController annotationController;
   ThinkModel get think => widget.think;
 
   @override
   void initState() {
-    pageController = AnnotationListPageController(think);
+    annotationController = AnnotationController(think);
     super.initState();
   }
 
@@ -30,7 +28,7 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
       builder: (_) {
         return Container(
           child: ReorderableListView(
-            onReorder: pageController.reOrderAnnotations,
+            onReorder: annotationController.reOrderAnnotations,
             children: _getAnnotationsCardList(),
           ),
         );
@@ -47,19 +45,8 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
           Key("${annotation.id}"),
           annotation,
           think,
-          _onClickDeleteAnnotation,
+          annotationController,
         );
-      },
-    );
-  }
-
-  _onClickDeleteAnnotation(AnnotationModel annotation) {
-    alert(
-      context,
-      "Você tem certeza ?",
-      "Essa anotação será deletada permanentemente.",
-      callback: () {
-        pageController.deleteAnnotation(annotation);
       },
     );
   }
