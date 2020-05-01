@@ -43,11 +43,11 @@ abstract class _AnnotationFormControllerBase with Store {
       : Colors.white;
 
   @computed
-  bool get hasChanges =>
-      !(files.isEmpty &&
+  bool get hasNoChanges =>
+      (files.isEmpty &&
           textController.text.isEmpty &&
           titleController.text.isEmpty) ||
-      !(annotation != null &&
+      (annotation != null &&
           deletedFiles.isEmpty &&
           annotation.text == textController.text &&
           annotation.files.length == files.length &&
@@ -62,7 +62,7 @@ abstract class _AnnotationFormControllerBase with Store {
       annotation.files.forEach(files.add);
     } else {
       isCreate = true;
-      color = Colors.black;
+      color = appController.primaryColor;
     }
   }
 
@@ -73,7 +73,7 @@ abstract class _AnnotationFormControllerBase with Store {
   setColor(Color color) => this.color = color;
 
   @action
-  _addAnnotationToThink(AnnotationModel ant) => think.annotations.add;
+  _addAnnotationToThink(AnnotationModel ant) => think.annotations.add(ant);
 
   @action
   _persistAnnotation(AnnotationModel annotation) {
@@ -105,7 +105,6 @@ abstract class _AnnotationFormControllerBase with Store {
         listIndex: think.annotations.length,
         createdAt: formatDate(DateTime.now()),
       );
-
       _addAnnotationToThink(newAnnotation);
       _persistAnnotation(newAnnotation);
     } else {

@@ -135,7 +135,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
 
   Future<bool> _onWillPop() async {
     bool shouldPop = false;
-    if (!formController.hasChanges) {
+    if (formController.hasNoChanges) {
       return Future(() {
         return true;
       });

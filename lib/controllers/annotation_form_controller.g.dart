@@ -15,11 +15,12 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
   dynamic get popupMenuButtonColor => (_$popupMenuButtonColorComputed ??=
           Computed<dynamic>(() => super.popupMenuButtonColor))
       .value;
-  Computed<bool> _$hasChangesComputed;
+  Computed<bool> _$hasNoChangesComputed;
 
   @override
-  bool get hasChanges =>
-      (_$hasChangesComputed ??= Computed<bool>(() => super.hasChanges)).value;
+  bool get hasNoChanges =>
+      (_$hasNoChangesComputed ??= Computed<bool>(() => super.hasNoChanges))
+          .value;
 
   final _$thinkAtom = Atom(name: '_AnnotationFormControllerBase.think');
 
@@ -169,7 +170,7 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
   @override
   String toString() {
     final string =
-        'think: ${think.toString()},annotation: ${annotation.toString()},color: ${color.toString()},files: ${files.toString()},deletedFiles: ${deletedFiles.toString()},popupMenuButtonColor: ${popupMenuButtonColor.toString()},hasChanges: ${hasChanges.toString()}';
+        'think: ${think.toString()},annotation: ${annotation.toString()},color: ${color.toString()},files: ${files.toString()},deletedFiles: ${deletedFiles.toString()},popupMenuButtonColor: ${popupMenuButtonColor.toString()},hasNoChanges: ${hasNoChanges.toString()}';
     return '{$string}';
   }
 }
