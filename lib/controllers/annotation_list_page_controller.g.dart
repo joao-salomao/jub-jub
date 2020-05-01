@@ -43,6 +43,18 @@ mixin _$AnnotationListPageController
   }
 
   @override
+  dynamic reOrderAnnotations(int oldIndex, int newIndex) {
+    final _$actionInfo =
+        _$_AnnotationListPageControllerBaseActionController.startAction();
+    try {
+      return super.reOrderAnnotations(oldIndex, newIndex);
+    } finally {
+      _$_AnnotationListPageControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'think: ${think.toString()}';
     return '{$string}';
