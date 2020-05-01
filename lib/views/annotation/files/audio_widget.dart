@@ -1,3 +1,4 @@
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_notes/controllers/app_controller.dart';
@@ -18,30 +19,50 @@ class AudioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      splashColor: Colors.white70,
-      child: Text(
-        annotationFile.fileName,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          decoration: TextDecoration.underline,
-          fontSize: 16,
-          color: appController.brightness == Brightness.dark
-              ? Colors.white
-              : Colors.black,
-        ),
-      ),
-      onPressed: () {
-        if (appAudioPlayerController.filePath == annotationFile.file.path) {
-          if (appAudioPlayerController.isPlaying) {
-            appAudioPlayerController.pause();
-          } else {
-            appAudioPlayerController.play();
-          }
-        } else {
-          appAudioPlayerController.playAudio(annotationFile.file.path);
-        }
+    return Observer(
+      builder: (_) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: ListTile(
+                leading: _getLeadingIcon(),
+                title: Text(
+                  annotationFile.fileName,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 16,
+                    color: appController.brightnessIsDark ? Colors.white : Colors.black,
+                  ),
+                ),
+                onTap: _onTap,
+              ),
+            ),
+          ],
+        );
       },
     );
+  }
+
+  _onTap() {
+    if (appAudioPlayerController.filePath == annotationFile.file.path) {
+      if (appAudioPlayerController.isPlaying) {
+        appAudioPlayerController.pause();
+      } else {
+        appAudioPlayerController.play();
+      }
+    } else {
+      appAudioPlayerController.playAudio(annotationFile.file.path);
+    }
+  }
+
+  _getLeadingIcon() {
+    if (appAudioPlayerController.filePath == annotationFile.file.path &&
+        appAudioPlayerController.isPlaying) {
+      return Icon(Icons.pause);
+    }
+    return Icon(Icons.play_circle_outline);
   }
 }
