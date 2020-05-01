@@ -47,7 +47,7 @@ abstract class _AppControllerBase with Store {
   @action
   getData() async {
     final thinksFuture = thinkDAO.findAllOrderBy('listIndex', false);
-    final annotationsFuture = annotationDAO.findAll();
+    final annotationsFuture = annotationDAO.findAllOrderBy('listIndex', false);
     final annotationFilesFuture = annotationFileDAO.findAll();
     final result = await Future.wait(
       [
