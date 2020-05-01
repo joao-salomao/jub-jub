@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppTextFormField extends StatelessWidget {
-  final String label;
   final String hint;
+  final String label;
   final bool expands;
   final int minLines;
   final int maxLines;

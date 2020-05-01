@@ -4,7 +4,9 @@ import 'package:potato_notes/utils/navigation.dart';
 import 'package:potato_notes/models/think_model.dart';
 import 'package:potato_notes/views/widgets/app_alert.dart';
 import 'package:potato_notes/models/annotation_model.dart';
+import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
 import 'package:potato_notes/views/annotation/annotation_form.dart';
+import 'package:potato_notes/views/widgets/app_text_form_field.dart';
 import 'package:potato_notes/controllers/annotation_controller.dart';
 import 'package:potato_notes/views/annotation/annotation_file_list.dart';
 import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
@@ -24,12 +26,16 @@ class AnnotationPage extends StatefulWidget {
 }
 
 class _AnnotationPageState extends State<AnnotationPage> {
+  ThinkModel get think => widget.think;
+  AnnotationModel get annotation => widget.annotation;
+  AnnotationController get annotationController => widget.annotationController;
+
   _onClickEdit() {
     push(
       context,
       AnnotationForm(
-        widget.think,
-        annotation: widget.annotation,
+        think,
+        annotation: annotation,
       ),
     );
   }
@@ -40,10 +46,92 @@ class _AnnotationPageState extends State<AnnotationPage> {
       "Você tem certeza ?",
       "Essa anotação será deletada permanentemente.",
       callback: () {
-        widget.annotationController.deleteAnnotation(widget.annotation);
+        annotationController.deleteAnnotation(annotation);
         pop(context);
       },
     );
+  }
+
+  _onClickLockOrUnlock() {
+    final isUnlocking = annotation.password != null ? true : false;
+
+    if (isUnlocking) {
+      return alert(
+        context,
+        "Você tem certeza ?",
+        "A senha da anotação anotação será removida.",
+        callback: () => _updatePassword(null),
+      );
+    }
+
+    final formKey = GlobalKey<FormState>();
+    final passwordController = TextEditingController();
+    final rePasswordController = TextEditingController();
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return Observer(
+          builder: (_) {
+            return AppAlertDialog(
+              title: "Cadastrando senha",
+              content: Container(
+                height: 190,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      AppTextFormField(
+                        "Digite a senha desejada",
+                        "",
+                        controller: passwordController,
+                        cursorColor: annotation.color,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Campo obrigatório*";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      AppTextFormField(
+                        "Digite a senha novamente",
+                        "",
+                        controller: rePasswordController,
+                        cursorColor: annotation.color,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Campo obrigatório*";
+                          }
+
+                          if (value != passwordController.text) {
+                            return "As senhas não coincidem";
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              onClose: () => pop(context),
+              onSave: () {
+                if (formKey.currentState.validate()) {
+                  _updatePassword(passwordController.text.trim());
+                  pop(context);
+                }
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  _updatePassword(String value) {
+    annotation.password = value;
+    annotationController.appController.annotationDAO.save(annotation);
   }
 
   @override
@@ -52,10 +140,15 @@ class _AnnotationPageState extends State<AnnotationPage> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.annotation.title),
-            centerTitle: true,
-            backgroundColor: widget.annotation.color,
+            title: Text(annotation.title),
+            backgroundColor: annotation.color,
             actions: [
+              IconButton(
+                icon: annotation.password == null
+                    ? Icon(Icons.lock_outline)
+                    : Icon(Icons.lock_open),
+                onPressed: _onClickLockOrUnlock,
+              ),
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: _onClickEdit,
@@ -76,7 +169,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
                     children: [
                       Container(
                         child: AnnotationFileList(
-                          widget.annotation,
+                          annotation,
                         ),
                       ),
                       Container(
@@ -84,7 +177,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
                           bottom: 10,
                         ),
                         child: Text(
-                          widget.annotation.text,
+                          annotation.text,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 16,
@@ -94,7 +187,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
                       Container(
                         width: double.infinity,
                         child: Text(
-                          "~ ${widget.annotation.createdAt}",
+                          "~ ${annotation.createdAt}",
                           textAlign: TextAlign.end,
                         ),
                       ),
