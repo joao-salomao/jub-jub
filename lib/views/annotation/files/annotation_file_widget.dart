@@ -3,7 +3,7 @@ import 'audio_widget.dart';
 import 'image_widget.dart';
 import 'file_not_found_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 
 class AnnotationFileWidget extends StatelessWidget {
   final AnnotationFileModel annotationFile;

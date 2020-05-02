@@ -1,10 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/controllers/app_controller.dart';
-import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
-import 'package:potato_notes/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/services/backup_service.dart';
+import 'package:jubjub/utils/navigation.dart';
+import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class DrawerList extends StatefulWidget {
@@ -21,6 +23,15 @@ class _DrawerListState extends State<DrawerList> {
       child: Drawer(
         child: ListView(
           children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text('Não Definido'),
+              accountEmail: Text("email"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: CachedNetworkImageProvider(
+                  "https://img.elo7.com.br/product/zoom/2AE8EF2/placa-decorativa-quadro-anime-kakashi-naruto-v703-anime.jpg",
+                ),
+              ),
+            ),
             ListTile(
               leading: Icon(Icons.text_fields),
               title: Text("Título Principal"),
@@ -41,6 +52,13 @@ class _DrawerListState extends State<DrawerList> {
               subtitle: Text("Alterar tema"),
               trailing: Icon(Icons.arrow_forward),
               onTap: _changeBrightnessDialog,
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Backup"),
+              subtitle: Text("Backup dos dados no Google Drive"),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () => BackupService().backup(),
             ),
           ],
         ),

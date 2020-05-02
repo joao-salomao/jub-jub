@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 
 class AppImageViewer extends StatelessWidget {
   final AnnotationFileModel annotationFile;

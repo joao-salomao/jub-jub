@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/views/annotation/annotation_card.dart';
-import 'package:potato_notes/controllers/annotation_controller.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/views/annotation/annotation_card.dart';
+import 'package:jubjub/controllers/annotation_controller.dart';
 
 class AnnotationListPage extends StatefulWidget {
   final ThinkModel think;

@@ -1,13 +1,14 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:jubjub/services/auth_service.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/dao/think_dao.dart';
-import 'package:potato_notes/dao/annotation_dao.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/dao/annotation_file_dao.dart';
-import 'package:potato_notes/models/annotation_model.dart';
+import 'package:jubjub/dao/think_dao.dart';
+import 'package:jubjub/dao/annotation_dao.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/dao/annotation_file_dao.dart';
+import 'package:jubjub/models/annotation_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 part 'app_controller.g.dart';
 
 class AppController = _AppControllerBase with _$AppController;
@@ -16,6 +17,7 @@ abstract class _AppControllerBase with Store {
   final thinkDAO = ThinkDAO();
   final annotationDAO = AnnotationDAO();
   final annotationFileDAO = AnnotationFileDAO();
+  final authService = AuthService();
   SharedPreferences sharedPreferences;
 
   @observable
@@ -171,5 +173,12 @@ abstract class _AppControllerBase with Store {
   @action
   deleteAnnotation(AnnotationModel annotation) async {
     await annotationDAO.delete(annotation.id);
+  }
+
+  @action
+  login() {
+    authService.signInGoogle().then((result) {
+      print(result);
+    });
   }
 }

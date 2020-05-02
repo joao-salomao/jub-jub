@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/views/widgets/app_text.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/views/annotation/annotation_page.dart';
-import 'package:potato_notes/controllers/annotation_controller.dart';
-import 'package:potato_notes/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/utils/navigation.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/views/widgets/app_text.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/views/annotation/annotation_page.dart';
+import 'package:jubjub/controllers/annotation_controller.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
 
 class AnnotationCard extends StatefulWidget {
   final Key key;
@@ -192,7 +192,6 @@ class _AnnotationCardState extends State<AnnotationCard> {
   }
 
   _onTapCard() {
-    print(widget.annotation.password);
     if (widget.annotation.password == null) {
       _pushAnnotationPage();
       return;

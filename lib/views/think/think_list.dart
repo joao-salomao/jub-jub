@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/views/think/think_card.dart';
-import 'package:potato_notes/views/think/think_form.dart';
-import 'package:potato_notes/views/user/drawer_list.dart';
-import 'package:potato_notes/controllers/app_controller.dart';
-import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/views/think/think_card.dart';
+import 'package:jubjub/views/think/think_form.dart';
+import 'package:jubjub/views/user/drawer_list.dart';
+import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
 
 class ThinkList extends StatefulWidget {
   @override

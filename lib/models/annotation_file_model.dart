@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/models/model.dart';
-import 'package:potato_notes/utils/file_picker.dart';
+import 'package:jubjub/models/model.dart';
+import 'package:jubjub/utils/file_picker.dart';
 part 'annotation_file_model.g.dart';
 
 class AnnotationFileModel = _AnnotationFileModelBase with _$AnnotationFileModel;

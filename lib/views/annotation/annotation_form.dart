@@ -3,18 +3,18 @@ import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:video_player/video_player.dart';
-import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/utils/file_picker.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/controllers/app_controller.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
-import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
-import 'package:potato_notes/views/widgets/app_text_form_field.dart';
-import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
-import 'package:potato_notes/controllers/annotation_form_controller.dart';
-import 'package:potato_notes/controllers/app_audio_player_controller.dart';
-import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
+import 'package:jubjub/utils/navigation.dart';
+import 'package:jubjub/utils/file_picker.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
+import 'package:jubjub/controllers/annotation_form_controller.dart';
+import 'package:jubjub/controllers/app_audio_player_controller.dart';
+import 'package:jubjub/views/annotation/files/annotation_file_widget.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class AnnotationForm extends StatefulWidget {
@@ -246,7 +246,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                   height: files[index].type == 'audio' ||
                                           files[index].type == 'pdf'
                                       ? 80
-                                      : 300,
+                                      : 220,
                                   child: AnnotationFileWidget(
                                     files[index],
                                     shouldPauseOnDispose: false,
@@ -260,7 +260,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                       height: files[index].type == 'audio' ||
                                               files[index].type == 'pdf'
                                           ? 40
-                                          : 150,
+                                          : 110,
                                       color: Colors.black12,
                                       child: FlatButton(
                                         child: Icon(
@@ -274,7 +274,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                       height: files[index].type == 'audio' ||
                                               files[index].type == 'pdf'
                                           ? 40
-                                          : 150,
+                                          : 110,
                                       color: Colors.redAccent,
                                       child: FlatButton(
                                         child: Icon(

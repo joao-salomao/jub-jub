@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:potato_notes/utils/formatters.dart';
+import 'package:jubjub/utils/formatters.dart';
 part 'app_audio_player_controller.g.dart';
 
 class AppAudioPlayerController = _AppAudioPlayerControllerBase with _$AppAudioPlayerController;

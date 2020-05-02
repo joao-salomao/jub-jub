@@ -1,5 +1,5 @@
-import 'package:potato_notes/dao/base_dao.dart';
-import 'package:potato_notes/models/think_model.dart';
+import 'package:jubjub/dao/base_dao.dart';
+import 'package:jubjub/models/think_model.dart';
 
 class ThinkDAO extends BaseDAO<ThinkModel> {
   @override

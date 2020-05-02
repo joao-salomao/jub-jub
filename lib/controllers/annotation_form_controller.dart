@@ -3,10 +3,10 @@ import 'package:mobx/mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'app_audio_player_controller.dart';
-import 'package:potato_notes/utils/formatters.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/utils/formatters.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 part 'annotation_form_controller.g.dart';
 
 class AnnotationFormController = _AnnotationFormControllerBase

@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/controllers/app_audio_player_controller.dart';
+import 'package:jubjub/controllers/app_audio_player_controller.dart';
+
 
 class AppBottomAudioPlayer extends StatefulWidget {
   @override

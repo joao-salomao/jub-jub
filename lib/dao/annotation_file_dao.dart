@@ -1,5 +1,5 @@
 import 'base_dao.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 
 class AnnotationFileDAO extends BaseDAO<AnnotationFileModel> {
   @override

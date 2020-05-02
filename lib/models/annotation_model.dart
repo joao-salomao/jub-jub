@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
-import 'package:potato_notes/models/model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/models/model.dart';
 part 'annotation_model.g.dart';
 
 class AnnotationModel = _AnnotationModelBase with _$AnnotationModel;

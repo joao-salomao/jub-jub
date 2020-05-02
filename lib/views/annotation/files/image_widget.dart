@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
-import 'package:potato_notes/views/widgets/app_image_viewer.dart';
+import 'package:jubjub/utils/navigation.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/views/widgets/app_image_viewer.dart';
 
 class ImageWidget extends StatelessWidget {
   final AnnotationFileModel annotationFile;
@@ -21,7 +21,7 @@ class ImageWidget extends StatelessWidget {
         width: double.infinity,
         child: Image.file(
           annotationFile.file,
-          fit: BoxFit.fill,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );

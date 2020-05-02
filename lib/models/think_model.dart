@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/models/model.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/models/model.dart';
 part 'think_model.g.dart';
 
 class ThinkModel = _ThinkModelBase with _$ThinkModel;

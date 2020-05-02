@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:potato_notes/views/user/splash_page.dart';
+import 'package:jubjub/views/user/splash_page.dart';
+
 
 class App extends StatefulWidget {
   @override

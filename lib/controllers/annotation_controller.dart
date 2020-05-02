@@ -1,8 +1,8 @@
 import 'package:mobx/mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/controllers/app_controller.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 part 'annotation_controller.g.dart';
 
 class AnnotationController = _AnnotationControllerBase

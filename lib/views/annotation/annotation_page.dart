@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/utils/navigation.dart';
-import 'package:potato_notes/models/think_model.dart';
-import 'package:potato_notes/views/widgets/app_alert.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/views/widgets/app_alert_dialog.dart';
-import 'package:potato_notes/views/annotation/annotation_form.dart';
-import 'package:potato_notes/views/widgets/app_text_form_field.dart';
-import 'package:potato_notes/controllers/annotation_controller.dart';
-import 'package:potato_notes/views/annotation/annotation_file_list.dart';
-import 'package:potato_notes/views/widgets/app_bottom_audio_player.dart';
+import 'package:jubjub/utils/navigation.dart';
+import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
+import 'package:jubjub/views/annotation/annotation_form.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/controllers/annotation_controller.dart';
+import 'package:jubjub/views/annotation/annotation_file_list.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
 
 class AnnotationPage extends StatefulWidget {
   final ThinkModel think;
@@ -164,7 +164,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
             child: ListView(
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     children: [
                       Container(

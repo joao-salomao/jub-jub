@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 
 class VideoWidget extends StatefulWidget {
   final bool shouldPauseOnDispose;

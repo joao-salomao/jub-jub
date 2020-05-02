@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:potato_notes/models/model.dart';
-import 'package:potato_notes/services/database_service.dart';
+import 'package:jubjub/models/model.dart';
+import 'package:jubjub/services/database_service.dart';
 
 // Data Access Object
 abstract class BaseDAO<T extends Model> {

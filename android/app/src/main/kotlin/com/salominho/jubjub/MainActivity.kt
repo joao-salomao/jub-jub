@@ -1,4 +1,4 @@
-package com.example.potato_notes
+package com.salominho.jubjub
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

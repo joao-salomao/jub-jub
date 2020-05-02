@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:potato_notes/models/annotation_model.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
-import 'package:potato_notes/views/annotation/files/annotation_file_widget.dart';
+import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/views/annotation/files/annotation_file_widget.dart';
+
 
 class AnnotationFileList extends StatelessWidget {
   final AnnotationModel annotation;

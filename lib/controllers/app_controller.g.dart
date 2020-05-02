@@ -204,6 +204,16 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
+  dynamic login() {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.login();
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
         'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';

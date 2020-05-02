@@ -1,9 +1,9 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_notes/controllers/app_controller.dart';
-import 'package:potato_notes/models/annotation_file_model.dart';
-import 'package:potato_notes/controllers/app_audio_player_controller.dart';
+import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/controllers/app_audio_player_controller.dart';
 
 class AudioWidget extends StatelessWidget {
   final AppController appController = GetIt.I<AppController>();
