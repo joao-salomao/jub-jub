@@ -1,18 +1,25 @@
 import 'dart:io';
-import 'package:path/path.dart' as p;
-import 'package:googleapis/drive/v3.dart' as ga;
+import 'package:path/path.dart' as path;
 import 'package:jubjub/services/auth_service.dart';
+import 'package:googleapis/drive/v3.dart' as googleApis;
 
 class GoogleDriveService {
   final _authService = AuthService();
 
   Future upload(File file) async {
     var client = await _authService.signInGoogle();
-    var drive = ga.DriveApi(client);
+    var drive = googleApis.DriveApi(client);
     print("Uploading file");
+
+    googleApis.File fileToUpload = googleApis.File();
+
+    fileToUpload.parents = ["backups_jubjub"];
+    fileToUpload.name = path.basename(file.absolute.path);
+
     var response = await drive.files.create(
-        ga.File()..name = p.basename(file.absolute.path),
-        uploadMedia: ga.Media(file.openRead(), file.lengthSync()));
+      fileToUpload,
+      uploadMedia: googleApis.Media(file.openRead(), file.lengthSync()),
+    );
 
     print("Result ${response.toJson()}");
   }
