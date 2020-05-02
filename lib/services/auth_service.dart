@@ -9,7 +9,12 @@ class AuthService {
   AuthService() {
     //   _firebaseAuth = FirebaseAuth.instance;
     _googleSignIn = GoogleSignIn(
-      scopes: ['https://www.googleapis.com/auth/drive'],
+      scopes: [
+        'https://www.googleapis.com/auth/drive',
+        // Scope to create a app folder on user Google Drive
+        // PS: Folder is not visible
+        // 'https://www.googleapis.com/auth/drive.appdata'
+      ],
     );
   }
 
@@ -37,7 +42,6 @@ class AuthService {
     _googleSignIn.signOut();
   }
 }
-
 
 class _GoogleHttpClient extends IOClient {
   Map<String, String> _headers;

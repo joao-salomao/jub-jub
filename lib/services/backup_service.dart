@@ -23,9 +23,14 @@ class BackupService {
     file.delete();
   }
 
+  list() {
+    driveService.listGoogleDriveFiles();
+  }
+
   _getFile(String data) async {
     final path = await _localPath;
-    final filename = path + '/backup-jub-jub-' + DateTime.now().toString() + '.json';
+    final filename =
+        path + '/backup-jub-jub-' + DateTime.now().toString() + '.json';
     final file = new File(filename);
     await file.writeAsString(data);
     return file;

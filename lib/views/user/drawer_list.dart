@@ -54,6 +54,13 @@ class _DrawerListState extends State<DrawerList> {
               onTap: _changeBrightnessDialog,
             ),
             ListTile(
+              leading: Icon(Icons.list),
+              title: Text("Listar backups"),
+              subtitle: Text("Listar backups realizados"),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () => BackupService().list(),
+            ),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Backup"),
               subtitle: Text("Backup dos dados no Google Drive"),
