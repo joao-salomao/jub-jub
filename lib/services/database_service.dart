@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter/services.dart';
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService.getInstance();

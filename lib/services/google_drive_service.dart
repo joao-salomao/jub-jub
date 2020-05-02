@@ -6,7 +6,6 @@ import 'package:jubjub/services/auth_service.dart';
 class GoogleDriveService {
   final _authService = AuthService();
 
-  //Upload File
   Future upload(File file) async {
     var client = await _authService.signInGoogle();
     var drive = ga.DriveApi(client);
