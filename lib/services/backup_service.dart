@@ -23,8 +23,8 @@ class BackupService {
     file.delete();
   }
 
-  list() {
-    driveService.listGoogleDriveFiles();
+  Future<List<File>> getBackupsList() async {
+    return await driveService.getBackupsList();
   }
 
   _getFile(String data) async {

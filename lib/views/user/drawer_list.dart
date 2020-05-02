@@ -8,6 +8,7 @@ import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'backup_page.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -55,10 +56,10 @@ class _DrawerListState extends State<DrawerList> {
             ),
             ListTile(
               leading: Icon(Icons.list),
-              title: Text("Listar backups"),
-              subtitle: Text("Listar backups realizados"),
+              title: Text("Restaurar Dados"),
+              subtitle: Text("Restaurar dados armazenados no Google Drive"),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () => BackupService().list(),
+              onTap: () => push(context, BackupPage()),
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),

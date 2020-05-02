@@ -31,17 +31,18 @@ class GoogleDriveService {
     }
   }
 
-  Future<void> listGoogleDriveFiles() async {
+  Future getBackupsList() async {
     try {
       var client = await _authService.signInGoogle();
       var drive = googleApis.DriveApi(client);
-      drive.files.list(q: "mimeType = 'application/json' and name contains ' backup-jub-jub'").then((value) {
-        for (var i = 0; i < value.files.length; i++) {
-          print("Id: ${value.files[i].id} File Name:${value.files[i].name}");
-        }
-      });
+      final fileList = await drive.files.list(
+        q: "mimeType = 'application/json' and name contains ' backup-jub-jub'",
+        orderBy: 'createdTime desc',
+      );
+      return fileList.files;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 }

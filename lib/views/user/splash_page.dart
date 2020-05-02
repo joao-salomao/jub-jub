@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:jubjub/utils/navigation.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:jubjub/views/think/think_list.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:jubjub/controllers/app_controller.dart';
 
 class SplashPage extends StatefulWidget {
   @override
