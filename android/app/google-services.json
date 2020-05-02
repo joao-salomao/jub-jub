@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "59755895341",
+    "firebase_url": "https://jub-jub-8b2a4.firebaseio.com",
+    "project_id": "jub-jub-8b2a4",
+    "storage_bucket": "jub-jub-8b2a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59755895341:android:64f80393c085fd7890f6a4",
+        "android_client_info": {
+          "package_name": "com.salominho.jubjub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59755895341-gsidkd6nhtialhlp9o3gt8l801p1l3bt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-KKMtRIQBpAWnaFHYBzwTr1oP7wduThM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59755895341-gsidkd6nhtialhlp9o3gt8l801p1l3bt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
