@@ -25,6 +25,9 @@ class AnnotationCard extends StatefulWidget {
 }
 
 class _AnnotationCardState extends State<AnnotationCard> {
+  final obsuredText =
+      "**************************************************************************************************************";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,8 +54,7 @@ class _AnnotationCardState extends State<AnnotationCard> {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        widget.annotation.text,
+                      child: Text( widget.annotation.password == null ? widget.annotation.text : obsuredText,
                         softWrap: true,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -147,7 +149,7 @@ class _AnnotationCardState extends State<AnnotationCard> {
       builder: (_) {
         return Container(
           child: SimpleDialog(
-            title: Text('Acessando anotação privada'),
+            title: Text('Acessando anotação protegida'),
             children: [
               Container(
                 padding: EdgeInsets.only(
