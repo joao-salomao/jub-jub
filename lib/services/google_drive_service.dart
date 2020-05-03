@@ -31,6 +31,17 @@ class GoogleDriveService {
     }
   }
 
+  Future<Stream<List<int>>> downloadGoogleDriveFile(String fileName, String fileId) async {
+    var client = await _authService.signInGoogle();
+    var drive = googleApis.DriveApi(client);
+    googleApis.Media file = await drive.files.get(
+      fileId,
+      downloadOptions: googleApis.DownloadOptions.FullMedia,
+
+    );
+    return file.stream;
+  }
+
   Future getBackupsList() async {
     try {
       var client = await _authService.signInGoogle();

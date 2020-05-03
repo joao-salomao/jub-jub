@@ -2,8 +2,11 @@ import 'dart:io';
 import 'dart:convert' as convert;
 import 'google_drive_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:jubjub/models/think_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/models/annotation_file_model.dart';
 
 class BackupService {
   final driveService = GoogleDriveService();
@@ -23,9 +26,41 @@ class BackupService {
     file.delete();
   }
 
-  Future<List<File>> getBackupsList() async {
-    return await driveService.getBackupsList();
+  backupFile(File file) async {
+    bool result;
+    try {
+      final String json = await file.readAsString();
+      final List thinksMap = convert.json.decode(json);
+
+      thinksMap.forEach((thinkMap) async {
+        final think = ThinkModel.fromMap(thinkMap);
+        await appController.saveThink(think);
+
+        thinkMap['annotations'].forEach((annotationMap) async {
+          final annotation = AnnotationModel.fromMap(annotationMap);
+          annotation.thinkId = think.id;
+          await appController.saveAnnotation(annotation);
+
+          annotationMap['annotation_files'].forEach((afMap) {
+            final annotationFile = AnnotationFileModel.fromMap(afMap);
+            annotation.files.add(annotationFile);
+          });
+
+          await appController.saveAnnotation(annotation);
+        });
+      });
+      result = true;
+    } catch (e) {
+      result = false;
+    }
+    return result;
   }
+
+  getBackupsList() async => await driveService.getBackupsList();
+
+  Future<Stream<List<int>>> downloadFile(
+          String fileName, String fileId) async =>
+      await driveService.downloadGoogleDriveFile(fileName, fileId);
 
   _getFile(String data) async {
     final path = await _localPath;
@@ -39,7 +74,7 @@ class BackupService {
   _getJson() async {
     await appController.getData();
 
-    final map = {'thinks': []};
+    final arr = [];
 
     appController.thinks.forEach((think) {
       final thinkMap = think.toMap();
@@ -55,9 +90,9 @@ class BackupService {
 
         thinkMap['annotations'].add(annotationMap);
       });
-      map['thinks'].add(thinkMap);
+      arr.add(thinkMap);
     });
 
-    return convert.json.encode(map);
+    return convert.json.encode(arr);
   }
 }

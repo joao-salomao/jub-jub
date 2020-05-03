@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
-String formatDate(date) => new DateFormat('dd/MM/yyyy').format(date);
+String formatDate(date, {String format = 'dd/MM/yyyy'}) {
+  return new DateFormat(format).format(date);
+}
 
 String formatDuration(Duration value) {
   final minutes = value.inMinutes.toString().padLeft(2, '0');
