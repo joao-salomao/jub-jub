@@ -42,10 +42,7 @@ abstract class _BackupFileBase with Store {
   bool isLoading = false;
 
   @action
-  downloadFile({
-    Function onDone,
-    Function onError,
-  }) async {
+  downloadFile() async {
     isDone = false;
     hasError = false;
     isLoading = true;
@@ -61,26 +58,20 @@ abstract class _BackupFileBase with Store {
 
     final List<int> dataStore = [];
     fileStream.listen((data) {
-
       dataStore.insertAll(dataStore.length, data);
-
     }, onDone: () async {
-      
       await file.writeAsBytes(dataStore);
 
       isDone = true;
       isLoading = false;
 
       await backupService.backupFile(file);
-      onDone();
-
+      file.delete();
+      backupService.appController.getData();
     }, onError: (error) {
-      
       hasError = true;
       isLoading = false;
       file.delete();
-      onError();
-      
     });
   }
 }

@@ -84,6 +84,13 @@ mixin _$BackupController on _BackupControllerBase, Store {
     return _$getBackupsAsyncAction.run(() => super.getBackups());
   }
 
+  final _$deleteFileAsyncAction = AsyncAction('deleteFile');
+
+  @override
+  Future deleteFile(dynamic file) {
+    return _$deleteFileAsyncAction.run(() => super.deleteFile(file));
+  }
+
   @override
   String toString() {
     final string =

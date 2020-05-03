@@ -37,4 +37,10 @@ abstract class _BackupControllerBase with Store {
     }
     isLoading = false;
   }
+
+  @action
+  deleteFile(var file) async {
+    await backupService.deleteFile(file);
+    getBackups();
+  }
 }

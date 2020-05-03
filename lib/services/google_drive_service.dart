@@ -31,13 +31,25 @@ class GoogleDriveService {
     }
   }
 
-  Future<Stream<List<int>>> downloadGoogleDriveFile(String fileName, String fileId) async {
+  Future deleteFile(googleApis.File file) async {
+    try {
+      var client = await _authService.signInGoogle();
+      var drive = googleApis.DriveApi(client);
+      await drive.files.delete(file.id);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<Stream<List<int>>> downloadGoogleDriveFile(
+      String fileName, String fileId) async {
     var client = await _authService.signInGoogle();
     var drive = googleApis.DriveApi(client);
     googleApis.Media file = await drive.files.get(
       fileId,
       downloadOptions: googleApis.DownloadOptions.FullMedia,
-
     );
     return file.stream;
   }
@@ -47,13 +59,13 @@ class GoogleDriveService {
       var client = await _authService.signInGoogle();
       var drive = googleApis.DriveApi(client);
       final fileList = await drive.files.list(
-        q: "mimeType = 'application/json' and name contains ' backup-jub-jub'",
+        q: "mimeType = 'application/json' and name contains ' backup-jub-jub' and trashed = false",
         orderBy: 'createdTime desc',
       );
       return fileList.files;
     } catch (e) {
       print(e);
-      return null;
+      throw e;
     }
   }
 }

@@ -56,11 +56,17 @@ class BackupService {
     return result;
   }
 
-  getBackupsList() async => await driveService.getBackupsList();
+  getBackupsList() async {
+    return await driveService.getBackupsList();
+  }
 
-  Future<Stream<List<int>>> downloadFile(
-          String fileName, String fileId) async =>
-      await driveService.downloadGoogleDriveFile(fileName, fileId);
+  Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {
+    return await driveService.downloadGoogleDriveFile(fileName, fileId);
+  }
+
+  deleteFile(var file) async {
+    return await driveService.deleteFile(file);
+  }
 
   _getFile(String data) async {
     final path = await _localPath;

@@ -120,9 +120,8 @@ mixin _$BackupFile on _BackupFileBase, Store {
   final _$downloadFileAsyncAction = AsyncAction('downloadFile');
 
   @override
-  Future downloadFile({Function onDone, Function onError}) {
-    return _$downloadFileAsyncAction
-        .run(() => super.downloadFile(onDone: onDone, onError: onError));
+  Future downloadFile() {
+    return _$downloadFileAsyncAction.run(() => super.downloadFile());
   }
 
   @override
