@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:video_player/video_player.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/utils/file_picker.dart';
 import 'package:jubjub/models/think_model.dart';
+import 'package:video_player/video_player.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';

@@ -1,6 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
@@ -13,10 +15,11 @@ showThinkForm({
   Function onCancel,
   @required Function onSubmit,
 }) async {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _titleController =
+  final _appController = GetIt.I<AppController>();
+  final  _formKey = GlobalKey<FormState>();
+  final  _titleController =
       TextEditingController(text: think != null ? think.title : "");
-  Color _color = think != null ? think.color : Colors.black;
+  Color _color = think != null ? think.color : _appController.primaryColor;
 
   if (onChangeTitle != null) {
     _titleController.addListener(() {
