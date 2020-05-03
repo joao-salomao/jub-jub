@@ -100,21 +100,38 @@ mixin _$BackupFile on _BackupFileBase, Store {
     }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
   }
 
-  final _$isLoadingAtom = Atom(name: '_BackupFileBase.isLoading');
+  final _$isDownloadingAtom = Atom(name: '_BackupFileBase.isDownloading');
 
   @override
-  bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
-    return super.isLoading;
+  bool get isDownloading {
+    _$isDownloadingAtom.context.enforceReadPolicy(_$isDownloadingAtom);
+    _$isDownloadingAtom.reportObserved();
+    return super.isDownloading;
   }
 
   @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
-      super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+  set isDownloading(bool value) {
+    _$isDownloadingAtom.context.conditionallyRunInAction(() {
+      super.isDownloading = value;
+      _$isDownloadingAtom.reportChanged();
+    }, _$isDownloadingAtom, name: '${_$isDownloadingAtom.name}_set');
+  }
+
+  final _$isDeletingAtom = Atom(name: '_BackupFileBase.isDeleting');
+
+  @override
+  bool get isDeleting {
+    _$isDeletingAtom.context.enforceReadPolicy(_$isDeletingAtom);
+    _$isDeletingAtom.reportObserved();
+    return super.isDeleting;
+  }
+
+  @override
+  set isDeleting(bool value) {
+    _$isDeletingAtom.context.conditionallyRunInAction(() {
+      super.isDeleting = value;
+      _$isDeletingAtom.reportChanged();
+    }, _$isDeletingAtom, name: '${_$isDeletingAtom.name}_set');
   }
 
   final _$downloadFileAsyncAction = AsyncAction('downloadFile');
@@ -127,7 +144,7 @@ mixin _$BackupFile on _BackupFileBase, Store {
   @override
   String toString() {
     final string =
-        'file: ${file.toString()},metaData: ${metaData.toString()},fileStream: ${fileStream.toString()},isDone: ${isDone.toString()},hasError: ${hasError.toString()},isLoading: ${isLoading.toString()},createdAt: ${createdAt.toString()}';
+        'file: ${file.toString()},metaData: ${metaData.toString()},fileStream: ${fileStream.toString()},isDone: ${isDone.toString()},hasError: ${hasError.toString()},isDownloading: ${isDownloading.toString()},isDeleting: ${isDeleting.toString()},createdAt: ${createdAt.toString()}';
     return '{$string}';
   }
 }

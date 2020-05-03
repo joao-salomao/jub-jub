@@ -2,7 +2,11 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
+import 'package:jubjub/models/backup_file_model.dart';
 import 'package:jubjub/controllers/backup_controller.dart';
+import 'package:jubjub/views/widgets/app_flat_button.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class BackupPage extends StatefulWidget {
   @override
@@ -20,23 +24,60 @@ class _BackupPageState extends State<BackupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Backup"),
-        centerTitle: true,
-      ),
-      body: Observer(
-        builder: (_) {
-          return _body();
-        },
-      ),
+    return Observer(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Backup"),
+            backgroundColor: backupController.backupAppBarColor,
+            centerTitle: true,
+            actions: [
+              Builder(
+                builder: (_) {
+                  return AppFlatButton(
+                    child: Icon(Icons.cloud_upload),
+                    onPressed: () => _onClickNewBackup(_),
+                    isLoading: backupController.isLoadingNewBackup,
+                  );
+                },
+              ),
+            ],
+          ),
+          body: _body(),
+        );
+      },
+    );
+  }
+
+  _onClickNewBackup(BuildContext context) {
+    alert(
+      context,
+      "Novo backup",
+      "Você tem certeza que deseja armazenar um novo backup ?",
+      callback: () {
+        backupController.storeNewBackup().then((result) {
+          _showSnackBar(
+            snackContext: context,
+            content: Text(result == false
+                ? 'Algo deu errado, tente novamente.'
+                : 'Backup realizado com sucesso !'),
+            snackBarAction: SnackBarAction(
+              label: result == false ? "" : "Voltar",
+              onPressed: () => result == false ? null : _pop(),
+            ),
+          );
+        });
+      },
     );
   }
 
   _body() {
-    if (backupController.isLoading) {
+    if (backupController.isLoadingBackups) {
       return Center(
-        child: CircularProgressIndicator(),
+        child: JumpingDotsProgressIndicator(
+          color: backupController.iconColor,
+          fontSize: 50,
+        ),
       );
     }
 
@@ -74,10 +115,6 @@ class _BackupPageState extends State<BackupPage> {
       (file) {
         return Observer(
           builder: (context) {
-            final _pop = () {
-              pop(context);
-              pop(context);
-            };
             return Container(
               padding: EdgeInsets.all(6),
               child: Card(
@@ -89,38 +126,22 @@ class _BackupPageState extends State<BackupPage> {
                       Text(file.createdAt),
                       Row(
                         children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.delete),
+                          AppFlatButton(
+                            child: Icon(
+                              Icons.delete,
+                              color: backupController.iconColor,
+                            ),
+                            isLoading: file.isDeleting,
                             onPressed: () =>
-                                backupController.deleteFile(file.metaData),
+                                _onClickDeleteBackup(context, file),
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          FlatButton(
-                            child: file.isLoading
-                                ? Container(
-                                    child: CircularProgressIndicator(
-                                    strokeWidth: .5,
-                                  ))
-                                : Icon(Icons.file_download),
-                            onPressed: () async {
-                              final result = await file.downloadFile();
-
-                              final snackBar = SnackBar(
-                                content: Text(
-                                    'Anotações restauradas com sucesso !!!'),
-                                action: SnackBarAction(
-                                  label: result == false ? null : "Voltar",
-                                  onPressed: () =>
-                                      result == false ? null : _pop(),
-                                ),
-                                duration: Duration(
-                                  seconds: 5,
-                                ),
-                              );
-                              Scaffold.of(context).showSnackBar(snackBar);
-                            },
+                          AppFlatButton(
+                            child: Icon(
+                              Icons.file_download,
+                              color: backupController.iconColor,
+                            ),
+                            isLoading: file.isDownloading,
+                            onPressed: () => _onClickBackup(context, file),
                           ),
                         ],
                       ),
@@ -133,5 +154,69 @@ class _BackupPageState extends State<BackupPage> {
         );
       },
     ).toList();
+  }
+
+  _onClickBackup(BuildContext context, BackupFile file) {
+    alert(
+      context,
+      "Restaurando dados",
+      "Você tem certeza que deseja restaurar as anotações desse backup ?",
+      callback: () {
+        file.downloadFile().then((result) {
+          _showSnackBar(
+            snackContext: context,
+            content: Text(result == false
+                ? 'Algo deu errado, tente novamente.'
+                : 'Anotações restauradas com sucesso !'),
+            snackBarAction: SnackBarAction(
+              label: result == false ? "" : "Voltar",
+              onPressed: () => result == false ? null : _pop(),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  _onClickDeleteBackup(BuildContext context, BackupFile file) {
+    alert(
+      context,
+      "Deletando backup",
+      "Você tem certeza ? As anotações desse backup serão permanentemente deletadas.",
+      callback: () {
+        backupController.deleteFile(file).then((result) {
+          _showSnackBar(
+            snackContext: context,
+            content: Text(result == false
+                ? 'Algo deu errado, tente novamente.'
+                : 'Backup deletado com sucesso !'),
+            snackBarAction: SnackBarAction(
+              label: result == false ? "" : "Voltar",
+              onPressed: () => result == false ? null : _pop(),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  _pop() {
+    pop(context);
+    pop(context);
+  }
+
+  _showSnackBar({
+    BuildContext snackContext,
+    Widget content,
+    SnackBarAction snackBarAction,
+  }) {
+    final snackBar = SnackBar(
+      content: content,
+      action: snackBarAction,
+      duration: Duration(
+        seconds: 5,
+      ),
+    );
+    Scaffold.of(snackContext).showSnackBar(snackBar);
   }
 }

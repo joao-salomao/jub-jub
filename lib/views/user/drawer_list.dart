@@ -56,17 +56,10 @@ class _DrawerListState extends State<DrawerList> {
             ),
             ListTile(
               leading: Icon(Icons.list),
-              title: Text("Restaurar Dados"),
+              title: Text("Backup"),
               subtitle: Text("Restaurar dados armazenados no Google Drive"),
               trailing: Icon(Icons.arrow_forward),
               onTap: () => push(context, BackupPage()),
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text("Backup"),
-              subtitle: Text("Backup dos dados no Google Drive"),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: () => BackupService().backup(),
             ),
           ],
         ),

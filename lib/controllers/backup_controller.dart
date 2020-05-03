@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:jubjub/services/backup_service.dart';
 import 'package:jubjub/models/backup_file_model.dart';
@@ -7,6 +10,7 @@ class BackupController = _BackupControllerBase with _$BackupController;
 
 abstract class _BackupControllerBase with Store {
   final backupService = BackupService();
+  final appController = GetIt.I<AppController>();
 
   @observable
   ObservableList<BackupFile> backups = ObservableList<BackupFile>();
@@ -15,14 +19,23 @@ abstract class _BackupControllerBase with Store {
   ObservableStream<List<int>> fileStream;
 
   @observable
-  bool isLoading;
+  bool isLoadingBackups;
+
+  @observable
+  bool isLoadingNewBackup = false;
 
   @observable
   bool hasError = false;
 
+  @computed
+  get iconColor =>
+      appController.brightnessIsDark ? Colors.white : Colors.black;
+
+  get backupAppBarColor => appController.primaryColor;
+
   @action
   getBackups() async {
-    isLoading = true;
+    isLoadingBackups = true;
     backups.clear();
 
     try {
@@ -35,12 +48,38 @@ abstract class _BackupControllerBase with Store {
       hasError = true;
       print(e);
     }
-    isLoading = false;
+    isLoadingBackups = false;
   }
 
   @action
-  deleteFile(var file) async {
-    await backupService.deleteFile(file);
-    getBackups();
+  storeNewBackup() async {
+    var result = false;
+    isLoadingNewBackup = true;
+
+    try {
+      await backupService.backup();
+      getBackups();
+      result = true;
+    } catch (e) {
+      print(e);
+    }
+
+    isLoadingNewBackup = false;
+    return result;
+  }
+
+  @action
+  deleteFile(BackupFile file) async {
+    var result = false;
+    file.isDeleting = true;
+    try {
+      await backupService.deleteFile(file.metaData);
+      backups.remove(file);
+      result = true;
+    } catch (e) {
+      print(e);
+    }
+    file.isDeleting = false;
+    return result;
   }
 }

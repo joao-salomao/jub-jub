@@ -9,6 +9,12 @@ part of 'backup_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BackupController on _BackupControllerBase, Store {
+  Computed<dynamic> _$iconColorComputed;
+
+  @override
+  dynamic get iconColor =>
+      (_$iconColorComputed ??= Computed<dynamic>(() => super.iconColor)).value;
+
   final _$backupsAtom = Atom(name: '_BackupControllerBase.backups');
 
   @override
@@ -43,21 +49,41 @@ mixin _$BackupController on _BackupControllerBase, Store {
     }, _$fileStreamAtom, name: '${_$fileStreamAtom.name}_set');
   }
 
-  final _$isLoadingAtom = Atom(name: '_BackupControllerBase.isLoading');
+  final _$isLoadingBackupsAtom =
+      Atom(name: '_BackupControllerBase.isLoadingBackups');
 
   @override
-  bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
-    return super.isLoading;
+  bool get isLoadingBackups {
+    _$isLoadingBackupsAtom.context.enforceReadPolicy(_$isLoadingBackupsAtom);
+    _$isLoadingBackupsAtom.reportObserved();
+    return super.isLoadingBackups;
   }
 
   @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
-      super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+  set isLoadingBackups(bool value) {
+    _$isLoadingBackupsAtom.context.conditionallyRunInAction(() {
+      super.isLoadingBackups = value;
+      _$isLoadingBackupsAtom.reportChanged();
+    }, _$isLoadingBackupsAtom, name: '${_$isLoadingBackupsAtom.name}_set');
+  }
+
+  final _$isLoadingNewBackupAtom =
+      Atom(name: '_BackupControllerBase.isLoadingNewBackup');
+
+  @override
+  bool get isLoadingNewBackup {
+    _$isLoadingNewBackupAtom.context
+        .enforceReadPolicy(_$isLoadingNewBackupAtom);
+    _$isLoadingNewBackupAtom.reportObserved();
+    return super.isLoadingNewBackup;
+  }
+
+  @override
+  set isLoadingNewBackup(bool value) {
+    _$isLoadingNewBackupAtom.context.conditionallyRunInAction(() {
+      super.isLoadingNewBackup = value;
+      _$isLoadingNewBackupAtom.reportChanged();
+    }, _$isLoadingNewBackupAtom, name: '${_$isLoadingNewBackupAtom.name}_set');
   }
 
   final _$hasErrorAtom = Atom(name: '_BackupControllerBase.hasError');
@@ -84,17 +110,24 @@ mixin _$BackupController on _BackupControllerBase, Store {
     return _$getBackupsAsyncAction.run(() => super.getBackups());
   }
 
+  final _$storeNewBackupAsyncAction = AsyncAction('storeNewBackup');
+
+  @override
+  Future storeNewBackup() {
+    return _$storeNewBackupAsyncAction.run(() => super.storeNewBackup());
+  }
+
   final _$deleteFileAsyncAction = AsyncAction('deleteFile');
 
   @override
-  Future deleteFile(dynamic file) {
+  Future deleteFile(BackupFile file) {
     return _$deleteFileAsyncAction.run(() => super.deleteFile(file));
   }
 
   @override
   String toString() {
     final string =
-        'backups: ${backups.toString()},fileStream: ${fileStream.toString()},isLoading: ${isLoading.toString()},hasError: ${hasError.toString()}';
+        'backups: ${backups.toString()},fileStream: ${fileStream.toString()},isLoadingBackups: ${isLoadingBackups.toString()},isLoadingNewBackup: ${isLoadingNewBackup.toString()},hasError: ${hasError.toString()},iconColor: ${iconColor.toString()}';
     return '{$string}';
   }
 }

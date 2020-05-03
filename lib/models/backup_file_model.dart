@@ -26,7 +26,7 @@ abstract class _BackupFileBase with Store {
         DateTime.parse(metaData.name
             .replaceAll("backup-jub-jub-", "")
             .replaceAll(".json", "")),
-        format: 'dd/MM/yyyy hh:mm',
+        format: 'dd/MM/yyyy HH:MM',
       );
 
   @observable
@@ -39,13 +39,16 @@ abstract class _BackupFileBase with Store {
   bool hasError;
 
   @observable
-  bool isLoading = false;
+  bool isDownloading = false;
+
+  @observable
+  bool isDeleting = false;
 
   @action
   downloadFile() async {
     isDone = false;
     hasError = false;
-    isLoading = true;
+    isDownloading = true;
 
     final stream = await backupService.downloadFile(metaData.name, metaData.id);
     fileStream = ObservableStream(stream);
@@ -63,14 +66,14 @@ abstract class _BackupFileBase with Store {
       await file.writeAsBytes(dataStore);
 
       isDone = true;
-      isLoading = false;
+      isDownloading = false;
 
       await backupService.backupFile(file);
       file.delete();
       backupService.appController.getData();
     }, onError: (error) {
       hasError = true;
-      isLoading = false;
+      isDownloading = false;
       file.delete();
     });
   }
