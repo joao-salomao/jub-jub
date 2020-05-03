@@ -1,13 +1,16 @@
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:jubjub/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  // FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AuthService() {
-    //   _firebaseAuth = FirebaseAuth.instance;
+    _firebaseAuth = FirebaseAuth.instance;
+
     _googleSignIn = GoogleSignIn(
       scopes: [
         'https://www.googleapis.com/auth/drive',
@@ -18,27 +21,63 @@ class AuthService {
     );
   }
 
-  Future signInGoogle() async {
-    final GoogleSignInAccount googleSignInAccount =
-        await _googleSignIn.signIn();
-    // final GoogleSignInAuthentication googleSignInAuthentication =
-    //     await googleSignInAccount.authentication;
+  Future<FirebaseUser> _signInFirebase(AuthCredential credential) async {
+    try {
+      final authResult = await _firebaseAuth.signInWithCredential(credential);
+      final FirebaseUser user = authResult.user;
 
-    await googleSignInAccount.authentication;
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-    // final AuthCredential credential = GoogleAuthProvider.getCredential(
-    //   accessToken: googleSignInAuthentication.accessToken,
-    //   idToken: googleSignInAuthentication.idToken,
-    // );
+      final FirebaseUser currentUser = await _firebaseAuth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    // AuthResult authResult = await _firebaseAuth.signInWithCredential(credential);
-
-    var client = _GoogleHttpClient(await googleSignInAccount.authHeaders);
-    return client;
+      return currentUser;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
-  signOutGoogle() {
-    //  _firebaseAuth.signOut();
+  Future signIn() async {
+    final isLogged = (await _firebaseAuth.currentUser()) != null;
+    try {
+      var googleSignInAccount;
+
+      if (isLogged) {
+        googleSignInAccount = await _googleSignIn.signInSilently();
+      } else {
+        googleSignInAccount = await _googleSignIn.signIn();
+      }
+
+      final googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      await googleSignInAccount.authentication;
+
+      final credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final currentUser = await _signInFirebase(credential);
+      final client = _GoogleHttpClient(await googleSignInAccount.authHeaders);
+      final user = UserModel(
+        client: client,
+        email: currentUser.email,
+        name: currentUser.displayName,
+        photoUrl: currentUser.photoUrl,
+      );
+
+      return user;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  signOut() {
+    _firebaseAuth.signOut();
     _googleSignIn.signOut();
   }
 }

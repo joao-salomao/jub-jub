@@ -9,12 +9,34 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
+  Computed<bool> _$hasUserComputed;
+
+  @override
+  bool get hasUser =>
+      (_$hasUserComputed ??= Computed<bool>(() => super.hasUser)).value;
   Computed<bool> _$brightnessIsDarkComputed;
 
   @override
   bool get brightnessIsDark => (_$brightnessIsDarkComputed ??=
           Computed<bool>(() => super.brightnessIsDark))
       .value;
+
+  final _$currentUserAtom = Atom(name: '_AppControllerBase.currentUser');
+
+  @override
+  UserModel get currentUser {
+    _$currentUserAtom.context.enforceReadPolicy(_$currentUserAtom);
+    _$currentUserAtom.reportObserved();
+    return super.currentUser;
+  }
+
+  @override
+  set currentUser(UserModel value) {
+    _$currentUserAtom.context.conditionallyRunInAction(() {
+      super.currentUser = value;
+      _$currentUserAtom.reportChanged();
+    }, _$currentUserAtom, name: '${_$currentUserAtom.name}_set');
+  }
 
   final _$thinksAtom = Atom(name: '_AppControllerBase.thinks');
 
@@ -214,9 +236,29 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
+  dynamic logout() {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.logout();
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getCurrentUser() {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.getCurrentUser();
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';
+        'currentUser: ${currentUser.toString()},thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},hasUser: ${hasUser.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';
     return '{$string}';
   }
 }

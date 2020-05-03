@@ -1,14 +1,15 @@
 import 'dart:io';
+import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
-import 'package:jubjub/services/auth_service.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 import 'package:googleapis/drive/v3.dart' as googleApis;
 
 class GoogleDriveService {
-  final _authService = AuthService();
+  final _appController = GetIt.I<AppController>();
 
   Future upload(File file) async {
     try {
-      var client = await _authService.signInGoogle();
+      var client = _appController.currentUser.client;
       var drive = googleApis.DriveApi(client);
 
       googleApis.File fileToUpload = googleApis.File();
@@ -33,7 +34,7 @@ class GoogleDriveService {
 
   Future deleteFile(googleApis.File file) async {
     try {
-      var client = await _authService.signInGoogle();
+      var client = _appController.currentUser.client;
       var drive = googleApis.DriveApi(client);
       await drive.files.delete(file.id);
       return true;
@@ -45,7 +46,7 @@ class GoogleDriveService {
 
   Future<Stream<List<int>>> downloadGoogleDriveFile(
       String fileName, String fileId) async {
-    var client = await _authService.signInGoogle();
+    var client = _appController.currentUser.client;
     var drive = googleApis.DriveApi(client);
     googleApis.Media file = await drive.files.get(
       fileId,
@@ -56,7 +57,7 @@ class GoogleDriveService {
 
   Future getBackupsList() async {
     try {
-      var client = await _authService.signInGoogle();
+      var client = _appController.currentUser.client;
       var drive = googleApis.DriveApi(client);
       final fileList = await drive.files.list(
         q: "mimeType = 'application/json' and name contains ' backup-jub-jub' and trashed = false",

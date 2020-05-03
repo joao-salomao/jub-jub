@@ -30,6 +30,7 @@ class _SplashPageState extends State<SplashPage> {
       controller.sharedPreferences = GetIt.I<SharedPreferences>();
       controller.getMainTitle();
       controller.getPrimaryColor();
+      controller.getCurrentUser();
 
       DynamicTheme.of(context).setThemeData(
         ThemeData(
@@ -48,6 +49,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         child: Center(
           child: JumpingDotsProgressIndicator(
             fontSize: 50,

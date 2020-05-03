@@ -1,8 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jubjub/services/backup_service.dart';
 import 'package:jubjub/utils/navigation.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/views/widgets/app_text_form_field.dart';
@@ -20,51 +19,90 @@ class _DrawerListState extends State<DrawerList> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text('Não Definido'),
-              accountEmail: Text("email"),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                  "https://img.elo7.com.br/product/zoom/2AE8EF2/placa-decorativa-quadro-anime-kakashi-naruto-v703-anime.jpg",
-                ),
-              ),
+    return Observer(
+      builder: (_) {
+        return SafeArea(
+          child: Drawer(
+            child: ListView(
+              children: _getActionsItems(),
             ),
-            ListTile(
-              leading: Icon(Icons.text_fields),
-              title: Text("Título Principal"),
-              subtitle: Text("Alterar título principal"),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: _changeMainTitleDialog,
-            ),
-            ListTile(
-              leading: Icon(Icons.brush),
-              title: Text("Cor Principal"),
-              subtitle: Text("Alterar cor principal"),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: _changeColorDialog,
-            ),
-            ListTile(
-              leading: Icon(Icons.brightness_6),
-              title: Text("Tema"),
-              subtitle: Text("Alterar tema"),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: _changeBrightnessDialog,
-            ),
-            ListTile(
-              leading: Icon(Icons.list),
-              title: Text("Backup"),
-              subtitle: Text("Restaurar dados armazenados no Google Drive"),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: () => push(context, BackupPage()),
-            ),
-          ],
+          ),
+        );
+      },
+    );
+  }
+
+  _getActionsItems() {
+    final widgets = [
+      UserAccountsDrawerHeader(
+        accountName:
+            Text(appController.hasUser ? appController.currentUser.name : '-'),
+        accountEmail:
+            Text(appController.hasUser ? appController.currentUser.email : '-'),
+        currentAccountPicture: CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(
+            appController.hasUser
+                ? appController.currentUser.photoUrl
+                : 'https://www.infoescola.com/wp-content/uploads/2017/07/jubarte-514076104.jpg',
+          ),
         ),
       ),
-    );
+      ListTile(
+        leading: Icon(Icons.text_fields),
+        title: Text("Título Principal"),
+        subtitle: Text("Alterar título principal"),
+        trailing: Icon(Icons.arrow_forward),
+        onTap: _changeMainTitleDialog,
+      ),
+      ListTile(
+        leading: Icon(Icons.brush),
+        title: Text("Cor Principal"),
+        subtitle: Text("Alterar cor principal"),
+        trailing: Icon(Icons.arrow_forward),
+        onTap: _changeColorDialog,
+      ),
+      ListTile(
+        leading: Icon(Icons.brightness_6),
+        title: Text("Tema"),
+        subtitle: Text("Alterar tema"),
+        trailing: Icon(Icons.arrow_forward),
+        onTap: _changeBrightnessDialog,
+      ),
+    ];
+
+    if (appController.hasUser) {
+      widgets.add(
+        ListTile(
+          leading: Icon(Icons.list),
+          title: Text("Backup e restauração"),
+          subtitle: Text("Backup e restauração no Google Drive"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () => push(context, BackupPage()),
+        ),
+      );
+
+      widgets.add(
+        ListTile(
+          leading: Icon(Icons.exit_to_app),
+          title: Text("Logout"),
+          subtitle: Text("Sair da Conta Google"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: appController.logout,
+        ),
+      );
+    } else {
+      widgets.add(
+        ListTile(
+          leading: Icon(Icons.fingerprint),
+          title: Text("Login"),
+          subtitle: Text("Logar com a conta google"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: appController.login,
+        ),
+      );
+    }
+
+    return widgets;
   }
 
   _changeMainTitleDialog() {

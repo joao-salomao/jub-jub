@@ -1,14 +1,16 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:jubjub/services/auth_service.dart';
 import 'package:mobx/mobx.dart';
+import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:jubjub/dao/think_dao.dart';
+import 'package:jubjub/models/user_model.dart';
 import 'package:jubjub/dao/annotation_dao.dart';
 import 'package:jubjub/models/think_model.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:jubjub/services/auth_service.dart';
 import 'package:jubjub/dao/annotation_file_dao.dart';
 import 'package:jubjub/models/annotation_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'app_controller.g.dart';
 
 class AppController = _AppControllerBase with _$AppController;
@@ -21,6 +23,9 @@ abstract class _AppControllerBase with Store {
   SharedPreferences sharedPreferences;
 
   @observable
+  UserModel currentUser;
+
+  @observable
   var thinks = ObservableList<ThinkModel>();
 
   @observable
@@ -31,6 +36,9 @@ abstract class _AppControllerBase with Store {
 
   @observable
   Color primaryColor;
+
+  @computed
+  bool get hasUser => currentUser != null;
 
   @computed
   bool get brightnessIsDark => brightness == Brightness.dark;
@@ -177,8 +185,41 @@ abstract class _AppControllerBase with Store {
 
   @action
   login() {
-    authService.signInGoogle().then((result) {
-      print(result);
+    authService.signIn().then((user) {
+      if (user != null) {
+        currentUser = user;
+        _saveUserToPrefs(currentUser);
+      }
     });
+  }
+
+
+  @action
+  logout() {
+    authService.signOut();
+    sharedPreferences.setString('user', null);
+    currentUser = null;
+  }
+
+  @action
+  getCurrentUser() {
+    final json = sharedPreferences.getString('user');
+    if (json != null) {
+      final map = convert.json.decode(json);
+      final user = UserModel.fromMap(map);
+      currentUser = user;
+
+      authService.signIn().then((result) {
+        if (result != null) {
+          currentUser.client = result.client;
+          _saveUserToPrefs(result);
+        }
+      });
+    }
+  }
+
+  _saveUserToPrefs(UserModel user) async {
+    final json = convert.json.encode(currentUser.toMap());
+    await sharedPreferences.setString('user', json);
   }
 }
