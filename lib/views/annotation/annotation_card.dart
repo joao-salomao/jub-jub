@@ -25,7 +25,7 @@ class AnnotationCard extends StatefulWidget {
 }
 
 class _AnnotationCardState extends State<AnnotationCard> {
-  final obsuredText =
+  final obscuredText =
       "**************************************************************************************************************";
 
   @override
@@ -54,7 +54,7 @@ class _AnnotationCardState extends State<AnnotationCard> {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
-                      child: Text( widget.annotation.password == null ? widget.annotation.text : obsuredText,
+                      child: Text( widget.annotation.password == null ? widget.annotation.text : obscuredText,
                         softWrap: true,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,

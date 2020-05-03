@@ -143,6 +143,15 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.getAnnotationFiles(annotationId));
   }
 
+  final _$saveAnnotationAsyncAction = AsyncAction('saveAnnotation');
+
+  @override
+  Future saveAnnotation(AnnotationModel annotation,
+      {List<AnnotationFileModel> deletedFiles}) {
+    return _$saveAnnotationAsyncAction.run(
+        () => super.saveAnnotation(annotation, deletedFiles: deletedFiles));
+  }
+
   final _$deleteAnnotationAsyncAction = AsyncAction('deleteAnnotation');
 
   @override
@@ -216,17 +225,6 @@ mixin _$AppController on _AppControllerBase, Store {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.updateMainTitle(text);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic saveAnnotation(AnnotationModel annotation,
-      {List<AnnotationFileModel> deletedFiles}) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
-    try {
-      return super.saveAnnotation(annotation, deletedFiles: deletedFiles);
     } finally {
       _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }

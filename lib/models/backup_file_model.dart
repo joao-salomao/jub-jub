@@ -65,12 +65,14 @@ abstract class _BackupFileBase with Store {
     }, onDone: () async {
       await file.writeAsBytes(dataStore);
 
-      isDone = true;
       isDownloading = false;
 
       await backupService.backupFile(file);
+      await Future.delayed(Duration(seconds: 1));
+      await backupService.appController.getData();
+
+      isDone = true;
       file.delete();
-      backupService.appController.getData();
     }, onError: (error) {
       hasError = true;
       isDownloading = false;

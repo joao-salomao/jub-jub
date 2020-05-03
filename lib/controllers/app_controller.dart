@@ -26,7 +26,7 @@ abstract class _AppControllerBase with Store {
   UserModel currentUser;
 
   @observable
-  var thinks = ObservableList<ThinkModel>();
+  ObservableList<ThinkModel> thinks = ObservableList<ThinkModel>();
 
   @observable
   var mainTitle = "";
@@ -139,7 +139,8 @@ abstract class _AppControllerBase with Store {
 
   @action
   saveThink(ThinkModel think) async {
-    await thinkDAO.save(think);
+    final id = await thinkDAO.save(think);
+    think.id = id;
   }
 
   @action
@@ -162,19 +163,19 @@ abstract class _AppControllerBase with Store {
   saveAnnotation(
     AnnotationModel annotation, {
     List<AnnotationFileModel> deletedFiles,
-  }) {
-    annotationDAO.save(annotation).then((annotationId) {
-      annotation.id = annotationId;
-      annotation.files.forEach((file) {
-        file.annotationId = annotationId;
-        annotationFileDAO.save(file).then((annotationFileId) {
-          file.id = annotationFileId;
-        });
-      });
+  }) async {
+    final annotationId = await annotationDAO.save(annotation);
+    annotation.id = annotationId;
+    annotation.files.forEach((file) async {
+      file.annotationId = annotationId;
+      final fileId = await annotationFileDAO.save(file);
+      file.id = fileId;
     });
 
     if (deletedFiles != null) {
-      deletedFiles.forEach((file) => annotationFileDAO.delete(file.id));
+      deletedFiles.forEach((file) async {
+        await annotationFileDAO.delete(file.id);
+      });
     }
   }
 

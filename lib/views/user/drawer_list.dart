@@ -36,9 +36,9 @@ class _DrawerListState extends State<DrawerList> {
     final widgets = [
       UserAccountsDrawerHeader(
         accountName:
-            Text(appController.hasUser ? appController.currentUser.name : '-'),
+            Text(appController.hasUser ? appController.currentUser.name : 'Jub Jub'),
         accountEmail:
-            Text(appController.hasUser ? appController.currentUser.email : '-'),
+            Text(appController.hasUser ? appController.currentUser.email : ''),
         currentAccountPicture: CircleAvatar(
           backgroundImage: CachedNetworkImageProvider(
             appController.hasUser

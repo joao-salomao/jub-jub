@@ -40,6 +40,7 @@ class BackupService {
           final annotation = AnnotationModel.fromMap(annotationMap);
           annotation.thinkId = think.id;
           await appController.saveAnnotation(annotation);
+          think.annotations.add(annotation);
 
           annotationMap['annotation_files'].forEach((afMap) {
             final annotationFile = AnnotationFileModel.fromMap(afMap);
@@ -84,14 +85,18 @@ class BackupService {
 
     appController.thinks.forEach((think) {
       final thinkMap = think.toMap();
+      thinkMap['id'] = null;
       thinkMap['annotations'] = [];
 
       think.annotations.forEach((annotation) {
         final annotationMap = annotation.toMap();
+        annotationMap['id'] = null;
         annotationMap['annotation_files'] = [];
 
         annotation.files.forEach((file) {
-          annotationMap['annotation_files'].add(file.toMap());
+          final fileMap = file.toMap();
+          fileMap['id'] = null;
+          annotationMap['annotation_files'].add(fileMap);
         });
 
         thinkMap['annotations'].add(annotationMap);
