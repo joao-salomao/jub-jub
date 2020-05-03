@@ -1,3 +1,4 @@
+import 'backup_page.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
@@ -7,7 +8,6 @@ import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'backup_page.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -35,8 +35,11 @@ class _DrawerListState extends State<DrawerList> {
   _getActionsItems() {
     final widgets = [
       UserAccountsDrawerHeader(
-        accountName:
-            Text(appController.hasUser ? appController.currentUser.name : 'Jub Jub'),
+        decoration: BoxDecoration(
+          color: appController.primaryColor,
+        ),
+        accountName: Text(
+            appController.hasUser ? appController.currentUser.name : 'Jubarte'),
         accountEmail:
             Text(appController.hasUser ? appController.currentUser.email : ''),
         currentAccountPicture: CircleAvatar(

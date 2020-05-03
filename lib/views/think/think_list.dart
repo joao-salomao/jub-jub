@@ -7,6 +7,7 @@ import 'package:jubjub/views/think/think_form.dart';
 import 'package:jubjub/views/user/drawer_list.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class ThinkList extends StatefulWidget {
   @override
@@ -41,6 +42,23 @@ class _ThinkListState extends State<ThinkList> {
           drawer: DrawerList(),
           body: Observer(
             builder: (_) {
+              if (appController.isLoading) {
+                return Center(
+                  child: JumpingDotsProgressIndicator(
+                    color: appController.brightnessIsDark
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 50,
+                  ),
+                );
+              }
+
+              if (appController.thinks.isEmpty) {
+                return Center(
+                  child: Text("Você não possui nenhuma pasta cadastrada"),
+                );
+              }
+
               return ReorderableListView(
                 onReorder: appController.reOrderThinks,
                 children: List.generate(

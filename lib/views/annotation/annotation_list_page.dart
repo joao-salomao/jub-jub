@@ -26,6 +26,12 @@ class _AnnotationListPageState extends State<AnnotationListPage> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
+        if (think.annotations.isEmpty) {
+          return Center(
+            child: Text("Essa pasta não possui nenhuma anotação"),
+          );
+        }
+
         return Container(
           child: ReorderableListView(
             onReorder: annotationController.reOrderAnnotations,

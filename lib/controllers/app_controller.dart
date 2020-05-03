@@ -37,6 +37,9 @@ abstract class _AppControllerBase with Store {
   @observable
   Color primaryColor;
 
+  @observable
+  bool isLoading;
+
   @computed
   bool get hasUser => currentUser != null;
 
@@ -56,6 +59,8 @@ abstract class _AppControllerBase with Store {
 
   @action
   getData() async {
+    isLoading = true;
+
     final thinksFuture = thinkDAO.findAllOrderBy('listIndex', false);
     final annotationsFuture = annotationDAO.findAllOrderBy('listIndex', false);
     final annotationFilesFuture = annotationFileDAO.findAll();
@@ -88,6 +93,8 @@ abstract class _AppControllerBase with Store {
       });
       thinks.add(think);
     });
+
+    isLoading = false;
   }
 
   reOrderThinks(int oldIndex, int newIndex) {
@@ -115,7 +122,7 @@ abstract class _AppControllerBase with Store {
   @action
   getMainTitle() {
     final title = sharedPreferences.getString("mainTitle");
-    mainTitle = title == null ? "Jub-Arte" : title;
+    mainTitle = title == null ? "Jub Jub" : title;
   }
 
   @action
