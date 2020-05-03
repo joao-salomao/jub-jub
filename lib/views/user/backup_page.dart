@@ -28,16 +28,20 @@ class _BackupPageState extends State<BackupPage> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("Backup"),
+            title: Text("Backup e restauração"),
             backgroundColor: backupController.backupAppBarColor,
             centerTitle: true,
             actions: [
               Builder(
-                builder: (_) {
-                  return AppFlatButton(
-                    child: Icon(Icons.cloud_upload),
-                    onPressed: () => _onClickNewBackup(_),
-                    isLoading: backupController.isLoadingNewBackup,
+                builder: (builderContext) {
+                  return Observer(
+                    builder: (_) {
+                      return AppFlatButton(
+                        child: Icon(Icons.cloud_upload),
+                        onPressed: () => _onClickNewBackup(builderContext),
+                        isLoading: backupController.isLoadingNewBackup,
+                      );
+                    },
                   );
                 },
               ),
@@ -92,7 +96,11 @@ class _BackupPageState extends State<BackupPage> {
             ),
             RaisedButton(
               child: Text("Carregar Novamente"),
-              onPressed: backupController.getBackups,
+              onPressed: () {
+                backupController.appController.getCurrentUser().then((_) {
+                  backupController.getBackups();
+                });
+              },
             ),
           ],
         ),
@@ -131,6 +139,7 @@ class _BackupPageState extends State<BackupPage> {
                               Icons.delete,
                               color: backupController.iconColor,
                             ),
+                            loaderColor: backupController.iconColor,
                             isLoading: file.isDeleting,
                             onPressed: () =>
                                 _onClickDeleteBackup(context, file),
@@ -140,6 +149,7 @@ class _BackupPageState extends State<BackupPage> {
                               Icons.file_download,
                               color: backupController.iconColor,
                             ),
+                            loaderColor: backupController.iconColor,
                             isLoading: file.isDownloading,
                             onPressed: () => _onClickBackup(context, file),
                           ),

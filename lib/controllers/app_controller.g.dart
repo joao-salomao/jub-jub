@@ -151,6 +151,13 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.deleteAnnotation(annotation));
   }
 
+  final _$getCurrentUserAsyncAction = AsyncAction('getCurrentUser');
+
+  @override
+  Future getCurrentUser() {
+    return _$getCurrentUserAsyncAction.run(() => super.getCurrentUser());
+  }
+
   final _$_AppControllerBaseActionController =
       ActionController(name: '_AppControllerBase');
 
@@ -240,16 +247,6 @@ mixin _$AppController on _AppControllerBase, Store {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
       return super.logout();
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic getCurrentUser() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
-    try {
-      return super.getCurrentUser();
     } finally {
       _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }

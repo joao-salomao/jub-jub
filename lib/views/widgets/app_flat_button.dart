@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class AppFlatButton extends StatelessWidget {
-  final Widget child;
-  final Function onPressed;
-  final bool isLoading;
   final Color color;
+  final Widget child;
+  final bool isLoading;
+  final Color loaderColor;
+  final Function onPressed;
 
   AppFlatButton({
     @required this.child,
-    this.onPressed,
-    this.isLoading = false,
     this.color,
+    this.onPressed,
+    this.loaderColor,
+    this.isLoading = false,
   });
 
   @override
@@ -20,7 +22,7 @@ class AppFlatButton extends StatelessWidget {
       child: isLoading
           ? Center(
               child: JumpingDotsProgressIndicator(
-                color: Colors.white,
+                color: loaderColor ?? Colors.white,
                 fontSize: 20.0,
               ),
             )

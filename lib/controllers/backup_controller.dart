@@ -35,6 +35,7 @@ abstract class _BackupControllerBase with Store {
 
   @action
   getBackups() async {
+    hasError = false;
     isLoadingBackups = true;
     backups.clear();
 
