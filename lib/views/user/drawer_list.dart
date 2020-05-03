@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/views/widgets/app_text_form_field.dart';
@@ -90,7 +91,7 @@ class _DrawerListState extends State<DrawerList> {
           title: Text("Logout"),
           subtitle: Text("Sair da Conta Google"),
           trailing: Icon(Icons.arrow_forward),
-          onTap: appController.logout,
+          onTap: _onClickLogout,
         ),
       );
     } else {
@@ -106,6 +107,15 @@ class _DrawerListState extends State<DrawerList> {
     }
 
     return widgets;
+  }
+
+  _onClickLogout() {
+    alert(
+      context,
+      "Saindo da conta Google",
+      "Você tem certeza ? Não será possível realizar backup das suas anotações",
+      callback: appController.logout,
+    );
   }
 
   _changeMainTitleDialog() {
