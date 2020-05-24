@@ -44,7 +44,6 @@ class _ThinkPageState extends State<ThinkPage> {
               ),
             ),
             backgroundColor: think.color,
-            centerTitle: true,
             actions: [
               IconButton(
                 icon: Icon(Icons.edit),

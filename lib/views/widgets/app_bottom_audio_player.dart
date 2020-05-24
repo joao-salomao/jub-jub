@@ -36,7 +36,7 @@ class _AppBottomAudioPlayerState extends State<AppBottomAudioPlayer> {
                 IconButton(
                   icon: Icon(
                     controller.isPlaying ? Icons.pause : Icons.play_arrow,
-                    size: 40,
+                    size: 30,
                   ),
                   onPressed: () {
                     controller.isPlaying
@@ -53,7 +53,7 @@ class _AppBottomAudioPlayerState extends State<AppBottomAudioPlayer> {
                 IconButton(
                   icon: Icon(
                     Icons.close,
-                    size: 40,
+                    size: 30,
                   ),
                   onPressed: () => controller.stop(),
                 ),
