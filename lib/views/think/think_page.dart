@@ -40,6 +40,7 @@ class _ThinkPageState extends State<ThinkPage> {
               think.title,
               style: TextStyle(
                 color: Colors.white,
+                fontSize: 18,
               ),
             ),
             backgroundColor: think.color,
@@ -127,8 +128,8 @@ class _ThinkPageState extends State<ThinkPage> {
               child: Text("Sim"),
               onPressed: () {
                 controller.deleteThink();
-                  pop(_);
-                  pop(_);
+                pop(_);
+                pop(_);
               },
             ),
           ],

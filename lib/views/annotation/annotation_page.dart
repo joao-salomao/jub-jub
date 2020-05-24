@@ -1,3 +1,4 @@
+import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
@@ -11,7 +12,6 @@ import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
 import 'package:jubjub/views/annotation/annotation_file_list.dart';
 import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
-import 'package:toast/toast.dart';
 
 class AnnotationPage extends StatefulWidget {
   final ThinkModel think;
@@ -142,7 +142,12 @@ class _AnnotationPageState extends State<AnnotationPage> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(annotation.title),
+            title: Text(
+              annotation.title,
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
             backgroundColor: annotation.color,
             actions: [
               IconButton(

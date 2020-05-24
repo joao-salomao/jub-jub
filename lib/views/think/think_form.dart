@@ -47,6 +47,7 @@ showThinkForm({
                   child: AppTextFormField(
                     "Título",
                     "Digite o título da pasta",
+                    cursorColor: think == null ? null : think.color,
                     controller: _titleController,
                     validator: (value) {
                       if (value.isEmpty) {
