@@ -1,6 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/utils/navigation.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/annotation_model.dart';
@@ -10,6 +11,7 @@ import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
 import 'package:jubjub/views/annotation/annotation_file_list.dart';
 import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
+import 'package:toast/toast.dart';
 
 class AnnotationPage extends StatefulWidget {
   final ThinkModel think;
@@ -176,12 +178,27 @@ class _AnnotationPageState extends State<AnnotationPage> {
                         margin: EdgeInsets.only(
                           bottom: 10,
                         ),
-                        child: Text(
+                        child: SelectableText(
                           annotation.text,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 16,
                           ),
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text: annotation.text +
+                                    '\n' +
+                                    "~ ${annotation.createdAt}",
+                              ),
+                            );
+                            Toast.show(
+                              "Anotação copiada",
+                              context,
+                              duration: Toast.LENGTH_SHORT,
+                              gravity: Toast.BOTTOM,
+                            );
+                          },
                         ),
                       ),
                       Container(
