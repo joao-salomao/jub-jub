@@ -33,7 +33,7 @@ class ThinkCard extends StatelessWidget {
                   children: <Widget>[
                     AppText(
                       think.title,
-                      fontSize: 20,
+                      fontSize: 16,
                       bold: true,
                     ),
                     Container(

@@ -1,6 +1,8 @@
+import 'package:toast/toast.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/utils/navigation.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/annotation_model.dart';
@@ -140,7 +142,12 @@ class _AnnotationPageState extends State<AnnotationPage> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(annotation.title),
+            title: Text(
+              annotation.title,
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
             backgroundColor: annotation.color,
             actions: [
               IconButton(
@@ -176,12 +183,27 @@ class _AnnotationPageState extends State<AnnotationPage> {
                         margin: EdgeInsets.only(
                           bottom: 10,
                         ),
-                        child: Text(
+                        child: SelectableText(
                           annotation.text,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 16,
                           ),
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text: annotation.text +
+                                    '\n' +
+                                    "~ ${annotation.createdAt}",
+                              ),
+                            );
+                            Toast.show(
+                              "Anotação copiada",
+                              context,
+                              duration: Toast.LENGTH_SHORT,
+                              gravity: Toast.BOTTOM,
+                            );
+                          },
                         ),
                       ),
                       Container(

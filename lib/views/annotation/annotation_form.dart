@@ -65,7 +65,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                 think.title,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 18,
                 ),
               ),
               backgroundColor: color,

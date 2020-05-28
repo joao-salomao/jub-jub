@@ -205,7 +205,7 @@ class _AnnotationCardState extends State<AnnotationCard> {
     final title = AppText(
       widget.annotation.title,
       bold: true,
-      fontSize: 18,
+      fontSize: 16,
     );
 
     if (widget.annotation.password == null) return title;

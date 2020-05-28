@@ -24,7 +24,6 @@ abstract class _UserModelBase with Store {
   String photoUrl;
 
   _UserModelBase.fromMap(Map<String, dynamic> map) {
-    print(map['photoUrl']);
     this.name = map['name'];
     this.email = map['email'];
     this.photoUrl = map['photoUrl'];

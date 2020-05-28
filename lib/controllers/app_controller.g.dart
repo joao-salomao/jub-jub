@@ -106,6 +106,23 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$primaryColorAtom, name: '${_$primaryColorAtom.name}_set');
   }
 
+  final _$isLoadingAtom = Atom(name: '_AppControllerBase.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
+    _$isLoadingAtom.reportObserved();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.context.conditionallyRunInAction(() {
+      super.isLoading = value;
+      _$isLoadingAtom.reportChanged();
+    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+  }
+
   final _$getDataAsyncAction = AsyncAction('getData');
 
   @override
@@ -253,7 +270,7 @@ mixin _$AppController on _AppControllerBase, Store {
   @override
   String toString() {
     final string =
-        'currentUser: ${currentUser.toString()},thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},hasUser: ${hasUser.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';
+        'currentUser: ${currentUser.toString()},thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},isLoading: ${isLoading.toString()},hasUser: ${hasUser.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';
     return '{$string}';
   }
 }

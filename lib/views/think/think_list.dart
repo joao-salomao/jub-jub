@@ -33,6 +33,7 @@ class _ThinkListState extends State<ThinkList> {
                   appController.mainTitle,
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 18
                   ),
                 );
               },
