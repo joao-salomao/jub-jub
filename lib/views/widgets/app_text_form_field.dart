@@ -46,6 +46,7 @@ class AppTextFormField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       expands: expands,
+      textCapitalization: TextCapitalization.sentences,
       onChanged: onChange,
       onFieldSubmitted: (String text) {
         if (nextFocus != null) {
