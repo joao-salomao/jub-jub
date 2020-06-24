@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void redirect() {
     final futureData = controller.getData();
-    final futureDelay = Future.delayed(Duration(seconds: 2));
+    final futureDelay = Future.delayed(Duration(seconds: 1));
     final futureGetIt = GetIt.I.isReady<SharedPreferences>();
 
     Future.wait([futureData, futureGetIt, futureDelay]).then((_) {
