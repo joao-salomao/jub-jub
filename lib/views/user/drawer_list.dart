@@ -34,21 +34,76 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _getActionsItems() {
-    final widgets = [
+    Widget accountName;
+    Widget accountEmail;
+    ImageProvider accountPictureProvider;
+    final headerTextStyle = TextStyle(color: Colors.white);
+    final List<Widget> dynamicItems = [];
+
+    if (appController.hasUser) {
+      accountName = Text(
+        appController.currentUser.name,
+        style: headerTextStyle,
+      );
+      accountEmail = Text(
+        appController.currentUser.email,
+        style: headerTextStyle,
+      );
+      accountPictureProvider =
+          CachedNetworkImageProvider(appController.currentUser.photoUrl);
+
+      dynamicItems.add(
+        ListTile(
+          leading: Icon(Icons.list),
+          title: Text("Backup e restauração"),
+          subtitle: Text("Backup e restauração no Google Drive"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () => push(context, BackupPage()),
+        ),
+      );
+
+      dynamicItems.add(
+        ListTile(
+          leading: Icon(Icons.exit_to_app),
+          title: Text("Logout"),
+          subtitle: Text("Sair da Conta Google"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: _onClickLogout,
+        ),
+      );
+    } else {
+      accountName = Text(
+        'Jubarte',
+        style: headerTextStyle,
+      );
+
+      accountEmail = Text(
+        '',
+        style: headerTextStyle,
+      );
+
+      accountPictureProvider = AssetImage("assets/images/jubarte.jpg");
+
+      dynamicItems.add(
+        ListTile(
+          leading: Icon(Icons.fingerprint),
+          title: Text("Login"),
+          subtitle: Text("Logar com a conta google"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: appController.login,
+        ),
+      );
+    }
+
+    final List<Widget> defaultWidgets = [
       UserAccountsDrawerHeader(
         decoration: BoxDecoration(
           color: appController.primaryColor,
         ),
-        accountName: Text(
-            appController.hasUser ? appController.currentUser.name : 'Jubarte'),
-        accountEmail:
-            Text(appController.hasUser ? appController.currentUser.email : ''),
+        accountName: accountName,
+        accountEmail: accountEmail,
         currentAccountPicture: CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(
-            appController.hasUser
-                ? appController.currentUser.photoUrl
-                : 'https://www.infoescola.com/wp-content/uploads/2017/07/jubarte-514076104.jpg',
-          ),
+          backgroundImage: accountPictureProvider,
         ),
       ),
       ListTile(
@@ -74,39 +129,7 @@ class _DrawerListState extends State<DrawerList> {
       ),
     ];
 
-    if (appController.hasUser) {
-      widgets.add(
-        ListTile(
-          leading: Icon(Icons.list),
-          title: Text("Backup e restauração"),
-          subtitle: Text("Backup e restauração no Google Drive"),
-          trailing: Icon(Icons.arrow_forward),
-          onTap: () => push(context, BackupPage()),
-        ),
-      );
-
-      widgets.add(
-        ListTile(
-          leading: Icon(Icons.exit_to_app),
-          title: Text("Logout"),
-          subtitle: Text("Sair da Conta Google"),
-          trailing: Icon(Icons.arrow_forward),
-          onTap: _onClickLogout,
-        ),
-      );
-    } else {
-      widgets.add(
-        ListTile(
-          leading: Icon(Icons.fingerprint),
-          title: Text("Login"),
-          subtitle: Text("Logar com a conta google"),
-          trailing: Icon(Icons.arrow_forward),
-          onTap: appController.login,
-        ),
-      );
-    }
-
-    return widgets;
+    return [...defaultWidgets, ...dynamicItems];
   }
 
   _onClickLogout() {
