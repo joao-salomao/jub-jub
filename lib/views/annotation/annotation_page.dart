@@ -61,7 +61,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
       return alert(
         context,
         "Você tem certeza ?",
-        "A senha da anotação anotação será removida.",
+        "A senha da anotação será removida.",
         callback: () => _updatePassword(null),
       );
     }
