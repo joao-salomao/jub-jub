@@ -247,7 +247,6 @@ class _DrawerListState extends State<DrawerList> {
 
   _changeBrightness(Brightness value) {
     appController.setBrightness(value, context);
-    _pop();
   }
 
   _changeColor(Color color) async {
