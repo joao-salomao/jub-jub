@@ -21,4 +21,12 @@ class AnnotationDAO extends BaseDAO<AnnotationModel> {
 
     return [];
   }
+
+  updateItemsListIndex(List items) {
+    for (int i = 0; i < items.length; i++) {
+      final item = items.elementAt(i);
+      item.listIndex = i;
+      super.save(item);
+    }
+  }
 }

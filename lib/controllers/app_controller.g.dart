@@ -208,6 +208,16 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
+  dynamic reOrderThinks(int oldIndex, int newIndex) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    try {
+      return super.reOrderThinks(oldIndex, newIndex);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getMainTitle() {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {

@@ -9,4 +9,12 @@ class ThinkDAO extends BaseDAO<ThinkModel> {
   ThinkModel fromMap(Map<String, dynamic> map) {
     return ThinkModel.fromMap(map);
   }
+
+  updateItemsListIndex(List items) {
+    for (int i = 0; i < items.length; i++) {
+      final item = items.elementAt(i);
+      item.listIndex = i;
+      super.save(item);
+    }
+  }
 }

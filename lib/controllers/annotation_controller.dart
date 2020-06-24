@@ -29,19 +29,14 @@ abstract class _AnnotationControllerBase with Store {
       newIndex -= 1;
     }
 
-    final otherThink = think.annotations.elementAt(newIndex);
-    final reOrderedThink = think.annotations.removeAt(oldIndex);
-
-    reOrderedThink.listIndex = newIndex;
-    otherThink.listIndex = oldIndex;
-
-    appController.annotationDAO.save(reOrderedThink);
-    appController.annotationDAO.save(otherThink);
+    final reOrderedAnnotation = think.annotations.removeAt(oldIndex);
 
     if (isLast) {
-      think.annotations.add(reOrderedThink);
-      return;
+      think.annotations.add(reOrderedAnnotation);
+    } else {
+      think.annotations.insert(newIndex, reOrderedAnnotation);
     }
-    think.annotations.insert(newIndex, reOrderedThink);
+
+    appController.annotationDAO.updateItemsListIndex(think.annotations);
   }
 }

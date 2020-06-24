@@ -97,26 +97,22 @@ abstract class _AppControllerBase with Store {
     isLoading = false;
   }
 
+  @action
   reOrderThinks(int oldIndex, int newIndex) {
     final isLast = newIndex == thinks.length;
     if (newIndex > oldIndex) {
       newIndex -= 1;
     }
 
-    final otherThink = thinks.elementAt(newIndex);
     final think = thinks.removeAt(oldIndex);
-
-    think.listIndex = newIndex;
-    otherThink.listIndex = oldIndex;
-
-    saveThink(think);
-    saveThink(otherThink);
 
     if (isLast) {
       thinks.add(think);
-      return;
+    } else {
+      thinks.insert(newIndex, think);
     }
-    thinks.insert(newIndex, think);
+
+    thinkDAO.updateItemsListIndex(thinks);
   }
 
   @action
