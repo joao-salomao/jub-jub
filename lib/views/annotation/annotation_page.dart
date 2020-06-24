@@ -146,22 +146,35 @@ class _AnnotationPageState extends State<AnnotationPage> {
               annotation.title,
               style: TextStyle(
                 fontSize: 18,
+                color: Colors.white,
               ),
             ),
             backgroundColor: annotation.color,
             actions: [
               IconButton(
                 icon: annotation.password == null
-                    ? Icon(Icons.lock_outline)
-                    : Icon(Icons.lock_open),
+                    ? Icon(
+                        Icons.lock_outline,
+                        color: Colors.white,
+                      )
+                    : Icon(
+                        Icons.lock_open,
+                        color: Colors.white,
+                      ),
                 onPressed: _onClickLockOrUnlock,
               ),
               IconButton(
-                icon: Icon(Icons.edit),
+                icon: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
                 onPressed: _onClickEdit,
               ),
               IconButton(
-                icon: Icon(Icons.delete),
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
                 onPressed: _onClickDelete,
               ),
             ],
