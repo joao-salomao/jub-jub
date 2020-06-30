@@ -12,6 +12,7 @@ import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
 import 'package:jubjub/views/annotation/annotation_file_list.dart';
 import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
+import 'package:jubjub/views/annotation/change_annotation_think_form.dart';
 
 class AnnotationPage extends StatefulWidget {
   final ThinkModel think;
@@ -131,6 +132,15 @@ class _AnnotationPageState extends State<AnnotationPage> {
     );
   }
 
+  _onClickChangeAnnotationPaste() {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return ChangeAnnotationThinkForm(think, annotation);
+      },
+    );
+  }
+
   _updatePassword(String value) {
     annotation.password = value;
     annotationController.appController.annotationDAO.save(annotation);
@@ -151,6 +161,13 @@ class _AnnotationPageState extends State<AnnotationPage> {
             ),
             backgroundColor: annotation.color,
             actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.autorenew,
+                  color: Colors.white,
+                ),
+                onPressed: _onClickChangeAnnotationPaste,
+              ),
               IconButton(
                 icon: annotation.password == null
                     ? Icon(

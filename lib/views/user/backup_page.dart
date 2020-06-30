@@ -28,7 +28,12 @@ class _BackupPageState extends State<BackupPage> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("Backup e restauração"),
+            title: Text(
+              "Backup e restauração",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             backgroundColor: backupController.backupAppBarColor,
             centerTitle: true,
             actions: [

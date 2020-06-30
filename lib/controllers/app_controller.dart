@@ -58,7 +58,7 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  getData() async {
+  Future<void> getData() async {
     isLoading = true;
 
     final thinksFuture = thinkDAO.findAllOrderBy('listIndex', false);
@@ -138,6 +138,17 @@ abstract class _AppControllerBase with Store {
     SharedPreferences.getInstance()
         .then((prefs) => prefs.setString("mainTitle", text));
     mainTitle = text;
+  }
+
+  @action
+  Future<void> updateAnnotationThink(
+    AnnotationModel annotation,
+    ThinkModel think,
+  ) async {
+    annotation.thinkId = think.id;
+    annotation.listIndex = think.annotations.length;
+    await annotationDAO.save(annotation);
+    await getData();
   }
 
   @action

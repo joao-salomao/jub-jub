@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AppAlertDialog extends StatelessWidget {
   final String title;
   final Widget content;
@@ -24,7 +25,7 @@ class AppAlertDialog extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.close,
-                  size: 30,
+                  size: 25,
                 ),
                 onPressed: () => onClose(),
               ),
@@ -34,7 +35,7 @@ class AppAlertDialog extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.save,
-                  size: 30,
+                  size: 25,
                 ),
                 onPressed: () => onSave(),
               ),

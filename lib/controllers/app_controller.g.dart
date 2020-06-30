@@ -126,8 +126,18 @@ mixin _$AppController on _AppControllerBase, Store {
   final _$getDataAsyncAction = AsyncAction('getData');
 
   @override
-  Future getData() {
+  Future<void> getData() {
     return _$getDataAsyncAction.run(() => super.getData());
+  }
+
+  final _$updateAnnotationThinkAsyncAction =
+      AsyncAction('updateAnnotationThink');
+
+  @override
+  Future<void> updateAnnotationThink(
+      AnnotationModel annotation, ThinkModel think) {
+    return _$updateAnnotationThinkAsyncAction
+        .run(() => super.updateAnnotationThink(annotation, think));
   }
 
   final _$saveThinkAsyncAction = AsyncAction('saveThink');
