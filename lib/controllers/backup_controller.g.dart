@@ -15,6 +15,57 @@ mixin _$BackupController on _BackupControllerBase, Store {
   dynamic get iconColor =>
       (_$iconColorComputed ??= Computed<dynamic>(() => super.iconColor)).value;
 
+  final _$driveLimitAtom = Atom(name: '_BackupControllerBase.driveLimit');
+
+  @override
+  String get driveLimit {
+    _$driveLimitAtom.context.enforceReadPolicy(_$driveLimitAtom);
+    _$driveLimitAtom.reportObserved();
+    return super.driveLimit;
+  }
+
+  @override
+  set driveLimit(String value) {
+    _$driveLimitAtom.context.conditionallyRunInAction(() {
+      super.driveLimit = value;
+      _$driveLimitAtom.reportChanged();
+    }, _$driveLimitAtom, name: '${_$driveLimitAtom.name}_set');
+  }
+
+  final _$driveUsageAtom = Atom(name: '_BackupControllerBase.driveUsage');
+
+  @override
+  String get driveUsage {
+    _$driveUsageAtom.context.enforceReadPolicy(_$driveUsageAtom);
+    _$driveUsageAtom.reportObserved();
+    return super.driveUsage;
+  }
+
+  @override
+  set driveUsage(String value) {
+    _$driveUsageAtom.context.conditionallyRunInAction(() {
+      super.driveUsage = value;
+      _$driveUsageAtom.reportChanged();
+    }, _$driveUsageAtom, name: '${_$driveUsageAtom.name}_set');
+  }
+
+  final _$usagePercentAtom = Atom(name: '_BackupControllerBase.usagePercent');
+
+  @override
+  double get usagePercent {
+    _$usagePercentAtom.context.enforceReadPolicy(_$usagePercentAtom);
+    _$usagePercentAtom.reportObserved();
+    return super.usagePercent;
+  }
+
+  @override
+  set usagePercent(double value) {
+    _$usagePercentAtom.context.conditionallyRunInAction(() {
+      super.usagePercent = value;
+      _$usagePercentAtom.reportChanged();
+    }, _$usagePercentAtom, name: '${_$usagePercentAtom.name}_set');
+  }
+
   final _$backupsAtom = Atom(name: '_BackupControllerBase.backups');
 
   @override
@@ -103,11 +154,11 @@ mixin _$BackupController on _BackupControllerBase, Store {
     }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
   }
 
-  final _$getBackupsAsyncAction = AsyncAction('getBackups');
+  final _$getBackupsDataAsyncAction = AsyncAction('getBackupsData');
 
   @override
-  Future getBackups() {
-    return _$getBackupsAsyncAction.run(() => super.getBackups());
+  Future getBackupsData() {
+    return _$getBackupsDataAsyncAction.run(() => super.getBackupsData());
   }
 
   final _$storeNewBackupAsyncAction = AsyncAction('storeNewBackup');
@@ -127,7 +178,7 @@ mixin _$BackupController on _BackupControllerBase, Store {
   @override
   String toString() {
     final string =
-        'backups: ${backups.toString()},fileStream: ${fileStream.toString()},isLoadingBackups: ${isLoadingBackups.toString()},isLoadingNewBackup: ${isLoadingNewBackup.toString()},hasError: ${hasError.toString()},iconColor: ${iconColor.toString()}';
+        'driveLimit: ${driveLimit.toString()},driveUsage: ${driveUsage.toString()},usagePercent: ${usagePercent.toString()},backups: ${backups.toString()},fileStream: ${fileStream.toString()},isLoadingBackups: ${isLoadingBackups.toString()},isLoadingNewBackup: ${isLoadingNewBackup.toString()},hasError: ${hasError.toString()},iconColor: ${iconColor.toString()}';
     return '{$string}';
   }
 }

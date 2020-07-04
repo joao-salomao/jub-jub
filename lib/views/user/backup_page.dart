@@ -4,6 +4,7 @@ import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/backup_file_model.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:jubjub/controllers/backup_controller.dart';
 import 'package:jubjub/views/widgets/app_flat_button.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -18,7 +19,7 @@ class _BackupPageState extends State<BackupPage> {
 
   @override
   void initState() {
-    backupController.getBackups();
+    backupController.getBackupsData();
     super.initState();
   }
 
@@ -27,6 +28,33 @@ class _BackupPageState extends State<BackupPage> {
     return Observer(
       builder: (_) {
         return Scaffold(
+          bottomNavigationBar: Container(
+            margin: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                LinearPercentIndicator(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  lineHeight: 14,
+                  animation: true,
+                  center: Text(
+                    backupController.driveUsage + ' GB',
+                    style: TextStyle(
+                      fontSize: 11,
+                    ),
+                  ),
+                  leading: Text(
+                    "Espaço usado: ",
+                  ),
+                  trailing: Text(
+                    backupController.driveLimit + ' GB',
+                  ),
+                  percent: backupController.usagePercent,
+                  progressColor: backupController.primaryColor,
+                ),
+              ],
+            ),
+          ),
           appBar: AppBar(
             title: Text(
               "Backup e restauração",
@@ -34,7 +62,7 @@ class _BackupPageState extends State<BackupPage> {
                 color: Colors.white,
               ),
             ),
-            backgroundColor: backupController.backupAppBarColor,
+            backgroundColor: backupController.primaryColor,
             centerTitle: true,
             actions: [
               Builder(
@@ -103,7 +131,7 @@ class _BackupPageState extends State<BackupPage> {
               child: Text("Carregar Novamente"),
               onPressed: () {
                 backupController.appController.getCurrentUser().then((_) {
-                  backupController.getBackups();
+                  backupController.getBackupsData();
                 });
               },
             ),

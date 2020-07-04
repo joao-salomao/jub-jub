@@ -32,6 +32,25 @@ class GoogleDriveService {
     }
   }
 
+  Future getDriveInfo() async {
+    try {
+      var drive = googleApis.DriveApi(_appController.currentUser.client);
+      final about = await drive.about.get($fields: '*');
+
+      final limit = double.parse(about.storageQuota.limit) / 1.074e+9;
+      final usage = double.parse(about.storageQuota.usage) / 1.074e+9;
+      final usagePercent = double.parse((usage / limit).toStringAsFixed(1));
+
+      return {
+        'limit': limit.toStringAsFixed(1),
+        'usage': usage.toStringAsFixed(1),
+        'usagePercent': usagePercent
+      };
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future deleteFile(googleApis.File file) async {
     try {
       var client = _appController.currentUser.client;

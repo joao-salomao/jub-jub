@@ -57,8 +57,12 @@ class BackupService {
     return result;
   }
 
-  getBackupsList() async {
+  Future getBackupsList() async {
     return await driveService.getBackupsList();
+  }
+
+  Future getDriveInfo() async {
+    return await driveService.getDriveInfo();
   }
 
   Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {

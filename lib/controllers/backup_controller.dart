@@ -13,6 +13,15 @@ abstract class _BackupControllerBase with Store {
   final appController = GetIt.I<AppController>();
 
   @observable
+  String driveLimit = '';
+
+  @observable
+  String driveUsage = '';
+
+  @observable
+  double usagePercent = 0;
+
+  @observable
   ObservableList<BackupFile> backups = ObservableList<BackupFile>();
 
   @observable
@@ -28,23 +37,34 @@ abstract class _BackupControllerBase with Store {
   bool hasError = false;
 
   @computed
-  get iconColor =>
-      appController.brightnessIsDark ? Colors.white : Colors.black;
+  get iconColor => appController.brightnessIsDark ? Colors.white : Colors.black;
 
-  get backupAppBarColor => appController.primaryColor;
+  get primaryColor => appController.primaryColor;
 
   @action
-  getBackups() async {
+  getBackupsData() async {
     hasError = false;
     isLoadingBackups = true;
     backups.clear();
 
     try {
-      final files = await backupService.getBackupsList();
+      Future.wait([
+        backupService.getBackupsList(),
+        backupService.getDriveInfo(),
+      ]).then((results) {
+        final files = results[0];
+        final driveInfo = results[1];
 
-      if (files != null) {
-        files.forEach((file) => backups.add(BackupFile(backupService, file)));
-      }
+        if (files != null) {
+          files.forEach((file) => backups.add(BackupFile(backupService, file)));
+        }
+
+        if (driveInfo != null) {
+          driveLimit = driveInfo['limit'];
+          driveUsage = driveInfo['usage'];
+          usagePercent = driveInfo['usagePercent'];
+        }
+      });
     } catch (e) {
       hasError = true;
       print(e);
@@ -59,7 +79,7 @@ abstract class _BackupControllerBase with Store {
 
     try {
       await backupService.backup();
-      getBackups();
+      getBackupsData();
       result = true;
     } catch (e) {
       print(e);
