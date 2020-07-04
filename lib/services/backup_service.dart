@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert' as convert;
+import 'package:archive/archive_io.dart';
 import 'google_drive_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jubjub/models/think_model.dart';
@@ -20,10 +21,37 @@ class BackupService {
   backup() async {
     final data = await _getJson();
     final file = await _getFile(data);
+    final file2 = await createZip(file);
 
-    await driveService.upload(file);
-
+    await driveService.upload(file2);
+    // await driveService.upload(file);
+    file2.delete();
     file.delete();
+  }
+
+  createBackupFileName() async {
+    final path = await _localPath;
+    final millisecondsSinceEpoch =
+        DateTime.now().millisecondsSinceEpoch.toString();
+    return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
+  }
+
+  createZip(File json) async {
+    final encoder = ZipFileEncoder();
+    final filename = await createBackupFileName();
+    encoder.create(filename);
+    encoder.addFile(json);
+
+    final paths =
+        await appController.annotationFileDAO.getAnnotationsFilesPaths();
+    paths.forEach((path) {
+      final file = File(path);
+      encoder.addFile(file);
+    });
+
+    // archives.forEach(encoder.addFile);
+    encoder.close();
+    return File(filename);
   }
 
   backupFile(File file) async {
@@ -75,8 +103,7 @@ class BackupService {
 
   _getFile(String data) async {
     final path = await _localPath;
-    final filename =
-        path + '/backup-jub-jub-' + DateTime.now().toString() + '.json';
+    final filename = path + '/backup-jub-jub-data.json';
     final file = new File(filename);
     await file.writeAsString(data);
     return file;
