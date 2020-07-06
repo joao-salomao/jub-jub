@@ -79,7 +79,7 @@ class GoogleDriveService {
       var client = _appController.currentUser.client;
       var drive = googleApis.DriveApi(client);
       final fileList = await drive.files.list(
-        q: "mimeType = 'application/json' and name contains ' backup-jub-jub' and trashed = false",
+        q: "mimeType = 'application/zip' and name contains ' backup-jub-jub' and trashed = false",
         orderBy: 'createdTime desc',
       );
       return fileList.files;
