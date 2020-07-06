@@ -19,14 +19,13 @@ class BackupService {
   }
 
   backup() async {
-    final data = await _getJson();
-    final file = await _getFile(data);
-    final file2 = await createZip(file);
+    final jsonFile = await _getDatabaseJsonCopyFile();
+    final zipFile = await _createZipFile(jsonFile);
 
-    await driveService.upload(file2);
-    // await driveService.upload(file);
-    file2.delete();
-    file.delete();
+    await driveService.upload(zipFile);
+
+    zipFile.delete();
+    jsonFile.delete();
   }
 
   createBackupFileName() async {
@@ -36,22 +35,27 @@ class BackupService {
     return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
   }
 
-  createZip(File json) async {
+  _createZipFile(File json) async {
     final encoder = ZipFileEncoder();
     final filename = await createBackupFileName();
+
     encoder.create(filename);
+
     encoder.addFile(json);
 
-    final paths =
-        await appController.annotationFileDAO.getAnnotationsFilesPaths();
-    paths.forEach((path) {
-      final file = File(path);
-      encoder.addFile(file);
-    });
+    final files = await _getAnnotationsFiles();
 
-    // archives.forEach(encoder.addFile);
+    files.forEach(encoder.addFile);
+
     encoder.close();
+
     return File(filename);
+  }
+
+  Future<List<File>> _getAnnotationsFiles() async {
+    return (await appController.annotationFileDAO.getAnnotationsFilesPaths())
+        .map((path) => File(path))
+        .toList();
   }
 
   backupFile(File file) async {
@@ -101,10 +105,11 @@ class BackupService {
     return await driveService.deleteFile(file);
   }
 
-  _getFile(String data) async {
+  _getDatabaseJsonCopyFile() async {
     final path = await _localPath;
     final filename = path + '/backup-jub-jub-data.json';
     final file = new File(filename);
+    final data = await _getJson();
     await file.writeAsString(data);
     return file;
   }
