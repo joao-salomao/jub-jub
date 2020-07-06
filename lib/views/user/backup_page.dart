@@ -28,33 +28,6 @@ class _BackupPageState extends State<BackupPage> {
     return Observer(
       builder: (_) {
         return Scaffold(
-          bottomNavigationBar: Container(
-            margin: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                LinearPercentIndicator(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  lineHeight: 14,
-                  animation: true,
-                  center: Text(
-                    backupController.driveUsage + ' GB',
-                    style: TextStyle(
-                      fontSize: 11,
-                    ),
-                  ),
-                  leading: Text(
-                    "Espaço usado: ",
-                  ),
-                  trailing: Text(
-                    backupController.driveLimit + ' GB',
-                  ),
-                  percent: backupController.usagePercent,
-                  progressColor: backupController.primaryColor,
-                ),
-              ],
-            ),
-          ),
           appBar: AppBar(
             title: Text(
               "Backup e restauração",
@@ -81,6 +54,7 @@ class _BackupPageState extends State<BackupPage> {
             ],
           ),
           body: _body(),
+          bottomNavigationBar: _bottomNavigationBar(),
         );
       },
     );
@@ -105,6 +79,36 @@ class _BackupPageState extends State<BackupPage> {
           );
         });
       },
+    );
+  }
+
+  _bottomNavigationBar() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width * 0.5,
+            lineHeight: 14,
+            animation: true,
+            center: Text(
+              backupController.driveUsage + ' GB',
+              style: TextStyle(
+                fontSize: 11,
+              ),
+            ),
+            leading: Text(
+              "Espaço usado: ",
+            ),
+            trailing: Text(
+              backupController.driveLimit + ' GB',
+            ),
+            percent: backupController.usagePercent,
+            progressColor: backupController.primaryColor,
+          ),
+        ],
+      ),
     );
   }
 
