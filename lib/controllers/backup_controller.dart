@@ -28,7 +28,7 @@ abstract class _BackupControllerBase with Store {
   ObservableStream<List<int>> fileStream;
 
   @observable
-  bool isLoadingBackups;
+  bool isLoadingBackups = true;
 
   @observable
   bool isLoadingNewBackup = false;
