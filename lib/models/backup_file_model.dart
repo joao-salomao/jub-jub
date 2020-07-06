@@ -22,12 +22,16 @@ abstract class _BackupFileBase with Store {
   drive.File metaData;
 
   @computed
-  String get createdAt => formatDate(
-        DateTime.parse(metaData.name
-            .replaceAll("backup-jub-jub-", "")
-            .replaceAll(".json", "")),
-        format: 'dd/MM/yyyy HH:MM',
-      );
+  String get createdAt {
+    final milliseconds = int.parse(
+      metaData.name.replaceAll("backup-jub-jub-", "").replaceAll(".zip", ""),
+    );
+
+    return formatDate(
+      DateTime.fromMillisecondsSinceEpoch(milliseconds),
+      format: 'dd/MM/yyyy HH:MM',
+    );
+  }
 
   @observable
   ObservableStream<List<int>> fileStream;
