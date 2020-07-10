@@ -64,12 +64,13 @@ abstract class _BackupControllerBase with Store {
           driveUsage = driveInfo['usage'];
           usagePercent = driveInfo['usagePercent'];
         }
+        isLoadingBackups = false;
       });
     } catch (e) {
       hasError = true;
+      isLoadingBackups = false;
       print(e);
     }
-    isLoadingBackups = false;
   }
 
   @action
