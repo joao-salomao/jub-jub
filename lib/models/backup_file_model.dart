@@ -1,9 +1,9 @@
 import 'dart:io' as io;
 import 'package:mobx/mobx.dart';
 import 'package:jubjub/utils/formatters.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:jubjub/services/backup_service.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:permission_handler/permission_handler.dart';
 part 'backup_file_model.g.dart';
 
 class BackupFile = _BackupFileBase with _$BackupFile;
@@ -57,11 +57,12 @@ abstract class _BackupFileBase with Store {
     final stream = await backupService.downloadFile(metaData.name, metaData.id);
     fileStream = ObservableStream(stream);
 
-    final directory = await getExternalStorageDirectory();
-    print(directory.path);
+    if (!(await Permission.storage.status).isGranted) {
+      await Permission.storage.request();
+    }
 
-    file = io.File(
-        '${directory.path}/${DateTime.now().millisecondsSinceEpoch}${metaData.name}');
+    io.Directory('/storage/emulated/0/JubJub').createSync(recursive: true);
+    file = io.File('/storage/emulated/0/JubJub/${metaData.name}')..createSync();
 
     final List<int> dataStore = [];
     fileStream.listen((data) {
