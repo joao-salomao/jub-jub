@@ -58,10 +58,31 @@ class BackupService {
         .toList();
   }
 
+  _unzipFiles(File file) {
+    final archive = ZipDecoder().decodeBytes(file.readAsBytesSync());
+    Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
+
+    for (final file in archive) {
+      final filename = file.name;
+      if (file.isFile) {
+        final data = file.content as List<int>;
+        File('/storage/emulated/0/JubJub/Files/$filename')
+          ..createSync(recursive: true)
+          ..writeAsBytesSync(data);
+      } else {
+        Directory('/storage/emulated/0/JubJub/Files/$filename')
+          ..create(recursive: true);
+      }
+    }
+  }
+
   backupFile(File file) async {
     bool result;
     try {
-      final String json = await file.readAsString();
+      _unzipFiles(file);
+      final String json =
+          File('/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json')
+              .readAsStringSync();
       final List thinksMap = convert.json.decode(json);
 
       thinksMap.forEach((thinkMap) async {
@@ -75,6 +96,8 @@ class BackupService {
           think.annotations.add(annotation);
 
           annotationMap['annotation_files'].forEach((afMap) {
+            final baseName = afMap['path'].split('/').last;
+            afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
             final annotationFile = AnnotationFileModel.fromMap(afMap);
             annotation.files.add(annotationFile);
           });
@@ -83,6 +106,8 @@ class BackupService {
         });
       });
       result = true;
+      File('/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json')
+          .delete();
     } catch (e) {
       result = false;
     }
