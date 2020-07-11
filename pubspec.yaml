@@ -62,4 +62,4 @@ scripts:
     - flutter build apk
   copy-database:
     - adb root
-    - adb -e pull /data/data/com.salominho.jubjub/jubjub_database.db %USERPROFILE%\Desktop\
+    - adb -e pull /data/data/com.salominho.jubjub/databases/jubjub_database.db %USERPROFILE%\Desktop\
