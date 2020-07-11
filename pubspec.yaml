@@ -60,3 +60,6 @@ scripts:
     - flutter pub run build_runner build --delete-conflicting-outputs
     - flutter pub run flutter_launcher_icons:main
     - flutter build apk
+  copy-database:
+    - adb root
+    - adb -e pull /data/data/com.salominho.jubjub/jubjub_database.db %USERPROFILE%\Desktop\

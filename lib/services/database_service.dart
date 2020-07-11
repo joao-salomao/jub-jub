@@ -22,7 +22,7 @@ class DatabaseService {
 
   Future _initDb() async {
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'popato_notes_database.db');
+    String path = join(databasesPath, 'jubjub_database.db');
 
     var db = await openDatabase(
       path,
