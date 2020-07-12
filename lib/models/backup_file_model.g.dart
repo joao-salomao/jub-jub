@@ -32,18 +32,18 @@ mixin _$BackupFile on _BackupFileBase, Store {
     });
   }
 
-  final _$fileStreamAtom = Atom(name: '_BackupFileBase.fileStream');
+  final _$backupStreamAtom = Atom(name: '_BackupFileBase.backupStream');
 
   @override
-  ObservableStream<List<int>> get fileStream {
-    _$fileStreamAtom.reportRead();
-    return super.fileStream;
+  ObservableStream<int> get backupStream {
+    _$backupStreamAtom.reportRead();
+    return super.backupStream;
   }
 
   @override
-  set fileStream(ObservableStream<List<int>> value) {
-    _$fileStreamAtom.reportWrite(value, super.fileStream, () {
-      super.fileStream = value;
+  set backupStream(ObservableStream<int> value) {
+    _$backupStreamAtom.reportWrite(value, super.backupStream, () {
+      super.backupStream = value;
     });
   }
 
@@ -118,7 +118,7 @@ mixin _$BackupFile on _BackupFileBase, Store {
   String toString() {
     return '''
 metaData: ${metaData},
-fileStream: ${fileStream},
+backupStream: ${backupStream},
 isDone: ${isDone},
 hasError: ${hasError},
 isDownloading: ${isDownloading},

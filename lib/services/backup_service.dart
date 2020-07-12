@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 import 'dart:convert' as convert;
 import 'google_drive_service.dart';
 import 'package:get_it/get_it.dart';
@@ -107,30 +108,42 @@ class BackupService {
 
   backupFile(String fileName, String id) async {
     File file;
-    Stream<List<int>> stream;
     final List<int> dataStore = [];
+    final controller = StreamController<int>();
 
     try {
       if (!(await Permission.storage.status).isGranted) {
         await Permission.storage.request();
       }
+      controller.add(5);
 
       Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
-      file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
+      controller.add(5);
 
-      stream = (await driveService.downloadGoogleDriveFile(fileName, id))
-          .asBroadcastStream();
+      file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
+      controller.add(5);
+
+      final stream = await driveService.downloadGoogleDriveFile(fileName, id);
+      controller.add(5);
 
       stream.listen((data) {
         dataStore.insertAll(dataStore.length, data);
       }, onDone: () async {
         file.writeAsBytesSync(dataStore);
+        controller.add(30);
 
         await _unzipFiles(file);
+        controller.add(10);
+
         await _persistData();
+        controller.add(10);
 
         File(DB_BACKUP_FILE_PATH).deleteSync();
+        controller.add(10);
+
         file.deleteSync();
+        controller.add(20);
+        controller.close();
       }, onError: (error) {
         file.deleteSync();
       });
@@ -138,9 +151,12 @@ class BackupService {
       if (file != null) {
         file.deleteSync();
       }
+
+      controller.addError(-1);
+      controller.close();
       print(e);
     }
-    return stream;
+    return controller.stream;
   }
 
   Future getBackupsList() async {

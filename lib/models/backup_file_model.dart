@@ -29,7 +29,7 @@ abstract class _BackupFileBase with Store {
   }
 
   @observable
-  ObservableStream<List<int>> fileStream;
+  ObservableStream<int> backupStream;
 
   @observable
   bool isDone;
@@ -49,20 +49,31 @@ abstract class _BackupFileBase with Store {
     hasError = false;
     isDownloading = true;
 
-    final backupStream =
-        await backupService.backupFile(metaData.name, metaData.id);
-
-    fileStream = ObservableStream(backupStream);
-
-    fileStream.listen((data) {}, onDone: () {
+    var progress = 0;
+    final onData = (data) {
+      progress += data;
+      print(progress);
+    };
+    final onDone = () {
       Future.delayed(Duration(seconds: 1)).then((value) {
         backupService.appController.getData();
         isDone = true;
         isDownloading = false;
       });
-    }, onError: (error) {
+    };
+    final onError = (error) {
       hasError = true;
       isDownloading = false;
-    });
+    };
+    final stream = await backupService.backupFile(metaData.name, metaData.id);
+
+    backupStream = ObservableStream(stream as Stream<int>);
+
+    backupStream.listen(
+      onData,
+      onDone: onDone,
+      onError: onError,
+      cancelOnError: true,
+    );
   }
 }
