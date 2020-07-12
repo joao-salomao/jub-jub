@@ -68,7 +68,7 @@ abstract class _BackupFileBase with Store {
     fileStream.listen((data) {
       dataStore.insertAll(dataStore.length, data);
     }, onDone: () async {
-      await file.writeAsBytes(dataStore);
+      file.writeAsBytesSync(dataStore);
 
       isDownloading = false;
 
@@ -77,11 +77,11 @@ abstract class _BackupFileBase with Store {
       await backupService.appController.getData();
 
       isDone = true;
-      file.delete();
+      file.deleteSync();
     }, onError: (error) {
       hasError = true;
       isDownloading = false;
-      file.delete();
+      file.deleteSync();
     });
   }
 }

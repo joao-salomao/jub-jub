@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BackupService {
   final driveService = GoogleDriveService();
@@ -60,7 +61,6 @@ class BackupService {
 
   _unzipFiles(File file) {
     final archive = ZipDecoder().decodeBytes(file.readAsBytesSync());
-    Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
 
     for (final file in archive) {
       final filename = file.name;
@@ -85,33 +85,39 @@ class BackupService {
               .readAsStringSync();
       final List thinksMap = convert.json.decode(json);
 
-      thinksMap.forEach((thinkMap) async {
-        final think = ThinkModel.fromMap(thinkMap);
-        await appController.saveThink(think);
+      await _persistData(thinksMap);
 
-        thinkMap['annotations'].forEach((annotationMap) async {
-          final annotation = AnnotationModel.fromMap(annotationMap);
-          annotation.thinkId = think.id;
-          await appController.saveAnnotation(annotation);
-          think.annotations.add(annotation);
-
-          annotationMap['annotation_files'].forEach((afMap) {
-            final baseName = afMap['path'].split('/').last;
-            afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
-            final annotationFile = AnnotationFileModel.fromMap(afMap);
-            annotation.files.add(annotationFile);
-          });
-
-          await appController.saveAnnotation(annotation);
-        });
-      });
-      result = true;
       File('/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json')
           .delete();
+
+      result = true;
     } catch (e) {
       result = false;
     }
     return result;
+  }
+
+  _persistData(List thinksMap) async {
+    thinksMap.forEach((thinkMap) async {
+      final think = ThinkModel.fromMap(thinkMap);
+      await appController.saveThink(think);
+
+      thinkMap['annotations'].forEach((annotationMap) async {
+        final annotation = AnnotationModel.fromMap(annotationMap);
+        annotation.thinkId = think.id;
+        await appController.saveAnnotation(annotation);
+        think.annotations.add(annotation);
+
+        annotationMap['annotation_files'].forEach((afMap) {
+          final baseName = afMap['path'].split('/').last;
+          afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
+          final annotationFile = AnnotationFileModel.fromMap(afMap);
+          annotation.files.add(annotationFile);
+        });
+
+        await appController.saveAnnotation(annotation);
+      });
+    });
   }
 
   Future getBackupsList() async {
