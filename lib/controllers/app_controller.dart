@@ -162,6 +162,13 @@ abstract class _AppControllerBase with Store {
     thinkDAO.delete(think.id);
   }
 
+  truncate() async {
+    await annotationFileDAO.deleteAll();
+    await annotationDAO.deleteAll();
+    await thinkDAO.deleteAll();
+    getData();
+  }
+
   @action
   getThinkAnnotations(int thinkId) async {
     return await annotationDAO.getAnnotationsByThinkId(thinkId);

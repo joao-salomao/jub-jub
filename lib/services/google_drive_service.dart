@@ -64,7 +64,9 @@ class GoogleDriveService {
   }
 
   Future<Stream<List<int>>> downloadGoogleDriveFile(
-      String fileName, String fileId) async {
+    String fileName,
+    String fileId,
+  ) async {
     var client = _appController.currentUser.client;
     var drive = googleApis.DriveApi(client);
     googleApis.Media file = await drive.files.get(
