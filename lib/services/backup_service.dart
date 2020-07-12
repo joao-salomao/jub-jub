@@ -11,6 +11,9 @@ import 'package:jubjub/models/annotation_file_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BackupService {
+  static const String DB_BACKUP_FILE_PATH =
+      '/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json';
+
   final driveService = GoogleDriveService();
   final appController = GetIt.I<AppController>();
 
@@ -59,8 +62,8 @@ class BackupService {
         .toList();
   }
 
-  _unzipFiles(File file) {
-    final archive = ZipDecoder().decodeBytes(file.readAsBytesSync());
+  _unzipFiles(File file) async {
+    final archive = ZipDecoder().decodeBytes((await file.readAsBytes()));
 
     for (final file in archive) {
       final filename = file.name;
@@ -71,33 +74,15 @@ class BackupService {
           ..writeAsBytesSync(data);
       } else {
         Directory('/storage/emulated/0/JubJub/Files/$filename')
-          ..create(recursive: true);
+          ..createSync(recursive: true);
       }
     }
   }
 
-  backupFile(File file) async {
-    bool result;
-    try {
-      _unzipFiles(file);
-      final String json =
-          File('/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json')
-              .readAsStringSync();
-      final List thinksMap = convert.json.decode(json);
+  _persistData() async {
+    final String json = File(DB_BACKUP_FILE_PATH).readAsStringSync();
+    final List thinksMap = convert.json.decode(json);
 
-      await _persistData(thinksMap);
-
-      File('/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json')
-          .delete();
-
-      result = true;
-    } catch (e) {
-      result = false;
-    }
-    return result;
-  }
-
-  _persistData(List thinksMap) async {
     thinksMap.forEach((thinkMap) async {
       final think = ThinkModel.fromMap(thinkMap);
       await appController.saveThink(think);
@@ -118,6 +103,40 @@ class BackupService {
         await appController.saveAnnotation(annotation);
       });
     });
+  }
+
+  backupFile(String fileName, String id) async {
+    Stream<List<int>> stream;
+    final List<int> dataStore = [];
+    final file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
+
+    try {
+      if (!(await Permission.storage.status).isGranted) {
+        await Permission.storage.request();
+      }
+
+      Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
+
+      stream = await driveService.downloadGoogleDriveFile(fileName, id);
+
+      stream.listen((data) {
+        dataStore.insertAll(dataStore.length, data);
+      }, onDone: () async {
+        file.writeAsBytesSync(dataStore);
+
+        await _unzipFiles(file);
+        await _persistData();
+
+        File(DB_BACKUP_FILE_PATH).deleteSync();
+        file.deleteSync();
+      }, onError: (error) {
+        file.deleteSync();
+      });
+    } catch (e) {
+      print(e);
+      file.deleteSync();
+    }
+    return stream;
   }
 
   Future getBackupsList() async {
