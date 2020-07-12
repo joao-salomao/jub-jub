@@ -106,9 +106,9 @@ class BackupService {
   }
 
   backupFile(String fileName, String id) async {
+    File file;
     Stream<List<int>> stream;
     final List<int> dataStore = [];
-    final file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
 
     try {
       if (!(await Permission.storage.status).isGranted) {
@@ -116,8 +116,10 @@ class BackupService {
       }
 
       Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
+      file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
 
-      stream = await driveService.downloadGoogleDriveFile(fileName, id);
+      stream = (await driveService.downloadGoogleDriveFile(fileName, id))
+          .asBroadcastStream();
 
       stream.listen((data) {
         dataStore.insertAll(dataStore.length, data);
@@ -133,8 +135,10 @@ class BackupService {
         file.deleteSync();
       });
     } catch (e) {
+      if (file != null) {
+        file.deleteSync();
+      }
       print(e);
-      file.deleteSync();
     }
     return stream;
   }
@@ -164,6 +168,7 @@ class BackupService {
     return file;
   }
 
+  // REFATORAR PARA PEGAR OS DADOS DOS DAO'S
   _getJson() async {
     await appController.getData();
 

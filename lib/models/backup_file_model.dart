@@ -55,8 +55,11 @@ abstract class _BackupFileBase with Store {
     fileStream = ObservableStream(backupStream);
 
     fileStream.listen((data) {}, onDone: () {
-      backupService.appController.getData();
-      isDone = true;
+      Future.delayed(Duration(seconds: 1)).then((value) {
+        backupService.appController.getData();
+        isDone = true;
+        isDownloading = false;
+      });
     }, onError: (error) {
       hasError = true;
       isDownloading = false;
