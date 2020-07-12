@@ -6,115 +6,108 @@ part of 'think_model.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ThinkModel on _ThinkModelBase, Store {
   final _$idAtom = Atom(name: '_ThinkModelBase.id');
 
   @override
   int get id {
-    _$idAtom.context.enforceReadPolicy(_$idAtom);
-    _$idAtom.reportObserved();
+    _$idAtom.reportRead();
     return super.id;
   }
 
   @override
   set id(int value) {
-    _$idAtom.context.conditionallyRunInAction(() {
+    _$idAtom.reportWrite(value, super.id, () {
       super.id = value;
-      _$idAtom.reportChanged();
-    }, _$idAtom, name: '${_$idAtom.name}_set');
+    });
   }
 
   final _$listIndexAtom = Atom(name: '_ThinkModelBase.listIndex');
 
   @override
   int get listIndex {
-    _$listIndexAtom.context.enforceReadPolicy(_$listIndexAtom);
-    _$listIndexAtom.reportObserved();
+    _$listIndexAtom.reportRead();
     return super.listIndex;
   }
 
   @override
   set listIndex(int value) {
-    _$listIndexAtom.context.conditionallyRunInAction(() {
+    _$listIndexAtom.reportWrite(value, super.listIndex, () {
       super.listIndex = value;
-      _$listIndexAtom.reportChanged();
-    }, _$listIndexAtom, name: '${_$listIndexAtom.name}_set');
+    });
   }
 
   final _$titleAtom = Atom(name: '_ThinkModelBase.title');
 
   @override
   String get title {
-    _$titleAtom.context.enforceReadPolicy(_$titleAtom);
-    _$titleAtom.reportObserved();
+    _$titleAtom.reportRead();
     return super.title;
   }
 
   @override
   set title(String value) {
-    _$titleAtom.context.conditionallyRunInAction(() {
+    _$titleAtom.reportWrite(value, super.title, () {
       super.title = value;
-      _$titleAtom.reportChanged();
-    }, _$titleAtom, name: '${_$titleAtom.name}_set');
+    });
   }
 
   final _$colorAtom = Atom(name: '_ThinkModelBase.color');
 
   @override
   Color get color {
-    _$colorAtom.context.enforceReadPolicy(_$colorAtom);
-    _$colorAtom.reportObserved();
+    _$colorAtom.reportRead();
     return super.color;
   }
 
   @override
   set color(Color value) {
-    _$colorAtom.context.conditionallyRunInAction(() {
+    _$colorAtom.reportWrite(value, super.color, () {
       super.color = value;
-      _$colorAtom.reportChanged();
-    }, _$colorAtom, name: '${_$colorAtom.name}_set');
+    });
   }
 
   final _$createdAtAtom = Atom(name: '_ThinkModelBase.createdAt');
 
   @override
   DateTime get createdAt {
-    _$createdAtAtom.context.enforceReadPolicy(_$createdAtAtom);
-    _$createdAtAtom.reportObserved();
+    _$createdAtAtom.reportRead();
     return super.createdAt;
   }
 
   @override
   set createdAt(DateTime value) {
-    _$createdAtAtom.context.conditionallyRunInAction(() {
+    _$createdAtAtom.reportWrite(value, super.createdAt, () {
       super.createdAt = value;
-      _$createdAtAtom.reportChanged();
-    }, _$createdAtAtom, name: '${_$createdAtAtom.name}_set');
+    });
   }
 
   final _$annotationsAtom = Atom(name: '_ThinkModelBase.annotations');
 
   @override
   ObservableList<AnnotationModel> get annotations {
-    _$annotationsAtom.context.enforceReadPolicy(_$annotationsAtom);
-    _$annotationsAtom.reportObserved();
+    _$annotationsAtom.reportRead();
     return super.annotations;
   }
 
   @override
   set annotations(ObservableList<AnnotationModel> value) {
-    _$annotationsAtom.context.conditionallyRunInAction(() {
+    _$annotationsAtom.reportWrite(value, super.annotations, () {
       super.annotations = value;
-      _$annotationsAtom.reportChanged();
-    }, _$annotationsAtom, name: '${_$annotationsAtom.name}_set');
+    });
   }
 
   @override
   String toString() {
-    final string =
-        'id: ${id.toString()},listIndex: ${listIndex.toString()},title: ${title.toString()},color: ${color.toString()},createdAt: ${createdAt.toString()},annotations: ${annotations.toString()}';
-    return '{$string}';
+    return '''
+id: ${id},
+listIndex: ${listIndex},
+title: ${title},
+color: ${color},
+createdAt: ${createdAt},
+annotations: ${annotations}
+    ''';
   }
 }

@@ -6,81 +6,76 @@ part of 'user_model.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserModel on _UserModelBase, Store {
   final _$clientAtom = Atom(name: '_UserModelBase.client');
 
   @override
   dynamic get client {
-    _$clientAtom.context.enforceReadPolicy(_$clientAtom);
-    _$clientAtom.reportObserved();
+    _$clientAtom.reportRead();
     return super.client;
   }
 
   @override
   set client(dynamic value) {
-    _$clientAtom.context.conditionallyRunInAction(() {
+    _$clientAtom.reportWrite(value, super.client, () {
       super.client = value;
-      _$clientAtom.reportChanged();
-    }, _$clientAtom, name: '${_$clientAtom.name}_set');
+    });
   }
 
   final _$nameAtom = Atom(name: '_UserModelBase.name');
 
   @override
   String get name {
-    _$nameAtom.context.enforceReadPolicy(_$nameAtom);
-    _$nameAtom.reportObserved();
+    _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
   set name(String value) {
-    _$nameAtom.context.conditionallyRunInAction(() {
+    _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
-      _$nameAtom.reportChanged();
-    }, _$nameAtom, name: '${_$nameAtom.name}_set');
+    });
   }
 
   final _$emailAtom = Atom(name: '_UserModelBase.email');
 
   @override
   String get email {
-    _$emailAtom.context.enforceReadPolicy(_$emailAtom);
-    _$emailAtom.reportObserved();
+    _$emailAtom.reportRead();
     return super.email;
   }
 
   @override
   set email(String value) {
-    _$emailAtom.context.conditionallyRunInAction(() {
+    _$emailAtom.reportWrite(value, super.email, () {
       super.email = value;
-      _$emailAtom.reportChanged();
-    }, _$emailAtom, name: '${_$emailAtom.name}_set');
+    });
   }
 
   final _$photoUrlAtom = Atom(name: '_UserModelBase.photoUrl');
 
   @override
   String get photoUrl {
-    _$photoUrlAtom.context.enforceReadPolicy(_$photoUrlAtom);
-    _$photoUrlAtom.reportObserved();
+    _$photoUrlAtom.reportRead();
     return super.photoUrl;
   }
 
   @override
   set photoUrl(String value) {
-    _$photoUrlAtom.context.conditionallyRunInAction(() {
+    _$photoUrlAtom.reportWrite(value, super.photoUrl, () {
       super.photoUrl = value;
-      _$photoUrlAtom.reportChanged();
-    }, _$photoUrlAtom, name: '${_$photoUrlAtom.name}_set');
+    });
   }
 
   @override
   String toString() {
-    final string =
-        'client: ${client.toString()},name: ${name.toString()},email: ${email.toString()},photoUrl: ${photoUrl.toString()}';
-    return '{$string}';
+    return '''
+client: ${client},
+name: ${name},
+email: ${email},
+photoUrl: ${photoUrl}
+    ''';
   }
 }

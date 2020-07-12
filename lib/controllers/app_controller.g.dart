@@ -6,124 +6,114 @@ part of 'app_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
   Computed<bool> _$hasUserComputed;
 
   @override
-  bool get hasUser =>
-      (_$hasUserComputed ??= Computed<bool>(() => super.hasUser)).value;
+  bool get hasUser => (_$hasUserComputed ??= Computed<bool>(() => super.hasUser,
+          name: '_AppControllerBase.hasUser'))
+      .value;
   Computed<bool> _$brightnessIsDarkComputed;
 
   @override
-  bool get brightnessIsDark => (_$brightnessIsDarkComputed ??=
-          Computed<bool>(() => super.brightnessIsDark))
+  bool get brightnessIsDark => (_$brightnessIsDarkComputed ??= Computed<bool>(
+          () => super.brightnessIsDark,
+          name: '_AppControllerBase.brightnessIsDark'))
       .value;
 
   final _$currentUserAtom = Atom(name: '_AppControllerBase.currentUser');
 
   @override
   UserModel get currentUser {
-    _$currentUserAtom.context.enforceReadPolicy(_$currentUserAtom);
-    _$currentUserAtom.reportObserved();
+    _$currentUserAtom.reportRead();
     return super.currentUser;
   }
 
   @override
   set currentUser(UserModel value) {
-    _$currentUserAtom.context.conditionallyRunInAction(() {
+    _$currentUserAtom.reportWrite(value, super.currentUser, () {
       super.currentUser = value;
-      _$currentUserAtom.reportChanged();
-    }, _$currentUserAtom, name: '${_$currentUserAtom.name}_set');
+    });
   }
 
   final _$thinksAtom = Atom(name: '_AppControllerBase.thinks');
 
   @override
   ObservableList<ThinkModel> get thinks {
-    _$thinksAtom.context.enforceReadPolicy(_$thinksAtom);
-    _$thinksAtom.reportObserved();
+    _$thinksAtom.reportRead();
     return super.thinks;
   }
 
   @override
   set thinks(ObservableList<ThinkModel> value) {
-    _$thinksAtom.context.conditionallyRunInAction(() {
+    _$thinksAtom.reportWrite(value, super.thinks, () {
       super.thinks = value;
-      _$thinksAtom.reportChanged();
-    }, _$thinksAtom, name: '${_$thinksAtom.name}_set');
+    });
   }
 
   final _$mainTitleAtom = Atom(name: '_AppControllerBase.mainTitle');
 
   @override
   String get mainTitle {
-    _$mainTitleAtom.context.enforceReadPolicy(_$mainTitleAtom);
-    _$mainTitleAtom.reportObserved();
+    _$mainTitleAtom.reportRead();
     return super.mainTitle;
   }
 
   @override
   set mainTitle(String value) {
-    _$mainTitleAtom.context.conditionallyRunInAction(() {
+    _$mainTitleAtom.reportWrite(value, super.mainTitle, () {
       super.mainTitle = value;
-      _$mainTitleAtom.reportChanged();
-    }, _$mainTitleAtom, name: '${_$mainTitleAtom.name}_set');
+    });
   }
 
   final _$brightnessAtom = Atom(name: '_AppControllerBase.brightness');
 
   @override
   Brightness get brightness {
-    _$brightnessAtom.context.enforceReadPolicy(_$brightnessAtom);
-    _$brightnessAtom.reportObserved();
+    _$brightnessAtom.reportRead();
     return super.brightness;
   }
 
   @override
   set brightness(Brightness value) {
-    _$brightnessAtom.context.conditionallyRunInAction(() {
+    _$brightnessAtom.reportWrite(value, super.brightness, () {
       super.brightness = value;
-      _$brightnessAtom.reportChanged();
-    }, _$brightnessAtom, name: '${_$brightnessAtom.name}_set');
+    });
   }
 
   final _$primaryColorAtom = Atom(name: '_AppControllerBase.primaryColor');
 
   @override
   Color get primaryColor {
-    _$primaryColorAtom.context.enforceReadPolicy(_$primaryColorAtom);
-    _$primaryColorAtom.reportObserved();
+    _$primaryColorAtom.reportRead();
     return super.primaryColor;
   }
 
   @override
   set primaryColor(Color value) {
-    _$primaryColorAtom.context.conditionallyRunInAction(() {
+    _$primaryColorAtom.reportWrite(value, super.primaryColor, () {
       super.primaryColor = value;
-      _$primaryColorAtom.reportChanged();
-    }, _$primaryColorAtom, name: '${_$primaryColorAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: '_AppControllerBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
-  final _$getDataAsyncAction = AsyncAction('getData');
+  final _$getDataAsyncAction = AsyncAction('_AppControllerBase.getData');
 
   @override
   Future<void> getData() {
@@ -131,7 +121,7 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   final _$updateAnnotationThinkAsyncAction =
-      AsyncAction('updateAnnotationThink');
+      AsyncAction('_AppControllerBase.updateAnnotationThink');
 
   @override
   Future<void> updateAnnotationThink(
@@ -140,21 +130,23 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.updateAnnotationThink(annotation, think));
   }
 
-  final _$saveThinkAsyncAction = AsyncAction('saveThink');
+  final _$saveThinkAsyncAction = AsyncAction('_AppControllerBase.saveThink');
 
   @override
   Future saveThink(ThinkModel think) {
     return _$saveThinkAsyncAction.run(() => super.saveThink(think));
   }
 
-  final _$deleteThinkAsyncAction = AsyncAction('deleteThink');
+  final _$deleteThinkAsyncAction =
+      AsyncAction('_AppControllerBase.deleteThink');
 
   @override
   Future deleteThink(ThinkModel think) {
     return _$deleteThinkAsyncAction.run(() => super.deleteThink(think));
   }
 
-  final _$getThinkAnnotationsAsyncAction = AsyncAction('getThinkAnnotations');
+  final _$getThinkAnnotationsAsyncAction =
+      AsyncAction('_AppControllerBase.getThinkAnnotations');
 
   @override
   Future getThinkAnnotations(int thinkId) {
@@ -162,7 +154,8 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.getThinkAnnotations(thinkId));
   }
 
-  final _$getAnnotationFilesAsyncAction = AsyncAction('getAnnotationFiles');
+  final _$getAnnotationFilesAsyncAction =
+      AsyncAction('_AppControllerBase.getAnnotationFiles');
 
   @override
   Future getAnnotationFiles(int annotationId) {
@@ -170,7 +163,8 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.getAnnotationFiles(annotationId));
   }
 
-  final _$saveAnnotationAsyncAction = AsyncAction('saveAnnotation');
+  final _$saveAnnotationAsyncAction =
+      AsyncAction('_AppControllerBase.saveAnnotation');
 
   @override
   Future saveAnnotation(AnnotationModel annotation,
@@ -179,7 +173,8 @@ mixin _$AppController on _AppControllerBase, Store {
         () => super.saveAnnotation(annotation, deletedFiles: deletedFiles));
   }
 
-  final _$deleteAnnotationAsyncAction = AsyncAction('deleteAnnotation');
+  final _$deleteAnnotationAsyncAction =
+      AsyncAction('_AppControllerBase.deleteAnnotation');
 
   @override
   Future deleteAnnotation(AnnotationModel annotation) {
@@ -187,7 +182,8 @@ mixin _$AppController on _AppControllerBase, Store {
         .run(() => super.deleteAnnotation(annotation));
   }
 
-  final _$getCurrentUserAsyncAction = AsyncAction('getCurrentUser');
+  final _$getCurrentUserAsyncAction =
+      AsyncAction('_AppControllerBase.getCurrentUser');
 
   @override
   Future getCurrentUser() {
@@ -199,7 +195,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic setBrightness(Brightness value, BuildContext context) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.setBrightness');
     try {
       return super.setBrightness(value, context);
     } finally {
@@ -209,7 +206,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic getBrightness(BuildContext context) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.getBrightness');
     try {
       return super.getBrightness(context);
     } finally {
@@ -219,7 +217,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic reOrderThinks(int oldIndex, int newIndex) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.reOrderThinks');
     try {
       return super.reOrderThinks(oldIndex, newIndex);
     } finally {
@@ -229,7 +228,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic getMainTitle() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.getMainTitle');
     try {
       return super.getMainTitle();
     } finally {
@@ -239,7 +239,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic getPrimaryColor() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.getPrimaryColor');
     try {
       return super.getPrimaryColor();
     } finally {
@@ -249,7 +250,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic updatePrimaryColor(Color color) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.updatePrimaryColor');
     try {
       return super.updatePrimaryColor(color);
     } finally {
@@ -259,7 +261,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic updateMainTitle(String text) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.updateMainTitle');
     try {
       return super.updateMainTitle(text);
     } finally {
@@ -269,7 +272,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic login() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.login');
     try {
       return super.login();
     } finally {
@@ -279,7 +283,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   dynamic logout() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.logout');
     try {
       return super.logout();
     } finally {
@@ -289,8 +294,15 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'currentUser: ${currentUser.toString()},thinks: ${thinks.toString()},mainTitle: ${mainTitle.toString()},brightness: ${brightness.toString()},primaryColor: ${primaryColor.toString()},isLoading: ${isLoading.toString()},hasUser: ${hasUser.toString()},brightnessIsDark: ${brightnessIsDark.toString()}';
-    return '{$string}';
+    return '''
+currentUser: ${currentUser},
+thinks: ${thinks},
+mainTitle: ${mainTitle},
+brightness: ${brightness},
+primaryColor: ${primaryColor},
+isLoading: ${isLoading},
+hasUser: ${hasUser},
+brightnessIsDark: ${brightnessIsDark}
+    ''';
   }
 }

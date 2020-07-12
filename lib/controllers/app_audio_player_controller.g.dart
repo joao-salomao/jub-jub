@@ -6,59 +6,59 @@ part of 'app_audio_player_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
   Computed<String> _$formatedTotaldDurationComputed;
 
   @override
   String get formatedTotaldDuration => (_$formatedTotaldDurationComputed ??=
-          Computed<String>(() => super.formatedTotaldDuration))
+          Computed<String>(() => super.formatedTotaldDuration,
+              name: '_AppAudioPlayerControllerBase.formatedTotaldDuration'))
       .value;
   Computed<String> _$formatedCurrentDurationComputed;
 
   @override
   String get formatedCurrentDuration => (_$formatedCurrentDurationComputed ??=
-          Computed<String>(() => super.formatedCurrentDuration))
+          Computed<String>(() => super.formatedCurrentDuration,
+              name: '_AppAudioPlayerControllerBase.formatedCurrentDuration'))
       .value;
   Computed<bool> _$showPlayerComputed;
 
   @override
   bool get showPlayer =>
-      (_$showPlayerComputed ??= Computed<bool>(() => super.showPlayer)).value;
+      (_$showPlayerComputed ??= Computed<bool>(() => super.showPlayer,
+              name: '_AppAudioPlayerControllerBase.showPlayer'))
+          .value;
 
   final _$isPlayingAtom = Atom(name: '_AppAudioPlayerControllerBase.isPlaying');
 
   @override
   bool get isPlaying {
-    _$isPlayingAtom.context.enforceReadPolicy(_$isPlayingAtom);
-    _$isPlayingAtom.reportObserved();
+    _$isPlayingAtom.reportRead();
     return super.isPlaying;
   }
 
   @override
   set isPlaying(bool value) {
-    _$isPlayingAtom.context.conditionallyRunInAction(() {
+    _$isPlayingAtom.reportWrite(value, super.isPlaying, () {
       super.isPlaying = value;
-      _$isPlayingAtom.reportChanged();
-    }, _$isPlayingAtom, name: '${_$isPlayingAtom.name}_set');
+    });
   }
 
   final _$filePathAtom = Atom(name: '_AppAudioPlayerControllerBase.filePath');
 
   @override
   String get filePath {
-    _$filePathAtom.context.enforceReadPolicy(_$filePathAtom);
-    _$filePathAtom.reportObserved();
+    _$filePathAtom.reportRead();
     return super.filePath;
   }
 
   @override
   set filePath(String value) {
-    _$filePathAtom.context.conditionallyRunInAction(() {
+    _$filePathAtom.reportWrite(value, super.filePath, () {
       super.filePath = value;
-      _$filePathAtom.reportChanged();
-    }, _$filePathAtom, name: '${_$filePathAtom.name}_set');
+    });
   }
 
   final _$totaldDurationAtom =
@@ -66,17 +66,15 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   Duration get totaldDuration {
-    _$totaldDurationAtom.context.enforceReadPolicy(_$totaldDurationAtom);
-    _$totaldDurationAtom.reportObserved();
+    _$totaldDurationAtom.reportRead();
     return super.totaldDuration;
   }
 
   @override
   set totaldDuration(Duration value) {
-    _$totaldDurationAtom.context.conditionallyRunInAction(() {
+    _$totaldDurationAtom.reportWrite(value, super.totaldDuration, () {
       super.totaldDuration = value;
-      _$totaldDurationAtom.reportChanged();
-    }, _$totaldDurationAtom, name: '${_$totaldDurationAtom.name}_set');
+    });
   }
 
   final _$currentDurationAtom =
@@ -84,20 +82,19 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   Duration get currentDuration {
-    _$currentDurationAtom.context.enforceReadPolicy(_$currentDurationAtom);
-    _$currentDurationAtom.reportObserved();
+    _$currentDurationAtom.reportRead();
     return super.currentDuration;
   }
 
   @override
   set currentDuration(Duration value) {
-    _$currentDurationAtom.context.conditionallyRunInAction(() {
+    _$currentDurationAtom.reportWrite(value, super.currentDuration, () {
       super.currentDuration = value;
-      _$currentDurationAtom.reportChanged();
-    }, _$currentDurationAtom, name: '${_$currentDurationAtom.name}_set');
+    });
   }
 
-  final _$setAudioDurationAsyncAction = AsyncAction('setAudioDuration');
+  final _$setAudioDurationAsyncAction =
+      AsyncAction('_AppAudioPlayerControllerBase.setAudioDuration');
 
   @override
   Future setAudioDuration(double value) {
@@ -110,8 +107,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic _setIsPlaying(bool value) {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase._setIsPlaying');
     try {
       return super._setIsPlaying(value);
     } finally {
@@ -121,8 +118,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic _setFilePath(String value) {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase._setFilePath');
     try {
       return super._setFilePath(value);
     } finally {
@@ -132,8 +129,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic _setTotaldDuration(Duration value) {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase._setTotaldDuration');
     try {
       return super._setTotaldDuration(value);
     } finally {
@@ -143,8 +140,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic _setCurrentDuration(Duration value) {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase._setCurrentDuration');
     try {
       return super._setCurrentDuration(value);
     } finally {
@@ -154,8 +151,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic playAudio(String path) {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase.playAudio');
     try {
       return super.playAudio(path);
     } finally {
@@ -165,8 +162,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic play() {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase.play');
     try {
       return super.play();
     } finally {
@@ -176,8 +173,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic pause() {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase.pause');
     try {
       return super.pause();
     } finally {
@@ -187,8 +184,8 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   dynamic stop() {
-    final _$actionInfo =
-        _$_AppAudioPlayerControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AppAudioPlayerControllerBaseActionController
+        .startAction(name: '_AppAudioPlayerControllerBase.stop');
     try {
       return super.stop();
     } finally {
@@ -198,8 +195,14 @@ mixin _$AppAudioPlayerController on _AppAudioPlayerControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'isPlaying: ${isPlaying.toString()},filePath: ${filePath.toString()},totaldDuration: ${totaldDuration.toString()},currentDuration: ${currentDuration.toString()},formatedTotaldDuration: ${formatedTotaldDuration.toString()},formatedCurrentDuration: ${formatedCurrentDuration.toString()},showPlayer: ${showPlayer.toString()}';
-    return '{$string}';
+    return '''
+isPlaying: ${isPlaying},
+filePath: ${filePath},
+totaldDuration: ${totaldDuration},
+currentDuration: ${currentDuration},
+formatedTotaldDuration: ${formatedTotaldDuration},
+formatedCurrentDuration: ${formatedCurrentDuration},
+showPlayer: ${showPlayer}
+    ''';
   }
 }
