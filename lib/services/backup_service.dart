@@ -19,8 +19,11 @@ class BackupService {
   final appController = GetIt.I<AppController>();
 
   Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+    return (await getApplicationDocumentsDirectory()).path;
+  }
+
+  Future<String> get _temporaryDirectory async {
+    return (await getTemporaryDirectory()).path;
   }
 
   backup() async {
