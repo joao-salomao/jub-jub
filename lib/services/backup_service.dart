@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:archive/archive_io.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:jubjub/services/zip_service.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
@@ -15,6 +16,7 @@ class BackupService {
   static const String DB_BACKUP_FILE_PATH =
       '/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json';
 
+  final zipService = ZipService();
   final driveService = GoogleDriveService();
   final appController = GetIt.I<AppController>();
 
@@ -36,28 +38,22 @@ class BackupService {
     jsonFile.delete();
   }
 
-  createBackupFileName() async {
-    final path = await _localPath;
+  Future<String> _createBackupFileName() async {
+    final path = await _temporaryDirectory;
     final millisecondsSinceEpoch =
         DateTime.now().millisecondsSinceEpoch.toString();
     return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
   }
 
   _createZipFile(File json) async {
-    final encoder = ZipFileEncoder();
-    final filename = await createBackupFileName();
-
-    encoder.create(filename);
-
-    encoder.addFile(json);
+    final filename = await _createBackupFileName();
 
     final files = await _getAnnotationsFiles();
+    files.add(json);
 
-    files.forEach(encoder.addFile);
+    final zipFile = await zipService.createZipFile(filename, files);
 
-    encoder.close();
-
-    return File(filename);
+    return zipFile;
   }
 
   Future<List<File>> _getAnnotationsFiles() async {
@@ -178,7 +174,7 @@ class BackupService {
     return await driveService.deleteFile(file);
   }
 
-  _getDatabaseJsonCopyFile() async {
+  Future<File> _getDatabaseJsonCopyFile() async {
     final path = await _localPath;
     final filename = path + '/backup-jub-jub-data.json';
     final file = new File(filename);
