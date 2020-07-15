@@ -9,12 +9,11 @@ class ZipService {
 
   Completer<File> _zipFileCompleter;
   Completer<void> _unzipFileCompleter;
-
-  final _isolateReady = Completer<void>();
-
-  Future<void> get isReady => _isolateReady.future;
+  Completer<void> _isolateReadyCompleter;
 
   Future<void> _init() async {
+    _isolateReadyCompleter = Completer<void>();
+
     final receivePort = ReceivePort();
     final errorPort = ReceivePort();
 
@@ -26,6 +25,8 @@ class ZipService {
       receivePort.sendPort,
       onError: errorPort.sendPort,
     );
+
+    await _isolateReadyCompleter.future;
   }
 
   void dispose() {
@@ -62,7 +63,7 @@ class ZipService {
   void _handleMessage(dynamic message) {
     if (message is SendPort) {
       _sendPort = message;
-      _isolateReady.complete();
+      _isolateReadyCompleter.complete();
       return;
     }
 
