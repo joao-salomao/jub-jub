@@ -163,7 +163,7 @@ class BackupService {
   }
 
   Future<File> _getDatabaseJsonCopyFile() async {
-    final path = await _localPath;
+    final path = await _temporaryDirectory;
     final filename = path + '/backup-jub-jub-data.json';
     final file = new File(filename);
     final data = await _getJson();
