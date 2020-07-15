@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:convert' as convert;
 import 'google_drive_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:archive/archive_io.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:jubjub/services/zip_service.dart';
@@ -28,7 +27,31 @@ class BackupService {
     return (await getTemporaryDirectory()).path;
   }
 
+  Future getBackupsList() async {
+    return await driveService.getBackupsList();
+  }
+
+  Future getDriveInfo() async {
+    return await driveService.getDriveInfo();
+  }
+
+  Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {
+    return await driveService.downloadGoogleDriveFile(fileName, fileId);
+  }
+
+  deleteFile(var file) async {
+    return await driveService.deleteFile(file);
+  }
+
+  Future<void> _requestStorageAccessPermission() async {
+    if (!(await Permission.storage.status).isGranted) {
+      await Permission.storage.request();
+    }
+  }
+
   backup() async {
+    await _requestStorageAccessPermission();
+
     final jsonFile = await _getDatabaseJsonCopyFile();
     final zipFile = await _createZipFile(jsonFile);
 
@@ -38,82 +61,13 @@ class BackupService {
     jsonFile.delete();
   }
 
-  Future<String> _createBackupFileName() async {
-    final path = await _temporaryDirectory;
-    final millisecondsSinceEpoch =
-        DateTime.now().millisecondsSinceEpoch.toString();
-    return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
-  }
-
-  _createZipFile(File json) async {
-    final filename = await _createBackupFileName();
-
-    final files = await _getAnnotationsFiles();
-    files.add(json);
-
-    final zipFile = await zipService.createZipFile(filename, files);
-
-    return zipFile;
-  }
-
-  Future<List<File>> _getAnnotationsFiles() async {
-    return (await appController.annotationFileDAO.getAnnotationsFilesPaths())
-        .map((path) => File(path))
-        .toList();
-  }
-
-  _unzipFiles(File file) async {
-    final archive = ZipDecoder().decodeBytes((await file.readAsBytes()));
-
-    for (final file in archive) {
-      final filename = file.name;
-      if (file.isFile) {
-        final data = file.content as List<int>;
-        File('/storage/emulated/0/JubJub/Files/$filename')
-          ..createSync(recursive: true)
-          ..writeAsBytesSync(data);
-      } else {
-        Directory('/storage/emulated/0/JubJub/Files/$filename')
-          ..createSync(recursive: true);
-      }
-    }
-  }
-
-  _persistData() async {
-    final String json = File(DB_BACKUP_FILE_PATH).readAsStringSync();
-    final List thinksMap = convert.json.decode(json);
-
-    thinksMap.forEach((thinkMap) async {
-      final think = ThinkModel.fromMap(thinkMap);
-      await appController.saveThink(think);
-
-      thinkMap['annotations'].forEach((annotationMap) async {
-        final annotation = AnnotationModel.fromMap(annotationMap);
-        annotation.thinkId = think.id;
-        await appController.saveAnnotation(annotation);
-        think.annotations.add(annotation);
-
-        annotationMap['annotation_files'].forEach((afMap) {
-          final baseName = afMap['path'].split('/').last;
-          afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
-          final annotationFile = AnnotationFileModel.fromMap(afMap);
-          annotation.files.add(annotationFile);
-        });
-
-        await appController.saveAnnotation(annotation);
-      });
-    });
-  }
-
   backupFile(String fileName, String id) async {
     File file;
     final List<int> dataStore = [];
     final controller = StreamController<int>();
 
     try {
-      if (!(await Permission.storage.status).isGranted) {
-        await Permission.storage.request();
-      }
+      await _requestStorageAccessPermission();
       controller.add(5);
 
       Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
@@ -131,7 +85,7 @@ class BackupService {
         file.writeAsBytesSync(dataStore);
         controller.add(30);
 
-        await _unzipFiles(file);
+        await zipService.unzipFile(file);
         controller.add(10);
 
         await _persistData();
@@ -158,20 +112,54 @@ class BackupService {
     return controller.stream;
   }
 
-  Future getBackupsList() async {
-    return await driveService.getBackupsList();
+  Future<String> _createBackupFileName() async {
+    final path = await _temporaryDirectory;
+    final millisecondsSinceEpoch =
+        DateTime.now().millisecondsSinceEpoch.toString();
+    return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
   }
 
-  Future getDriveInfo() async {
-    return await driveService.getDriveInfo();
+  _createZipFile(File json) async {
+    final filename = await _createBackupFileName();
+
+    final files = await _getAnnotationsFiles();
+    files.add(json);
+
+    final zipFile = await zipService.createZipFile(filename, files);
+
+    return zipFile;
   }
 
-  Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {
-    return await driveService.downloadGoogleDriveFile(fileName, fileId);
+  Future<List<File>> _getAnnotationsFiles() async {
+    return (await appController.annotationFileDAO.getAnnotationsFilesPaths())
+        .map((path) => File(path))
+        .toList();
   }
 
-  deleteFile(var file) async {
-    return await driveService.deleteFile(file);
+  _persistData() async {
+    final String json = File(DB_BACKUP_FILE_PATH).readAsStringSync();
+    final List thinksMap = convert.json.decode(json);
+
+    thinksMap.forEach((thinkMap) async {
+      final think = ThinkModel.fromMap(thinkMap);
+      await appController.saveThink(think);
+
+      thinkMap['annotations'].forEach((annotationMap) async {
+        final annotation = AnnotationModel.fromMap(annotationMap);
+        annotation.thinkId = think.id;
+        await appController.saveAnnotation(annotation);
+        think.annotations.add(annotation);
+
+        annotationMap['annotation_files'].forEach((afMap) {
+          final baseName = afMap['path'].split('/').last;
+          afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
+          final annotationFile = AnnotationFileModel.fromMap(afMap);
+          annotation.files.add(annotationFile);
+        });
+
+        await appController.saveAnnotation(annotation);
+      });
+    });
   }
 
   Future<File> _getDatabaseJsonCopyFile() async {
