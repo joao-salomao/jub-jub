@@ -104,6 +104,8 @@ abstract class _BackupControllerBase with Store {
         (data) {},
         onDone: () {
           completer.complete(true);
+          Future.delayed(Duration(seconds: 1))
+              .then((value) => appController.getData());
         },
         cancelOnError: true,
       );
