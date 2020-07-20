@@ -29,50 +29,47 @@ abstract class _BackupFileBase with Store {
   }
 
   @observable
-  ObservableStream<int> backupStream;
+  ObservableStream<int> _backupProgressStream;
 
   @observable
   bool isDone;
 
   @observable
-  bool hasError;
-
-  @observable
-  bool isDownloading = false;
+  bool isBackingUp = false;
 
   @observable
   bool isDeleting = false;
 
+  @observable
+  int backupProgress = 0;
+
   @action
-  downloadFile() async {
+  setDownloadProgressStream(Stream<int> stream) {
     isDone = false;
-    hasError = false;
-    isDownloading = true;
+    isBackingUp = true;
 
-    var progress = 0;
-    final onData = (data) {
-      progress += data;
-      print(progress);
-    };
-    final onDone = () {
-      Future.delayed(Duration(seconds: 1)).then((value) {
-        backupService.appController.getData();
-        isDone = true;
-        isDownloading = false;
-      });
-    };
-    final onError = (error) {
-      hasError = true;
-      isDownloading = false;
-    };
-    final stream = await backupService.backupFile(metaData.name, metaData.id);
+    backupProgress = 0;
 
-    backupStream = ObservableStream(stream as Stream<int>);
+    final onUpdateProgress = (progress) {
+      backupProgress += progress;
+    };
 
-    backupStream.listen(
-      onData,
-      onDone: onDone,
-      onError: onError,
+    final onFinishBackup = () async {
+      await Future.delayed(Duration(milliseconds: 500));
+      isDone = true;
+      isBackingUp = false;
+    };
+
+    final onBackupError = (error) {
+      isBackingUp = false;
+    };
+
+    _backupProgressStream = ObservableStream(stream);
+
+    stream.listen(
+      onUpdateProgress,
+      onDone: onFinishBackup,
+      onError: onBackupError,
       cancelOnError: true,
     );
   }

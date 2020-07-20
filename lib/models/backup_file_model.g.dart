@@ -32,18 +32,20 @@ mixin _$BackupFile on _BackupFileBase, Store {
     });
   }
 
-  final _$backupStreamAtom = Atom(name: '_BackupFileBase.backupStream');
+  final _$_backupProgressStreamAtom =
+      Atom(name: '_BackupFileBase._backupProgressStream');
 
   @override
-  ObservableStream<int> get backupStream {
-    _$backupStreamAtom.reportRead();
-    return super.backupStream;
+  ObservableStream<int> get _backupProgressStream {
+    _$_backupProgressStreamAtom.reportRead();
+    return super._backupProgressStream;
   }
 
   @override
-  set backupStream(ObservableStream<int> value) {
-    _$backupStreamAtom.reportWrite(value, super.backupStream, () {
-      super.backupStream = value;
+  set _backupProgressStream(ObservableStream<int> value) {
+    _$_backupProgressStreamAtom.reportWrite(value, super._backupProgressStream,
+        () {
+      super._backupProgressStream = value;
     });
   }
 
@@ -62,33 +64,18 @@ mixin _$BackupFile on _BackupFileBase, Store {
     });
   }
 
-  final _$hasErrorAtom = Atom(name: '_BackupFileBase.hasError');
+  final _$isBackingUpAtom = Atom(name: '_BackupFileBase.isBackingUp');
 
   @override
-  bool get hasError {
-    _$hasErrorAtom.reportRead();
-    return super.hasError;
+  bool get isBackingUp {
+    _$isBackingUpAtom.reportRead();
+    return super.isBackingUp;
   }
 
   @override
-  set hasError(bool value) {
-    _$hasErrorAtom.reportWrite(value, super.hasError, () {
-      super.hasError = value;
-    });
-  }
-
-  final _$isDownloadingAtom = Atom(name: '_BackupFileBase.isDownloading');
-
-  @override
-  bool get isDownloading {
-    _$isDownloadingAtom.reportRead();
-    return super.isDownloading;
-  }
-
-  @override
-  set isDownloading(bool value) {
-    _$isDownloadingAtom.reportWrite(value, super.isDownloading, () {
-      super.isDownloading = value;
+  set isBackingUp(bool value) {
+    _$isBackingUpAtom.reportWrite(value, super.isBackingUp, () {
+      super.isBackingUp = value;
     });
   }
 
@@ -107,22 +94,43 @@ mixin _$BackupFile on _BackupFileBase, Store {
     });
   }
 
-  final _$downloadFileAsyncAction = AsyncAction('_BackupFileBase.downloadFile');
+  final _$backupProgressAtom = Atom(name: '_BackupFileBase.backupProgress');
 
   @override
-  Future downloadFile() {
-    return _$downloadFileAsyncAction.run(() => super.downloadFile());
+  int get backupProgress {
+    _$backupProgressAtom.reportRead();
+    return super.backupProgress;
+  }
+
+  @override
+  set backupProgress(int value) {
+    _$backupProgressAtom.reportWrite(value, super.backupProgress, () {
+      super.backupProgress = value;
+    });
+  }
+
+  final _$_BackupFileBaseActionController =
+      ActionController(name: '_BackupFileBase');
+
+  @override
+  dynamic setDownloadProgressStream(Stream<int> stream) {
+    final _$actionInfo = _$_BackupFileBaseActionController.startAction(
+        name: '_BackupFileBase.setDownloadProgressStream');
+    try {
+      return super.setDownloadProgressStream(stream);
+    } finally {
+      _$_BackupFileBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
 metaData: ${metaData},
-backupStream: ${backupStream},
 isDone: ${isDone},
-hasError: ${hasError},
-isDownloading: ${isDownloading},
+isBackingUp: ${isBackingUp},
 isDeleting: ${isDeleting},
+backupProgress: ${backupProgress},
 createdAt: ${createdAt}
     ''';
   }

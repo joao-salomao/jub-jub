@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:jubjub/controllers/app_controller.dart';
+import 'dart:async';
 import 'package:mobx/mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flutter/material.dart';
+import '../models/backup_file_model.dart';
 import 'package:jubjub/services/backup_service.dart';
 import 'package:jubjub/models/backup_file_model.dart';
+import 'package:jubjub/controllers/app_controller.dart';
 part 'backup_controller.g.dart';
 
 class BackupController = _BackupControllerBase with _$BackupController;
@@ -88,6 +90,30 @@ abstract class _BackupControllerBase with Store {
 
     isLoadingNewBackup = false;
     return result;
+  }
+
+  @action
+  restoreBackup(BackupFile file) async {
+    final completer = Completer<bool>();
+
+    try {
+      final stream =
+          await backupService.backupFile(file.metaData.name, file.metaData.id);
+
+      stream.listen(
+        (data) {},
+        onDone: () {
+          completer.complete(true);
+        },
+        cancelOnError: true,
+      );
+
+      file.setDownloadProgressStream(stream);
+    } catch (e) {
+      completer.complete(false);
+      print(e);
+    }
+    return completer.future;
   }
 
   @action
