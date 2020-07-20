@@ -19,10 +19,6 @@ class BackupService {
   final driveService = GoogleDriveService();
   final appController = GetIt.I<AppController>();
 
-  Future<String> get _localPath async {
-    return (await getApplicationDocumentsDirectory()).path;
-  }
-
   Future<String> get _temporaryDirectory async {
     return (await getTemporaryDirectory()).path;
   }
