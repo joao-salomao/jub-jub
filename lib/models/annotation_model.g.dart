@@ -6,166 +6,156 @@ part of 'annotation_model.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AnnotationModel on _AnnotationModelBase, Store {
   final _$idAtom = Atom(name: '_AnnotationModelBase.id');
 
   @override
   int get id {
-    _$idAtom.context.enforceReadPolicy(_$idAtom);
-    _$idAtom.reportObserved();
+    _$idAtom.reportRead();
     return super.id;
   }
 
   @override
   set id(int value) {
-    _$idAtom.context.conditionallyRunInAction(() {
+    _$idAtom.reportWrite(value, super.id, () {
       super.id = value;
-      _$idAtom.reportChanged();
-    }, _$idAtom, name: '${_$idAtom.name}_set');
+    });
   }
 
   final _$thinkIdAtom = Atom(name: '_AnnotationModelBase.thinkId');
 
   @override
   int get thinkId {
-    _$thinkIdAtom.context.enforceReadPolicy(_$thinkIdAtom);
-    _$thinkIdAtom.reportObserved();
+    _$thinkIdAtom.reportRead();
     return super.thinkId;
   }
 
   @override
   set thinkId(int value) {
-    _$thinkIdAtom.context.conditionallyRunInAction(() {
+    _$thinkIdAtom.reportWrite(value, super.thinkId, () {
       super.thinkId = value;
-      _$thinkIdAtom.reportChanged();
-    }, _$thinkIdAtom, name: '${_$thinkIdAtom.name}_set');
+    });
   }
 
   final _$titleAtom = Atom(name: '_AnnotationModelBase.title');
 
   @override
   String get title {
-    _$titleAtom.context.enforceReadPolicy(_$titleAtom);
-    _$titleAtom.reportObserved();
+    _$titleAtom.reportRead();
     return super.title;
   }
 
   @override
   set title(String value) {
-    _$titleAtom.context.conditionallyRunInAction(() {
+    _$titleAtom.reportWrite(value, super.title, () {
       super.title = value;
-      _$titleAtom.reportChanged();
-    }, _$titleAtom, name: '${_$titleAtom.name}_set');
+    });
   }
 
   final _$textAtom = Atom(name: '_AnnotationModelBase.text');
 
   @override
   String get text {
-    _$textAtom.context.enforceReadPolicy(_$textAtom);
-    _$textAtom.reportObserved();
+    _$textAtom.reportRead();
     return super.text;
   }
 
   @override
   set text(String value) {
-    _$textAtom.context.conditionallyRunInAction(() {
+    _$textAtom.reportWrite(value, super.text, () {
       super.text = value;
-      _$textAtom.reportChanged();
-    }, _$textAtom, name: '${_$textAtom.name}_set');
+    });
   }
 
   final _$colorAtom = Atom(name: '_AnnotationModelBase.color');
 
   @override
   Color get color {
-    _$colorAtom.context.enforceReadPolicy(_$colorAtom);
-    _$colorAtom.reportObserved();
+    _$colorAtom.reportRead();
     return super.color;
   }
 
   @override
   set color(Color value) {
-    _$colorAtom.context.conditionallyRunInAction(() {
+    _$colorAtom.reportWrite(value, super.color, () {
       super.color = value;
-      _$colorAtom.reportChanged();
-    }, _$colorAtom, name: '${_$colorAtom.name}_set');
+    });
   }
 
   final _$listIndexAtom = Atom(name: '_AnnotationModelBase.listIndex');
 
   @override
   int get listIndex {
-    _$listIndexAtom.context.enforceReadPolicy(_$listIndexAtom);
-    _$listIndexAtom.reportObserved();
+    _$listIndexAtom.reportRead();
     return super.listIndex;
   }
 
   @override
   set listIndex(int value) {
-    _$listIndexAtom.context.conditionallyRunInAction(() {
+    _$listIndexAtom.reportWrite(value, super.listIndex, () {
       super.listIndex = value;
-      _$listIndexAtom.reportChanged();
-    }, _$listIndexAtom, name: '${_$listIndexAtom.name}_set');
+    });
   }
 
   final _$passwordAtom = Atom(name: '_AnnotationModelBase.password');
 
   @override
   String get password {
-    _$passwordAtom.context.enforceReadPolicy(_$passwordAtom);
-    _$passwordAtom.reportObserved();
+    _$passwordAtom.reportRead();
     return super.password;
   }
 
   @override
   set password(String value) {
-    _$passwordAtom.context.conditionallyRunInAction(() {
+    _$passwordAtom.reportWrite(value, super.password, () {
       super.password = value;
-      _$passwordAtom.reportChanged();
-    }, _$passwordAtom, name: '${_$passwordAtom.name}_set');
+    });
   }
 
   final _$createdAtAtom = Atom(name: '_AnnotationModelBase.createdAt');
 
   @override
   String get createdAt {
-    _$createdAtAtom.context.enforceReadPolicy(_$createdAtAtom);
-    _$createdAtAtom.reportObserved();
+    _$createdAtAtom.reportRead();
     return super.createdAt;
   }
 
   @override
   set createdAt(String value) {
-    _$createdAtAtom.context.conditionallyRunInAction(() {
+    _$createdAtAtom.reportWrite(value, super.createdAt, () {
       super.createdAt = value;
-      _$createdAtAtom.reportChanged();
-    }, _$createdAtAtom, name: '${_$createdAtAtom.name}_set');
+    });
   }
 
   final _$filesAtom = Atom(name: '_AnnotationModelBase.files');
 
   @override
   ObservableList<AnnotationFileModel> get files {
-    _$filesAtom.context.enforceReadPolicy(_$filesAtom);
-    _$filesAtom.reportObserved();
+    _$filesAtom.reportRead();
     return super.files;
   }
 
   @override
   set files(ObservableList<AnnotationFileModel> value) {
-    _$filesAtom.context.conditionallyRunInAction(() {
+    _$filesAtom.reportWrite(value, super.files, () {
       super.files = value;
-      _$filesAtom.reportChanged();
-    }, _$filesAtom, name: '${_$filesAtom.name}_set');
+    });
   }
 
   @override
   String toString() {
-    final string =
-        'id: ${id.toString()},thinkId: ${thinkId.toString()},title: ${title.toString()},text: ${text.toString()},color: ${color.toString()},listIndex: ${listIndex.toString()},password: ${password.toString()},createdAt: ${createdAt.toString()},files: ${files.toString()}';
-    return '{$string}';
+    return '''
+id: ${id},
+thinkId: ${thinkId},
+title: ${title},
+text: ${text},
+color: ${color},
+listIndex: ${listIndex},
+password: ${password},
+createdAt: ${createdAt},
+files: ${files}
+    ''';
   }
 }

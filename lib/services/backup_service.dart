@@ -1,64 +1,34 @@
 import 'dart:io';
+import 'dart:async';
 import 'dart:convert' as convert;
 import 'google_drive_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:jubjub/services/zip_service.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BackupService {
+  static const String DB_BACKUP_FILE_PATH =
+      '/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json';
+
+  final zipService = ZipService();
   final driveService = GoogleDriveService();
   final appController = GetIt.I<AppController>();
 
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+  Future<String> get _temporaryDirectory async {
+    return (await getTemporaryDirectory()).path;
   }
 
-  backup() async {
-    final data = await _getJson();
-    final file = await _getFile(data);
-
-    await driveService.upload(file);
-
-    file.delete();
-  }
-
-  backupFile(File file) async {
-    bool result;
-    try {
-      final String json = await file.readAsString();
-      final List thinksMap = convert.json.decode(json);
-
-      thinksMap.forEach((thinkMap) async {
-        final think = ThinkModel.fromMap(thinkMap);
-        await appController.saveThink(think);
-
-        thinkMap['annotations'].forEach((annotationMap) async {
-          final annotation = AnnotationModel.fromMap(annotationMap);
-          annotation.thinkId = think.id;
-          await appController.saveAnnotation(annotation);
-          think.annotations.add(annotation);
-
-          annotationMap['annotation_files'].forEach((afMap) {
-            final annotationFile = AnnotationFileModel.fromMap(afMap);
-            annotation.files.add(annotationFile);
-          });
-
-          await appController.saveAnnotation(annotation);
-        });
-      });
-      result = true;
-    } catch (e) {
-      result = false;
-    }
-    return result;
-  }
-
-  getBackupsList() async {
+  Future getBackupsList() async {
     return await driveService.getBackupsList();
+  }
+
+  Future getDriveInfo() async {
+    return await driveService.getDriveInfo();
   }
 
   Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {
@@ -69,15 +39,134 @@ class BackupService {
     return await driveService.deleteFile(file);
   }
 
-  _getFile(String data) async {
-    final path = await _localPath;
-    final filename =
-        path + '/backup-jub-jub-' + DateTime.now().toString() + '.json';
+  Future<void> _requestStorageAccessPermission() async {
+    if (!(await Permission.storage.status).isGranted) {
+      await Permission.storage.request();
+    }
+  }
+
+  backup() async {
+    await _requestStorageAccessPermission();
+
+    final jsonFile = await _getDatabaseJsonCopyFile();
+    final zipFile = await _createZipFile(jsonFile);
+
+    await driveService.upload(zipFile);
+
+    zipFile.delete();
+    jsonFile.delete();
+  }
+
+  backupFile(String fileName, String id) async {
+    File file;
+    final controller = StreamController<int>();
+
+    try {
+      await _requestStorageAccessPermission();
+      controller.add(5);
+
+      Directory('/storage/emulated/0/JubJub/Files').createSync(recursive: true);
+      controller.add(5);
+
+      file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
+      controller.add(5);
+
+      final stream = await driveService.downloadGoogleDriveFile(fileName, id);
+      controller.add(5);
+
+      stream.listen((data) {
+        file.writeAsBytesSync(data, mode: FileMode.append);
+      }, onDone: () async {
+        controller.add(30);
+
+        await zipService.unzipFile(file);
+        controller.add(10);
+
+        await _persistData();
+        controller.add(10);
+
+        File(DB_BACKUP_FILE_PATH).deleteSync();
+        controller.add(10);
+
+        file.deleteSync();
+
+        controller.add(20);
+        controller.close();
+      }, onError: (error) {
+        file.deleteSync();
+      });
+    } catch (e) {
+      if (file != null) {
+        file.deleteSync();
+      }
+
+      controller.addError(-1);
+      controller.close();
+      print(e);
+    }
+    return controller.stream.asBroadcastStream();
+  }
+
+  Future<String> _createBackupFileName() async {
+    final path = await _temporaryDirectory;
+    final millisecondsSinceEpoch =
+        DateTime.now().millisecondsSinceEpoch.toString();
+    return path + '/backup-jub-jub-$millisecondsSinceEpoch.zip';
+  }
+
+  _createZipFile(File json) async {
+    final filename = await _createBackupFileName();
+
+    final files = await _getAnnotationsFiles();
+    files.add(json);
+
+    final zipFile = await zipService.createZipFile(filename, files);
+
+    return zipFile;
+  }
+
+  Future<List<File>> _getAnnotationsFiles() async {
+    return (await appController.annotationFileDAO.getAnnotationsFilesPaths())
+        .map((path) => File(path))
+        .toList();
+  }
+
+  _persistData() async {
+    final String json = File(DB_BACKUP_FILE_PATH).readAsStringSync();
+    final List thinksMap = convert.json.decode(json);
+
+    thinksMap.forEach((thinkMap) async {
+      final think = ThinkModel.fromMap(thinkMap);
+      await appController.saveThink(think);
+
+      thinkMap['annotations'].forEach((annotationMap) async {
+        final annotation = AnnotationModel.fromMap(annotationMap);
+        annotation.thinkId = think.id;
+        await appController.saveAnnotation(annotation);
+        think.annotations.add(annotation);
+
+        annotationMap['annotation_files'].forEach((afMap) {
+          final baseName = afMap['path'].split('/').last;
+          afMap['path'] = '/storage/emulated/0/JubJub/Files/$baseName';
+          final annotationFile = AnnotationFileModel.fromMap(afMap);
+          annotation.files.add(annotationFile);
+        });
+
+        await appController.saveAnnotation(annotation);
+      });
+    });
+  }
+
+  Future<File> _getDatabaseJsonCopyFile() async {
+    final path = await _temporaryDirectory;
+    final filename = path + '/backup-jub-jub-data.json';
     final file = new File(filename);
+    final data = await _getJson();
     await file.writeAsString(data);
     return file;
   }
 
+  // REFATORAR PARA PEGAR OS DADOS DOS DAO'S
   _getJson() async {
     await appController.getData();
 

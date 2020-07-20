@@ -23,4 +23,15 @@ class AnnotationFileDAO extends BaseDAO<AnnotationFileModel> {
 
     return [];
   }
+
+  Future<List<String>> getAnnotationsFilesPaths() async {
+    var dbClient = await db;
+    final list = await dbClient.rawQuery('select path from $table');
+
+    if (list.length > 0) {
+      return list.map((map) => map['path'].toString()).toList();
+    }
+
+    return [];
+  }
 }

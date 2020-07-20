@@ -6,37 +6,37 @@ part of 'annotation_form_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
   Computed<dynamic> _$popupMenuButtonColorComputed;
 
   @override
   dynamic get popupMenuButtonColor => (_$popupMenuButtonColorComputed ??=
-          Computed<dynamic>(() => super.popupMenuButtonColor))
+          Computed<dynamic>(() => super.popupMenuButtonColor,
+              name: '_AnnotationFormControllerBase.popupMenuButtonColor'))
       .value;
   Computed<bool> _$hasNoChangesComputed;
 
   @override
   bool get hasNoChanges =>
-      (_$hasNoChangesComputed ??= Computed<bool>(() => super.hasNoChanges))
+      (_$hasNoChangesComputed ??= Computed<bool>(() => super.hasNoChanges,
+              name: '_AnnotationFormControllerBase.hasNoChanges'))
           .value;
 
   final _$thinkAtom = Atom(name: '_AnnotationFormControllerBase.think');
 
   @override
   ThinkModel get think {
-    _$thinkAtom.context.enforceReadPolicy(_$thinkAtom);
-    _$thinkAtom.reportObserved();
+    _$thinkAtom.reportRead();
     return super.think;
   }
 
   @override
   set think(ThinkModel value) {
-    _$thinkAtom.context.conditionallyRunInAction(() {
+    _$thinkAtom.reportWrite(value, super.think, () {
       super.think = value;
-      _$thinkAtom.reportChanged();
-    }, _$thinkAtom, name: '${_$thinkAtom.name}_set');
+    });
   }
 
   final _$annotationAtom =
@@ -44,51 +44,45 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   AnnotationModel get annotation {
-    _$annotationAtom.context.enforceReadPolicy(_$annotationAtom);
-    _$annotationAtom.reportObserved();
+    _$annotationAtom.reportRead();
     return super.annotation;
   }
 
   @override
   set annotation(AnnotationModel value) {
-    _$annotationAtom.context.conditionallyRunInAction(() {
+    _$annotationAtom.reportWrite(value, super.annotation, () {
       super.annotation = value;
-      _$annotationAtom.reportChanged();
-    }, _$annotationAtom, name: '${_$annotationAtom.name}_set');
+    });
   }
 
   final _$colorAtom = Atom(name: '_AnnotationFormControllerBase.color');
 
   @override
   Color get color {
-    _$colorAtom.context.enforceReadPolicy(_$colorAtom);
-    _$colorAtom.reportObserved();
+    _$colorAtom.reportRead();
     return super.color;
   }
 
   @override
   set color(Color value) {
-    _$colorAtom.context.conditionallyRunInAction(() {
+    _$colorAtom.reportWrite(value, super.color, () {
       super.color = value;
-      _$colorAtom.reportChanged();
-    }, _$colorAtom, name: '${_$colorAtom.name}_set');
+    });
   }
 
   final _$filesAtom = Atom(name: '_AnnotationFormControllerBase.files');
 
   @override
   ObservableList<AnnotationFileModel> get files {
-    _$filesAtom.context.enforceReadPolicy(_$filesAtom);
-    _$filesAtom.reportObserved();
+    _$filesAtom.reportRead();
     return super.files;
   }
 
   @override
   set files(ObservableList<AnnotationFileModel> value) {
-    _$filesAtom.context.conditionallyRunInAction(() {
+    _$filesAtom.reportWrite(value, super.files, () {
       super.files = value;
-      _$filesAtom.reportChanged();
-    }, _$filesAtom, name: '${_$filesAtom.name}_set');
+    });
   }
 
   final _$deletedFilesAtom =
@@ -96,17 +90,15 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   ObservableList<AnnotationFileModel> get deletedFiles {
-    _$deletedFilesAtom.context.enforceReadPolicy(_$deletedFilesAtom);
-    _$deletedFilesAtom.reportObserved();
+    _$deletedFilesAtom.reportRead();
     return super.deletedFiles;
   }
 
   @override
   set deletedFiles(ObservableList<AnnotationFileModel> value) {
-    _$deletedFilesAtom.context.conditionallyRunInAction(() {
+    _$deletedFilesAtom.reportWrite(value, super.deletedFiles, () {
       super.deletedFiles = value;
-      _$deletedFilesAtom.reportChanged();
-    }, _$deletedFilesAtom, name: '${_$deletedFilesAtom.name}_set');
+    });
   }
 
   final _$_AnnotationFormControllerBaseActionController =
@@ -114,8 +106,8 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   dynamic validateForm() {
-    final _$actionInfo =
-        _$_AnnotationFormControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AnnotationFormControllerBaseActionController
+        .startAction(name: '_AnnotationFormControllerBase.validateForm');
     try {
       return super.validateForm();
     } finally {
@@ -125,8 +117,8 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   dynamic setColor(Color color) {
-    final _$actionInfo =
-        _$_AnnotationFormControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AnnotationFormControllerBaseActionController
+        .startAction(name: '_AnnotationFormControllerBase.setColor');
     try {
       return super.setColor(color);
     } finally {
@@ -137,7 +129,8 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
   @override
   dynamic _addAnnotationToThink(AnnotationModel ant) {
     final _$actionInfo =
-        _$_AnnotationFormControllerBaseActionController.startAction();
+        _$_AnnotationFormControllerBaseActionController.startAction(
+            name: '_AnnotationFormControllerBase._addAnnotationToThink');
     try {
       return super._addAnnotationToThink(ant);
     } finally {
@@ -147,8 +140,8 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   dynamic _persistAnnotation(AnnotationModel annotation) {
-    final _$actionInfo =
-        _$_AnnotationFormControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AnnotationFormControllerBaseActionController
+        .startAction(name: '_AnnotationFormControllerBase._persistAnnotation');
     try {
       return super._persistAnnotation(annotation);
     } finally {
@@ -158,8 +151,8 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   dynamic save() {
-    final _$actionInfo =
-        _$_AnnotationFormControllerBaseActionController.startAction();
+    final _$actionInfo = _$_AnnotationFormControllerBaseActionController
+        .startAction(name: '_AnnotationFormControllerBase.save');
     try {
       return super.save();
     } finally {
@@ -169,8 +162,14 @@ mixin _$AnnotationFormController on _AnnotationFormControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'think: ${think.toString()},annotation: ${annotation.toString()},color: ${color.toString()},files: ${files.toString()},deletedFiles: ${deletedFiles.toString()},popupMenuButtonColor: ${popupMenuButtonColor.toString()},hasNoChanges: ${hasNoChanges.toString()}';
-    return '{$string}';
+    return '''
+think: ${think},
+annotation: ${annotation},
+color: ${color},
+files: ${files},
+deletedFiles: ${deletedFiles},
+popupMenuButtonColor: ${popupMenuButtonColor},
+hasNoChanges: ${hasNoChanges}
+    ''';
   }
 }

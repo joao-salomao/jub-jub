@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mobx/mobx.dart';
 import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
@@ -160,6 +162,14 @@ abstract class _AppControllerBase with Store {
   @action
   deleteThink(ThinkModel think) async {
     thinkDAO.delete(think.id);
+  }
+
+  truncate() async {
+    await annotationFileDAO.deleteAll();
+    await annotationDAO.deleteAll();
+    await thinkDAO.deleteAll();
+    Directory('/storage/emulated/0/JubJub').deleteSync(recursive: true);
+    getData();
   }
 
   @action

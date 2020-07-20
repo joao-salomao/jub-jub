@@ -31,14 +31,17 @@ class _ThinkListState extends State<ThinkList> {
               builder: (_) {
                 return Text(
                   appController.mainTitle,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 );
               },
             ),
             centerTitle: true,
+            // actions: <Widget>[
+            //   IconButton(
+            //     icon: Icon(Icons.ac_unit),
+            //     onPressed: () => appController.truncate(),
+            //   )
+            // ],
           ),
           drawer: DrawerList(),
           body: Observer(

@@ -6,145 +6,132 @@ part of 'backup_file_model.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BackupFile on _BackupFileBase, Store {
   Computed<String> _$createdAtComputed;
 
   @override
   String get createdAt =>
-      (_$createdAtComputed ??= Computed<String>(() => super.createdAt)).value;
-
-  final _$fileAtom = Atom(name: '_BackupFileBase.file');
-
-  @override
-  io.File get file {
-    _$fileAtom.context.enforceReadPolicy(_$fileAtom);
-    _$fileAtom.reportObserved();
-    return super.file;
-  }
-
-  @override
-  set file(io.File value) {
-    _$fileAtom.context.conditionallyRunInAction(() {
-      super.file = value;
-      _$fileAtom.reportChanged();
-    }, _$fileAtom, name: '${_$fileAtom.name}_set');
-  }
+      (_$createdAtComputed ??= Computed<String>(() => super.createdAt,
+              name: '_BackupFileBase.createdAt'))
+          .value;
 
   final _$metaDataAtom = Atom(name: '_BackupFileBase.metaData');
 
   @override
   drive.File get metaData {
-    _$metaDataAtom.context.enforceReadPolicy(_$metaDataAtom);
-    _$metaDataAtom.reportObserved();
+    _$metaDataAtom.reportRead();
     return super.metaData;
   }
 
   @override
   set metaData(drive.File value) {
-    _$metaDataAtom.context.conditionallyRunInAction(() {
+    _$metaDataAtom.reportWrite(value, super.metaData, () {
       super.metaData = value;
-      _$metaDataAtom.reportChanged();
-    }, _$metaDataAtom, name: '${_$metaDataAtom.name}_set');
+    });
   }
 
-  final _$fileStreamAtom = Atom(name: '_BackupFileBase.fileStream');
+  final _$_backupProgressStreamAtom =
+      Atom(name: '_BackupFileBase._backupProgressStream');
 
   @override
-  ObservableStream<List<int>> get fileStream {
-    _$fileStreamAtom.context.enforceReadPolicy(_$fileStreamAtom);
-    _$fileStreamAtom.reportObserved();
-    return super.fileStream;
+  ObservableStream<int> get _backupProgressStream {
+    _$_backupProgressStreamAtom.reportRead();
+    return super._backupProgressStream;
   }
 
   @override
-  set fileStream(ObservableStream<List<int>> value) {
-    _$fileStreamAtom.context.conditionallyRunInAction(() {
-      super.fileStream = value;
-      _$fileStreamAtom.reportChanged();
-    }, _$fileStreamAtom, name: '${_$fileStreamAtom.name}_set');
+  set _backupProgressStream(ObservableStream<int> value) {
+    _$_backupProgressStreamAtom.reportWrite(value, super._backupProgressStream,
+        () {
+      super._backupProgressStream = value;
+    });
   }
 
   final _$isDoneAtom = Atom(name: '_BackupFileBase.isDone');
 
   @override
   bool get isDone {
-    _$isDoneAtom.context.enforceReadPolicy(_$isDoneAtom);
-    _$isDoneAtom.reportObserved();
+    _$isDoneAtom.reportRead();
     return super.isDone;
   }
 
   @override
   set isDone(bool value) {
-    _$isDoneAtom.context.conditionallyRunInAction(() {
+    _$isDoneAtom.reportWrite(value, super.isDone, () {
       super.isDone = value;
-      _$isDoneAtom.reportChanged();
-    }, _$isDoneAtom, name: '${_$isDoneAtom.name}_set');
+    });
   }
 
-  final _$hasErrorAtom = Atom(name: '_BackupFileBase.hasError');
+  final _$isBackingUpAtom = Atom(name: '_BackupFileBase.isBackingUp');
 
   @override
-  bool get hasError {
-    _$hasErrorAtom.context.enforceReadPolicy(_$hasErrorAtom);
-    _$hasErrorAtom.reportObserved();
-    return super.hasError;
-  }
-
-  @override
-  set hasError(bool value) {
-    _$hasErrorAtom.context.conditionallyRunInAction(() {
-      super.hasError = value;
-      _$hasErrorAtom.reportChanged();
-    }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
-  }
-
-  final _$isDownloadingAtom = Atom(name: '_BackupFileBase.isDownloading');
-
-  @override
-  bool get isDownloading {
-    _$isDownloadingAtom.context.enforceReadPolicy(_$isDownloadingAtom);
-    _$isDownloadingAtom.reportObserved();
-    return super.isDownloading;
+  bool get isBackingUp {
+    _$isBackingUpAtom.reportRead();
+    return super.isBackingUp;
   }
 
   @override
-  set isDownloading(bool value) {
-    _$isDownloadingAtom.context.conditionallyRunInAction(() {
-      super.isDownloading = value;
-      _$isDownloadingAtom.reportChanged();
-    }, _$isDownloadingAtom, name: '${_$isDownloadingAtom.name}_set');
+  set isBackingUp(bool value) {
+    _$isBackingUpAtom.reportWrite(value, super.isBackingUp, () {
+      super.isBackingUp = value;
+    });
   }
 
   final _$isDeletingAtom = Atom(name: '_BackupFileBase.isDeleting');
 
   @override
   bool get isDeleting {
-    _$isDeletingAtom.context.enforceReadPolicy(_$isDeletingAtom);
-    _$isDeletingAtom.reportObserved();
+    _$isDeletingAtom.reportRead();
     return super.isDeleting;
   }
 
   @override
   set isDeleting(bool value) {
-    _$isDeletingAtom.context.conditionallyRunInAction(() {
+    _$isDeletingAtom.reportWrite(value, super.isDeleting, () {
       super.isDeleting = value;
-      _$isDeletingAtom.reportChanged();
-    }, _$isDeletingAtom, name: '${_$isDeletingAtom.name}_set');
+    });
   }
 
-  final _$downloadFileAsyncAction = AsyncAction('downloadFile');
+  final _$backupProgressAtom = Atom(name: '_BackupFileBase.backupProgress');
 
   @override
-  Future downloadFile() {
-    return _$downloadFileAsyncAction.run(() => super.downloadFile());
+  int get backupProgress {
+    _$backupProgressAtom.reportRead();
+    return super.backupProgress;
+  }
+
+  @override
+  set backupProgress(int value) {
+    _$backupProgressAtom.reportWrite(value, super.backupProgress, () {
+      super.backupProgress = value;
+    });
+  }
+
+  final _$_BackupFileBaseActionController =
+      ActionController(name: '_BackupFileBase');
+
+  @override
+  dynamic setDownloadProgressStream(Stream<int> stream) {
+    final _$actionInfo = _$_BackupFileBaseActionController.startAction(
+        name: '_BackupFileBase.setDownloadProgressStream');
+    try {
+      return super.setDownloadProgressStream(stream);
+    } finally {
+      _$_BackupFileBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
-    final string =
-        'file: ${file.toString()},metaData: ${metaData.toString()},fileStream: ${fileStream.toString()},isDone: ${isDone.toString()},hasError: ${hasError.toString()},isDownloading: ${isDownloading.toString()},isDeleting: ${isDeleting.toString()},createdAt: ${createdAt.toString()}';
-    return '{$string}';
+    return '''
+metaData: ${metaData},
+isDone: ${isDone},
+isBackingUp: ${isBackingUp},
+isDeleting: ${isDeleting},
+backupProgress: ${backupProgress},
+createdAt: ${createdAt}
+    ''';
   }
 }

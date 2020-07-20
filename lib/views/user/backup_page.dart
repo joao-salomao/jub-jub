@@ -4,6 +4,7 @@ import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/backup_file_model.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:jubjub/controllers/backup_controller.dart';
 import 'package:jubjub/views/widgets/app_flat_button.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -18,7 +19,7 @@ class _BackupPageState extends State<BackupPage> {
 
   @override
   void initState() {
-    backupController.getBackups();
+    backupController.getBackupsData();
     super.initState();
   }
 
@@ -34,7 +35,7 @@ class _BackupPageState extends State<BackupPage> {
                 color: Colors.white,
               ),
             ),
-            backgroundColor: backupController.backupAppBarColor,
+            backgroundColor: backupController.primaryColor,
             centerTitle: true,
             actions: [
               Builder(
@@ -53,6 +54,7 @@ class _BackupPageState extends State<BackupPage> {
             ],
           ),
           body: _body(),
+          bottomNavigationBar: _bottomNavigationBar(),
         );
       },
     );
@@ -80,6 +82,36 @@ class _BackupPageState extends State<BackupPage> {
     );
   }
 
+  _bottomNavigationBar() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width * 0.5,
+            lineHeight: 14,
+            animation: true,
+            center: Text(
+              backupController.driveUsage + ' GB',
+              style: TextStyle(
+                fontSize: 11,
+              ),
+            ),
+            leading: Text(
+              "Espaço usado: ",
+            ),
+            trailing: Text(
+              backupController.driveLimit + ' GB',
+            ),
+            percent: backupController.usagePercent,
+            progressColor: backupController.primaryColor,
+          ),
+        ],
+      ),
+    );
+  }
+
   _body() {
     if (backupController.isLoadingBackups) {
       return Center(
@@ -103,7 +135,7 @@ class _BackupPageState extends State<BackupPage> {
               child: Text("Carregar Novamente"),
               onPressed: () {
                 backupController.appController.getCurrentUser().then((_) {
-                  backupController.getBackups();
+                  backupController.getBackupsData();
                 });
               },
             ),
@@ -155,7 +187,7 @@ class _BackupPageState extends State<BackupPage> {
                               color: backupController.iconColor,
                             ),
                             loaderColor: backupController.iconColor,
-                            isLoading: file.isDownloading,
+                            isLoading: file.isBackingUp,
                             onPressed: () => _onClickBackup(context, file),
                           ),
                         ],
@@ -176,19 +208,28 @@ class _BackupPageState extends State<BackupPage> {
       context,
       "Restaurando dados",
       "Você tem certeza que deseja restaurar as anotações desse backup ?",
-      callback: () {
-        file.downloadFile().then((result) {
-          _showSnackBar(
-            snackContext: context,
-            content: Text(result == false
-                ? 'Algo deu errado, tente novamente.'
-                : 'Anotações restauradas com sucesso !'),
-            snackBarAction: SnackBarAction(
-              label: result == false ? "" : "Voltar",
-              onPressed: () => result == false ? null : _pop(),
-            ),
-          );
-        });
+      callback: () async {
+        final result = await backupController.restoreBackup(file);
+
+        String content;
+        String label;
+
+        if (result) {
+          content = 'Anotações restauradas com sucesso !';
+          label = 'Voltar';
+        } else {
+          content = 'Algo deu errado, tente novamente.';
+          label = '';
+        }
+
+        _showSnackBar(
+          snackContext: context,
+          content: Text(content),
+          snackBarAction: SnackBarAction(
+            label: label,
+            onPressed: () => result == false ? null : _pop(),
+          ),
+        );
       },
     );
   }

@@ -355,7 +355,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
               },
               onClose: () => pop(context),
               content: Container(
-                height: 240,
+                height: 195,
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -381,7 +381,6 @@ class _AnnotationFormState extends State<AnnotationForm> {
                         child: AppTextFormField(
                           "Descrição",
                           "",
-                          maxLines: 3,
                           controller: fileDescription,
                         ),
                       ),
@@ -475,7 +474,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
             }
           },
           content: Container(
-            height: 230,
+            height: 190,
             child: Form(
               key: formKey,
               child: Column(
@@ -500,7 +499,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                     child: AppTextFormField(
                       "Descrição",
                       "",
-                      maxLines: 5,
+                      maxLines: 3,
                       controller: fileDescription,
                     ),
                   ),

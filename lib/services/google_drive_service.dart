@@ -32,6 +32,25 @@ class GoogleDriveService {
     }
   }
 
+  Future getDriveInfo() async {
+    try {
+      var drive = googleApis.DriveApi(_appController.currentUser.client);
+      final about = await drive.about.get($fields: '*');
+
+      final limit = double.parse(about.storageQuota.limit) / 1.074e+9;
+      final usage = double.parse(about.storageQuota.usage) / 1.074e+9;
+      final usagePercent = double.parse((usage / limit).toStringAsFixed(1));
+
+      return {
+        'limit': limit.toStringAsFixed(1),
+        'usage': usage.toStringAsFixed(1),
+        'usagePercent': usagePercent
+      };
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future deleteFile(googleApis.File file) async {
     try {
       var client = _appController.currentUser.client;
@@ -45,7 +64,9 @@ class GoogleDriveService {
   }
 
   Future<Stream<List<int>>> downloadGoogleDriveFile(
-      String fileName, String fileId) async {
+    String fileName,
+    String fileId,
+  ) async {
     var client = _appController.currentUser.client;
     var drive = googleApis.DriveApi(client);
     googleApis.Media file = await drive.files.get(
@@ -60,7 +81,7 @@ class GoogleDriveService {
       var client = _appController.currentUser.client;
       var drive = googleApis.DriveApi(client);
       final fileList = await drive.files.list(
-        q: "mimeType = 'application/json' and name contains ' backup-jub-jub' and trashed = false",
+        q: "mimeType = 'application/zip' and name contains ' backup-jub-jub' and trashed = false",
         orderBy: 'createdTime desc',
       );
       return fileList.files;
