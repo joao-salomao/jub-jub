@@ -63,7 +63,6 @@ class BackupService {
 
   backupFile(String fileName, String id) async {
     File file;
-    final List<int> dataStore = [];
     final controller = StreamController<int>();
 
     try {
@@ -80,9 +79,8 @@ class BackupService {
       controller.add(5);
 
       stream.listen((data) {
-        dataStore.insertAll(dataStore.length, data);
+        file.writeAsBytesSync(data, mode: FileMode.append);
       }, onDone: () async {
-        file.writeAsBytesSync(dataStore);
         controller.add(30);
 
         await zipService.unzipFile(file);
@@ -95,6 +93,7 @@ class BackupService {
         controller.add(10);
 
         file.deleteSync();
+
         controller.add(20);
         controller.close();
       }, onError: (error) {
