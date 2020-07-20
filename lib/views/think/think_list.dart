@@ -36,12 +36,12 @@ class _ThinkListState extends State<ThinkList> {
               },
             ),
             centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.ac_unit),
-                onPressed: () => appController.truncate(),
-              )
-            ],
+            // actions: <Widget>[
+            //   IconButton(
+            //     icon: Icon(Icons.ac_unit),
+            //     onPressed: () => appController.truncate(),
+            //   )
+            // ],
           ),
           drawer: DrawerList(),
           body: Observer(
