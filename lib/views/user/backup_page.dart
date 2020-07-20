@@ -187,7 +187,7 @@ class _BackupPageState extends State<BackupPage> {
                               color: backupController.iconColor,
                             ),
                             loaderColor: backupController.iconColor,
-                            isLoading: file.isDownloading,
+                            isLoading: file.isBackingUp,
                             onPressed: () => _onClickBackup(context, file),
                           ),
                         ],
@@ -208,19 +208,28 @@ class _BackupPageState extends State<BackupPage> {
       context,
       "Restaurando dados",
       "Você tem certeza que deseja restaurar as anotações desse backup ?",
-      callback: () {
-        file.downloadFile().then((result) {
-          _showSnackBar(
-            snackContext: context,
-            content: Text(result == false
-                ? 'Algo deu errado, tente novamente.'
-                : 'Anotações restauradas com sucesso !'),
-            snackBarAction: SnackBarAction(
-              label: result == false ? "" : "Voltar",
-              onPressed: () => result == false ? null : _pop(),
-            ),
-          );
-        });
+      callback: () async {
+        final result = await backupController.restoreBackup(file);
+
+        String content;
+        String label;
+
+        if (result) {
+          content = 'Anotações restauradas com sucesso !';
+          label = 'Voltar';
+        } else {
+          content = 'Algo deu errado, tente novamente.';
+          label = '';
+        }
+
+        _showSnackBar(
+          snackContext: context,
+          content: Text(content),
+          snackBarAction: SnackBarAction(
+            label: label,
+            onPressed: () => result == false ? null : _pop(),
+          ),
+        );
       },
     );
   }
