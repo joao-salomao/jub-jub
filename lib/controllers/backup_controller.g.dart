@@ -77,21 +77,6 @@ mixin _$BackupController on _BackupControllerBase, Store {
     });
   }
 
-  final _$fileStreamAtom = Atom(name: '_BackupControllerBase.fileStream');
-
-  @override
-  ObservableStream<List<int>> get fileStream {
-    _$fileStreamAtom.reportRead();
-    return super.fileStream;
-  }
-
-  @override
-  set fileStream(ObservableStream<List<int>> value) {
-    _$fileStreamAtom.reportWrite(value, super.fileStream, () {
-      super.fileStream = value;
-    });
-  }
-
   final _$isLoadingBackupsAtom =
       Atom(name: '_BackupControllerBase.isLoadingBackups');
 
@@ -178,7 +163,6 @@ driveLimit: ${driveLimit},
 driveUsage: ${driveUsage},
 usagePercent: ${usagePercent},
 backups: ${backups},
-fileStream: ${fileStream},
 isLoadingBackups: ${isLoadingBackups},
 isLoadingNewBackup: ${isLoadingNewBackup},
 hasError: ${hasError},

@@ -27,9 +27,6 @@ abstract class _BackupControllerBase with Store {
   ObservableList<BackupFile> backups = ObservableList<BackupFile>();
 
   @observable
-  ObservableStream<List<int>> fileStream;
-
-  @observable
   bool isLoadingBackups = true;
 
   @observable
