@@ -108,7 +108,7 @@ class BackupService {
       controller.close();
       print(e);
     }
-    return controller.stream;
+    return controller.stream.asBroadcastStream();
   }
 
   Future<String> _createBackupFileName() async {
