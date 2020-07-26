@@ -58,6 +58,17 @@ mixin _$ThinkListController on _ThinkListControllerBase, Store {
   }
 
   @override
+  dynamic reOrderThinks(int oldIndex, int newIndex) {
+    final _$actionInfo = _$_ThinkListControllerBaseActionController.startAction(
+        name: '_ThinkListControllerBase.reOrderThinks');
+    try {
+      return super.reOrderThinks(oldIndex, newIndex);
+    } finally {
+      _$_ThinkListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 thinks: ${thinks}

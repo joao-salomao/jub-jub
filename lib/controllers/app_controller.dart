@@ -100,24 +100,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  reOrderThinks(int oldIndex, int newIndex) {
-    final isLast = newIndex == thinks.length;
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
-
-    final think = thinks.removeAt(oldIndex);
-
-    if (isLast) {
-      thinks.add(think);
-    } else {
-      thinks.insert(newIndex, think);
-    }
-
-    thinkDAO.updateItemsListIndex(thinks);
-  }
-
-  @action
   getMainTitle() {
     final title = sharedPreferences.getString("mainTitle");
     mainTitle = title == null ? "Jub Jub" : title;
