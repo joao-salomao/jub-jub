@@ -7,7 +7,6 @@ import 'package:jubjub/dao/think_dao.dart';
 import 'package:jubjub/models/user_model.dart';
 import 'package:jubjub/dao/annotation_dao.dart';
 import 'package:jubjub/models/think_model.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:jubjub/services/auth_service.dart';
 import 'package:jubjub/dao/annotation_file_dao.dart';
 import 'package:jubjub/models/annotation_model.dart';
@@ -47,12 +46,6 @@ abstract class _AppControllerBase with Store {
 
   @computed
   bool get brightnessIsDark => brightness == Brightness.dark;
-
-  @action
-  setBrightness(Brightness value, BuildContext context) {
-    brightness = value;
-    DynamicTheme.of(context).setBrightness(value);
-  }
 
   @action
   getBrightness(BuildContext context) {

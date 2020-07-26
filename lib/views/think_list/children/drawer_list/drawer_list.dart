@@ -101,7 +101,7 @@ class _DrawerListState extends State<DrawerList> {
     final List<Widget> defaultWidgets = [
       UserAccountsDrawerHeader(
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: _controller.primaryColor,
         ),
         accountName: accountName,
         accountEmail: accountEmail,
@@ -162,7 +162,7 @@ class _DrawerListState extends State<DrawerList> {
                       "Título",
                       "Digite o principal desejado",
                       controller: _titleController,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: _controller.primaryColor,
                     ),
                   ],
                 ),
@@ -206,8 +206,8 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    final originalColor = Theme.of(context).primaryColor;
-    var color = Theme.of(context).primaryColor;
+    final originalColor = _controller.primaryColor;
+    var color = _controller.primaryColor;
     final changeColor = (Color newColor) {
       _changeColor(newColor);
       _pop();
@@ -248,7 +248,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeBrightness(Brightness value) {
-    appController.setBrightness(value, context);
+    _controller.updateBrightness(value, context);
   }
 
   _changeColor(Color color) async {

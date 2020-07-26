@@ -38,6 +38,17 @@ mixin _$DrawerListController on _DrawerListControllerBase, Store {
   }
 
   @override
+  dynamic updateBrightness(Brightness value, BuildContext context) {
+    final _$actionInfo = _$_DrawerListControllerBaseActionController
+        .startAction(name: '_DrawerListControllerBase.updateBrightness');
+    try {
+      return super.updateBrightness(value, context);
+    } finally {
+      _$_DrawerListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic logout() {
     final _$actionInfo = _$_DrawerListControllerBaseActionController
         .startAction(name: '_DrawerListControllerBase.logout');
