@@ -6,7 +6,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:jubjub/views/components/app_text_form_field.dart';
 import 'package:jubjub/views/components/app_alert.dart';
 import 'package:jubjub/views/components/app_alert_dialog.dart';
-import 'children/backup_page.dart';
+import 'children/backup_page/backup_page.dart';
 import 'drawer_list_controller.dart';
 
 class DrawerList extends StatefulWidget {
