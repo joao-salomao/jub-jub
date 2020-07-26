@@ -24,6 +24,14 @@ mixin _$ThinkListController on _ThinkListControllerBase, Store {
     });
   }
 
+  final _$createThinkAsyncAction =
+      AsyncAction('_ThinkListControllerBase.createThink');
+
+  @override
+  Future createThink(String title, Color color) {
+    return _$createThinkAsyncAction.run(() => super.createThink(title, color));
+  }
+
   final _$_ThinkListControllerBaseActionController =
       ActionController(name: '_ThinkListControllerBase');
 
@@ -33,6 +41,17 @@ mixin _$ThinkListController on _ThinkListControllerBase, Store {
         name: '_ThinkListControllerBase.getThinks');
     try {
       return super.getThinks();
+    } finally {
+      _$_ThinkListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updateList() {
+    final _$actionInfo = _$_ThinkListControllerBaseActionController.startAction(
+        name: '_ThinkListControllerBase.updateList');
+    try {
+      return super.updateList();
     } finally {
       _$_ThinkListControllerBaseActionController.endAction(_$actionInfo);
     }
