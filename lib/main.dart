@@ -1,7 +1,7 @@
+import 'views/app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/dao/think_dao.dart';
-import 'package:jubjub/views-new/app.dart';
 import 'package:jubjub/dao/annotation_dao.dart';
 import 'package:jubjub/dao/annotation_file_dao.dart';
 import 'package:jubjub/controllers/app_controller.dart';
