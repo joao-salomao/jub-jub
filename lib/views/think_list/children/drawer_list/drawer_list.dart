@@ -10,6 +10,7 @@ import 'package:jubjub/views/components/app_alert.dart';
 import 'package:jubjub/views/components/app_alert_dialog.dart';
 
 import 'children/backup_page.dart';
+import 'drawer_list_controller.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class DrawerList extends StatefulWidget {
 
 class _DrawerListState extends State<DrawerList> {
   final appController = GetIt.I<AppController>();
+  final _controller = DrawerListController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,7 @@ class _DrawerListState extends State<DrawerList> {
           title: Text("Login"),
           subtitle: Text("Logar com a conta google"),
           trailing: Icon(Icons.arrow_forward),
-          onTap: appController.login,
+          onTap: _controller.login,
         ),
       );
     }

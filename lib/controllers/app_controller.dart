@@ -191,16 +191,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  login() {
-    authService.signIn().then((user) {
-      if (user != null) {
-        currentUser = user;
-        _saveUserToPrefs(currentUser);
-      }
-    });
-  }
-
-  @action
   logout() {
     authService.signOut();
     sharedPreferences.setString('user', null);
@@ -218,12 +208,12 @@ abstract class _AppControllerBase with Store {
       final result = await authService.signIn();
       if (result != null) {
         currentUser.client = result.client;
-        _saveUserToPrefs(result);
+        saveUserToPrefs(result);
       }
     }
   }
 
-  _saveUserToPrefs(UserModel user) async {
+  saveUserToPrefs(UserModel user) async {
     final json = convert.json.encode(currentUser.toMap());
     await sharedPreferences.setString('user', json);
   }

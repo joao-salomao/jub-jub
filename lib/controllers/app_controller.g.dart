@@ -260,17 +260,6 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
-  dynamic login() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.login');
-    try {
-      return super.login();
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic logout() {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction(
         name: '_AppControllerBase.logout');
