@@ -9,12 +9,6 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
-  Computed<bool> _$hasUserComputed;
-
-  @override
-  bool get hasUser => (_$hasUserComputed ??= Computed<bool>(() => super.hasUser,
-          name: '_AppControllerBase.hasUser'))
-      .value;
   Computed<bool> _$brightnessIsDarkComputed;
 
   @override
@@ -246,7 +240,6 @@ mainTitle: ${mainTitle},
 brightness: ${brightness},
 primaryColor: ${primaryColor},
 isLoading: ${isLoading},
-hasUser: ${hasUser},
 brightnessIsDark: ${brightnessIsDark}
     ''';
   }

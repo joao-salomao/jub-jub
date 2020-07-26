@@ -42,9 +42,6 @@ abstract class _AppControllerBase with Store {
   bool isLoading;
 
   @computed
-  bool get hasUser => currentUser != null;
-
-  @computed
   bool get brightnessIsDark => brightness == Brightness.dark;
 
   @action
