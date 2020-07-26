@@ -249,17 +249,6 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
-  dynamic updateMainTitle(String text) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.updateMainTitle');
-    try {
-      return super.updateMainTitle(text);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 currentUser: ${currentUser},

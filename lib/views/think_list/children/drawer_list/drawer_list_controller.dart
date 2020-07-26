@@ -14,10 +14,18 @@ abstract class _DrawerListControllerBase with Store {
   final _appController = GetIt.I<AppController>();
   final _authService = GetIt.I<AuthService>();
 
+  String get mainTitle => _appController.mainTitle;
   UserModel get currentUser => _appController.currentUser;
 
   @computed
   bool get hasUser => currentUser != null;
+
+  @action
+  updateMainTitle(String text) {
+    SharedPreferences.getInstance()
+        .then((prefs) => prefs.setString("mainTitle", text));
+    _appController.mainTitle = text;
+  }
 
   @action
   login() async {

@@ -27,6 +27,17 @@ mixin _$DrawerListController on _DrawerListControllerBase, Store {
       ActionController(name: '_DrawerListControllerBase');
 
   @override
+  dynamic updateMainTitle(String text) {
+    final _$actionInfo = _$_DrawerListControllerBaseActionController
+        .startAction(name: '_DrawerListControllerBase.updateMainTitle');
+    try {
+      return super.updateMainTitle(text);
+    } finally {
+      _$_DrawerListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic logout() {
     final _$actionInfo = _$_DrawerListControllerBaseActionController
         .startAction(name: '_DrawerListControllerBase.logout');

@@ -118,13 +118,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  updateMainTitle(String text) {
-    SharedPreferences.getInstance()
-        .then((prefs) => prefs.setString("mainTitle", text));
-    mainTitle = text;
-  }
-
-  @action
   Future<void> updateAnnotationThink(
     AnnotationModel annotation,
     ThinkModel think,

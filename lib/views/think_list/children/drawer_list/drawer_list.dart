@@ -145,8 +145,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitleDialog() {
-    final _titleController =
-        TextEditingController(text: appController.mainTitle);
+    final _titleController = TextEditingController(text: _controller.mainTitle);
 
     return showDialog(
       context: context,
@@ -244,7 +243,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitle(String text) {
-    appController.updateMainTitle(text);
+    _controller.updateMainTitle(text);
     _pop();
   }
 
