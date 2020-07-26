@@ -43,17 +43,17 @@ class _DrawerListState extends State<DrawerList> {
     final headerTextStyle = TextStyle(color: Colors.white);
     final List<Widget> dynamicItems = [];
 
-    if (appController.hasUser) {
+    if (_controller.hasUser) {
       accountName = Text(
-        appController.currentUser.name,
+        _controller.currentUser.name,
         style: headerTextStyle,
       );
       accountEmail = Text(
-        appController.currentUser.email,
+        _controller.currentUser.email,
         style: headerTextStyle,
       );
       accountPictureProvider =
-          CachedNetworkImageProvider(appController.currentUser.photoUrl);
+          CachedNetworkImageProvider(_controller.currentUser.photoUrl);
 
       dynamicItems.add(
         ListTile(
@@ -101,7 +101,7 @@ class _DrawerListState extends State<DrawerList> {
     final List<Widget> defaultWidgets = [
       UserAccountsDrawerHeader(
         decoration: BoxDecoration(
-          color: appController.primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
         accountName: accountName,
         accountEmail: accountEmail,
@@ -163,7 +163,7 @@ class _DrawerListState extends State<DrawerList> {
                       "Título",
                       "Digite o principal desejado",
                       controller: _titleController,
-                      cursorColor: appController.primaryColor,
+                      cursorColor: Theme.of(context).primaryColor,
                     ),
                   ],
                 ),
@@ -207,8 +207,8 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    final originalColor = appController.primaryColor;
-    var color = appController.primaryColor;
+    final originalColor = Theme.of(context).primaryColor;
+    var color = Theme.of(context).primaryColor;
     final changeColor = (Color newColor) {
       _changeColor(newColor);
       _pop();
