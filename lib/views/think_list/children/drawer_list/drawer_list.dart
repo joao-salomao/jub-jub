@@ -252,7 +252,7 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColor(Color color) async {
-    appController.updatePrimaryColor(color);
+    _controller.updatePrimaryColor(color);
   }
 
   _pop() {

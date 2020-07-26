@@ -38,6 +38,17 @@ mixin _$DrawerListController on _DrawerListControllerBase, Store {
   }
 
   @override
+  dynamic updatePrimaryColor(Color color) {
+    final _$actionInfo = _$_DrawerListControllerBaseActionController
+        .startAction(name: '_DrawerListControllerBase.updatePrimaryColor');
+    try {
+      return super.updatePrimaryColor(color);
+    } finally {
+      _$_DrawerListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic updateBrightness(Brightness value, BuildContext context) {
     final _$actionInfo = _$_DrawerListControllerBaseActionController
         .startAction(name: '_DrawerListControllerBase.updateBrightness');

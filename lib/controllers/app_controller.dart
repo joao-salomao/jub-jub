@@ -102,12 +102,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  updatePrimaryColor(Color color) {
-    primaryColor = color;
-    sharedPreferences.setInt("primaryColor", color.value);
-  }
-
-  @action
   Future<void> updateAnnotationThink(
     AnnotationModel annotation,
     ThinkModel think,

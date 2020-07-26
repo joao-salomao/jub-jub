@@ -31,6 +31,14 @@ abstract class _DrawerListControllerBase with Store {
   }
 
   @action
+  updatePrimaryColor(Color color) {
+    _appController.primaryColor = color;
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      sharedPreferences.setInt("primaryColor", color.value);
+    });
+  }
+
+  @action
   updateBrightness(Brightness value, BuildContext context) {
     _appController.brightness = value;
     DynamicTheme.of(context).setBrightness(value);

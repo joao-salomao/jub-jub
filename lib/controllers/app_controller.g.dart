@@ -221,17 +221,6 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
-  dynamic updatePrimaryColor(Color color) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.updatePrimaryColor');
-    try {
-      return super.updatePrimaryColor(color);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 currentUser: ${currentUser},
