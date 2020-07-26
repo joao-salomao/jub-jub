@@ -3,6 +3,7 @@ import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/user_model.dart';
 import 'package:jubjub/services/auth_service.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'drawer_list_controller.g.dart';
 
@@ -25,5 +26,14 @@ abstract class _DrawerListControllerBase with Store {
       _appController.currentUser = user;
       _appController.saveUserToPrefs(currentUser);
     }
+  }
+
+  @action
+  logout() {
+    _authService.signOut();
+    SharedPreferences.getInstance().then((sharedPreferences) {
+      sharedPreferences.setString('user', null);
+      _appController.currentUser = null;
+    });
   }
 }

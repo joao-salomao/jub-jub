@@ -191,13 +191,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  logout() {
-    authService.signOut();
-    sharedPreferences.setString('user', null);
-    currentUser = null;
-  }
-
-  @action
   getCurrentUser() async {
     final json = sharedPreferences.getString('user');
     if (json != null) {

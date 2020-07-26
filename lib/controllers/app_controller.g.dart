@@ -260,17 +260,6 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
-  dynamic logout() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.logout');
-    try {
-      return super.logout();
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 currentUser: ${currentUser},

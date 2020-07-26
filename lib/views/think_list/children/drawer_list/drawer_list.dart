@@ -140,7 +140,7 @@ class _DrawerListState extends State<DrawerList> {
       context,
       "Saindo da conta Google",
       "Você tem certeza ? Não será possível realizar backup das suas anotações",
-      callback: appController.logout,
+      callback: _controller.logout,
     );
   }
 

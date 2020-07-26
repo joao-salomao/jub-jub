@@ -23,6 +23,20 @@ mixin _$DrawerListController on _DrawerListControllerBase, Store {
     return _$loginAsyncAction.run(() => super.login());
   }
 
+  final _$_DrawerListControllerBaseActionController =
+      ActionController(name: '_DrawerListControllerBase');
+
+  @override
+  dynamic logout() {
+    final _$actionInfo = _$_DrawerListControllerBaseActionController
+        .startAction(name: '_DrawerListControllerBase.logout');
+    try {
+      return super.logout();
+    } finally {
+      _$_DrawerListControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
