@@ -16,6 +16,7 @@ abstract class _DrawerListControllerBase with Store {
   final _appController = GetIt.I<AppController>();
   final _authService = GetIt.I<AuthService>();
 
+  Brightness get brightness => _appController.brightness;
   Color get primaryColor => _appController.primaryColor;
   String get mainTitle => _appController.mainTitle;
   UserModel get currentUser => _appController.currentUser;

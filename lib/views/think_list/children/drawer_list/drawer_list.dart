@@ -1,14 +1,11 @@
-import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jubjub/controllers/app_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:jubjub/views/components/app_text_form_field.dart';
 import 'package:jubjub/views/components/app_alert.dart';
 import 'package:jubjub/views/components/app_alert_dialog.dart';
-
 import 'children/backup_page.dart';
 import 'drawer_list_controller.dart';
 
@@ -18,7 +15,6 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  final appController = GetIt.I<AppController>();
   final _controller = DrawerListController();
 
   @override
@@ -187,13 +183,13 @@ class _DrawerListState extends State<DrawerList> {
               children: [
                 RadioListTile<Brightness>(
                   value: Brightness.light,
-                  groupValue: appController.brightness,
+                  groupValue: _controller.brightness,
                   onChanged: _changeBrightness,
                   title: Text('Claro'),
                 ),
                 RadioListTile<Brightness>(
                   value: Brightness.dark,
-                  groupValue: appController.brightness,
+                  groupValue: _controller.brightness,
                   onChanged: _changeBrightness,
                   title: Text('Escuro'),
                 ),
