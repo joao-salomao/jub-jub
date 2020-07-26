@@ -47,17 +47,6 @@ mixin _$ThinkListController on _ThinkListControllerBase, Store {
   }
 
   @override
-  dynamic updateList() {
-    final _$actionInfo = _$_ThinkListControllerBaseActionController.startAction(
-        name: '_ThinkListControllerBase.updateList');
-    try {
-      return super.updateList();
-    } finally {
-      _$_ThinkListControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic reOrderThinks(int oldIndex, int newIndex) {
     final _$actionInfo = _$_ThinkListControllerBaseActionController.startAction(
         name: '_ThinkListControllerBase.reOrderThinks');

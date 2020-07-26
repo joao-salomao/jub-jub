@@ -10,28 +10,21 @@ part 'think_list_controller.g.dart';
 class ThinkListController = _ThinkListControllerBase with _$ThinkListController;
 
 abstract class _ThinkListControllerBase with Store {
-  final appController = GetIt.I<AppController>();
-  final thinkDAO = GetIt.I<ThinkDAO>();
+  final _appController = GetIt.I<AppController>();
+  final _thinkDAO = GetIt.I<ThinkDAO>();
 
   bool get listIsEmpty => thinks.isEmpty;
-  bool get isLoading => appController.isLoading;
-  String get mainTitle => appController.mainTitle;
-  Color get primaryColor => appController.primaryColor;
-  bool get brightnessIsDark => appController.brightnessIsDark;
+  bool get isLoading => _appController.isLoading;
+  String get mainTitle => _appController.mainTitle;
+  Color get primaryColor => _appController.primaryColor;
+  bool get brightnessIsDark => _appController.brightnessIsDark;
 
   @observable
   ObservableList<ThinkModel> thinks = ObservableList<ThinkModel>();
 
   @action
   getThinks() {
-    thinks = appController.thinks;
-  }
-
-  @action
-  updateList() {
-    appController.getData().then((value) {
-      thinks = appController.thinks;
-    });
+    thinks = _appController.thinks;
   }
 
   @action
@@ -46,9 +39,10 @@ abstract class _ThinkListControllerBase with Store {
       createdAt: DateTime.now(),
     );
 
-    await appController.saveThink(think);
+    await _appController.saveThink(think);
+    await _appController.getData();
 
-    updateList();
+    getThinks();
   }
 
   @action
@@ -66,6 +60,6 @@ abstract class _ThinkListControllerBase with Store {
       thinks.insert(newIndex, think);
     }
 
-    thinkDAO.updateItemsListIndex(thinks);
+    _thinkDAO.updateItemsListIndex(thinks);
   }
 }
