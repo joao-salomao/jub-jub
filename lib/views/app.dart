@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'components/app_splash_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:jubjub/views/user/splash_page.dart';
-
 
 class App extends StatefulWidget {
   @override
@@ -16,15 +14,14 @@ class _AppState extends State<App> {
       defaultBrightness: Brightness.light,
       data: (brightness) => ThemeData(
         brightness: brightness,
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(),
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Jub-Arte',
+          title: 'Jub Jub',
           theme: theme,
-          home: SplashPage(),
+          home: AppSplashPage(),
         );
       },
     );
