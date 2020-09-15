@@ -7,7 +7,6 @@ import 'package:jubjub/dao/think_dao.dart';
 import 'package:jubjub/models/user_model.dart';
 import 'package:jubjub/dao/annotation_dao.dart';
 import 'package:jubjub/models/think_model.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:jubjub/services/auth_service.dart';
 import 'package:jubjub/dao/annotation_file_dao.dart';
 import 'package:jubjub/models/annotation_model.dart';
@@ -43,16 +42,7 @@ abstract class _AppControllerBase with Store {
   bool isLoading;
 
   @computed
-  bool get hasUser => currentUser != null;
-
-  @computed
   bool get brightnessIsDark => brightness == Brightness.dark;
-
-  @action
-  setBrightness(Brightness value, BuildContext context) {
-    brightness = value;
-    DynamicTheme.of(context).setBrightness(value);
-  }
 
   @action
   getBrightness(BuildContext context) {
@@ -100,24 +90,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  reOrderThinks(int oldIndex, int newIndex) {
-    final isLast = newIndex == thinks.length;
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
-
-    final think = thinks.removeAt(oldIndex);
-
-    if (isLast) {
-      thinks.add(think);
-    } else {
-      thinks.insert(newIndex, think);
-    }
-
-    thinkDAO.updateItemsListIndex(thinks);
-  }
-
-  @action
   getMainTitle() {
     final title = sharedPreferences.getString("mainTitle");
     mainTitle = title == null ? "Jub Jub" : title;
@@ -127,19 +99,6 @@ abstract class _AppControllerBase with Store {
   getPrimaryColor() {
     final colorValue = sharedPreferences.getInt("primaryColor");
     primaryColor = Color(colorValue != null ? colorValue : 4280391411);
-  }
-
-  @action
-  updatePrimaryColor(Color color) {
-    primaryColor = color;
-    sharedPreferences.setInt("primaryColor", color.value);
-  }
-
-  @action
-  updateMainTitle(String text) {
-    SharedPreferences.getInstance()
-        .then((prefs) => prefs.setString("mainTitle", text));
-    mainTitle = text;
   }
 
   @action
@@ -209,23 +168,6 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
-  login() {
-    authService.signIn().then((user) {
-      if (user != null) {
-        currentUser = user;
-        _saveUserToPrefs(currentUser);
-      }
-    });
-  }
-
-  @action
-  logout() {
-    authService.signOut();
-    sharedPreferences.setString('user', null);
-    currentUser = null;
-  }
-
-  @action
   getCurrentUser() async {
     final json = sharedPreferences.getString('user');
     if (json != null) {
@@ -236,12 +178,12 @@ abstract class _AppControllerBase with Store {
       final result = await authService.signIn();
       if (result != null) {
         currentUser.client = result.client;
-        _saveUserToPrefs(result);
+        saveUserToPrefs(result);
       }
     }
   }
 
-  _saveUserToPrefs(UserModel user) async {
+  saveUserToPrefs(UserModel user) async {
     final json = convert.json.encode(currentUser.toMap());
     await sharedPreferences.setString('user', json);
   }

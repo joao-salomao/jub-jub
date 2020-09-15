@@ -9,12 +9,6 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
-  Computed<bool> _$hasUserComputed;
-
-  @override
-  bool get hasUser => (_$hasUserComputed ??= Computed<bool>(() => super.hasUser,
-          name: '_AppControllerBase.hasUser'))
-      .value;
   Computed<bool> _$brightnessIsDarkComputed;
 
   @override
@@ -194,33 +188,11 @@ mixin _$AppController on _AppControllerBase, Store {
       ActionController(name: '_AppControllerBase');
 
   @override
-  dynamic setBrightness(Brightness value, BuildContext context) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.setBrightness');
-    try {
-      return super.setBrightness(value, context);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic getBrightness(BuildContext context) {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction(
         name: '_AppControllerBase.getBrightness');
     try {
       return super.getBrightness(context);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic reOrderThinks(int oldIndex, int newIndex) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.reOrderThinks');
-    try {
-      return super.reOrderThinks(oldIndex, newIndex);
     } finally {
       _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -249,50 +221,6 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
-  dynamic updatePrimaryColor(Color color) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.updatePrimaryColor');
-    try {
-      return super.updatePrimaryColor(color);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic updateMainTitle(String text) {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.updateMainTitle');
-    try {
-      return super.updateMainTitle(text);
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic login() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.login');
-    try {
-      return super.login();
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic logout() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.logout');
-    try {
-      return super.logout();
-    } finally {
-      _$_AppControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 currentUser: ${currentUser},
@@ -301,7 +229,6 @@ mainTitle: ${mainTitle},
 brightness: ${brightness},
 primaryColor: ${primaryColor},
 isLoading: ${isLoading},
-hasUser: ${hasUser},
 brightnessIsDark: ${brightnessIsDark}
     ''';
   }

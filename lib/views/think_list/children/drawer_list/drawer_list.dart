@@ -1,15 +1,13 @@
-import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jubjub/controllers/app_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:jubjub/views/components/app_text_form_field.dart';
 import 'package:jubjub/views/components/app_alert.dart';
 import 'package:jubjub/views/components/app_alert_dialog.dart';
-
-import 'children/backup_page.dart';
+import 'children/backup_page/backup_page.dart';
+import 'drawer_list_controller.dart';
 
 class DrawerList extends StatefulWidget {
   @override
@@ -17,7 +15,7 @@ class DrawerList extends StatefulWidget {
 }
 
 class _DrawerListState extends State<DrawerList> {
-  final appController = GetIt.I<AppController>();
+  final _controller = DrawerListController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +39,17 @@ class _DrawerListState extends State<DrawerList> {
     final headerTextStyle = TextStyle(color: Colors.white);
     final List<Widget> dynamicItems = [];
 
-    if (appController.hasUser) {
+    if (_controller.hasUser) {
       accountName = Text(
-        appController.currentUser.name,
+        _controller.currentUser.name,
         style: headerTextStyle,
       );
       accountEmail = Text(
-        appController.currentUser.email,
+        _controller.currentUser.email,
         style: headerTextStyle,
       );
       accountPictureProvider =
-          CachedNetworkImageProvider(appController.currentUser.photoUrl);
+          CachedNetworkImageProvider(_controller.currentUser.photoUrl);
 
       dynamicItems.add(
         ListTile(
@@ -91,7 +89,7 @@ class _DrawerListState extends State<DrawerList> {
           title: Text("Login"),
           subtitle: Text("Logar com a conta google"),
           trailing: Icon(Icons.arrow_forward),
-          onTap: appController.login,
+          onTap: _controller.login,
         ),
       );
     }
@@ -99,7 +97,7 @@ class _DrawerListState extends State<DrawerList> {
     final List<Widget> defaultWidgets = [
       UserAccountsDrawerHeader(
         decoration: BoxDecoration(
-          color: appController.primaryColor,
+          color: _controller.primaryColor,
         ),
         accountName: accountName,
         accountEmail: accountEmail,
@@ -138,13 +136,12 @@ class _DrawerListState extends State<DrawerList> {
       context,
       "Saindo da conta Google",
       "Você tem certeza ? Não será possível realizar backup das suas anotações",
-      callback: appController.logout,
+      callback: _controller.logout,
     );
   }
 
   _changeMainTitleDialog() {
-    final _titleController =
-        TextEditingController(text: appController.mainTitle);
+    final _titleController = TextEditingController(text: _controller.mainTitle);
 
     return showDialog(
       context: context,
@@ -161,7 +158,7 @@ class _DrawerListState extends State<DrawerList> {
                       "Título",
                       "Digite o principal desejado",
                       controller: _titleController,
-                      cursorColor: appController.primaryColor,
+                      cursorColor: _controller.primaryColor,
                     ),
                   ],
                 ),
@@ -186,13 +183,13 @@ class _DrawerListState extends State<DrawerList> {
               children: [
                 RadioListTile<Brightness>(
                   value: Brightness.light,
-                  groupValue: appController.brightness,
+                  groupValue: _controller.brightness,
                   onChanged: _changeBrightness,
                   title: Text('Claro'),
                 ),
                 RadioListTile<Brightness>(
                   value: Brightness.dark,
-                  groupValue: appController.brightness,
+                  groupValue: _controller.brightness,
                   onChanged: _changeBrightness,
                   title: Text('Escuro'),
                 ),
@@ -205,8 +202,8 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeColorDialog() {
-    final originalColor = appController.primaryColor;
-    var color = appController.primaryColor;
+    final originalColor = _controller.primaryColor;
+    var color = _controller.primaryColor;
     final changeColor = (Color newColor) {
       _changeColor(newColor);
       _pop();
@@ -242,16 +239,16 @@ class _DrawerListState extends State<DrawerList> {
   }
 
   _changeMainTitle(String text) {
-    appController.updateMainTitle(text);
+    _controller.updateMainTitle(text);
     _pop();
   }
 
   _changeBrightness(Brightness value) {
-    appController.setBrightness(value, context);
+    _controller.updateBrightness(value, context);
   }
 
   _changeColor(Color color) async {
-    appController.updatePrimaryColor(color);
+    _controller.updatePrimaryColor(color);
   }
 
   _pop() {
