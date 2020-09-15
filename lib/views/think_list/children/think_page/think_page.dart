@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/models/think_model.dart';
-import 'package:jubjub/controllers/think_page_controller.dart';
 import 'package:jubjub/views/components/app_bottom_audio_player.dart';
 import 'package:jubjub/views/think_list/components/think_form.dart';
+import './think_page_controller.dart';
 
 import 'children/annotation/components/annotation_form.dart';
 import 'components/annotation_list_page.dart';
