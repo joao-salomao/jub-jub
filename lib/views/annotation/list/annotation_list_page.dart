@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
-import 'package:jubjub/views/think_list/children/think_page/components/annotation_card.dart';
+import 'package:jubjub/views/annotation/components/annotation_card.dart';
 
 class AnnotationListPage extends StatefulWidget {
   final ThinkModel think;

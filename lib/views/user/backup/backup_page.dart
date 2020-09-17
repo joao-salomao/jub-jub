@@ -2,10 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/backup_file_model.dart';
-import 'package:jubjub/views/components/app_alert.dart';
-import 'package:jubjub/views/components/app_flat_button.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:jubjub/views/widgets/app_flat_button.dart';
 import 'package:jubjub/controllers/backup_controller.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 

@@ -1,13 +1,12 @@
+import 'think_page_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/utils/navigation.dart';
+import '../../annotation/list/annotation_list_page.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/think_model.dart';
-import 'package:jubjub/views/components/app_bottom_audio_player.dart';
-import 'package:jubjub/views/think_list/components/think_form.dart';
-import './think_page_controller.dart';
-
-import 'children/annotation/components/annotation_form.dart';
-import 'components/annotation_list_page.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
+import 'package:jubjub/views/think/list/components/think_form.dart';
+import 'package:jubjub/views//annotation/components/annotation_form.dart';
 
 class ThinkPage extends StatefulWidget {
   final ThinkModel think;

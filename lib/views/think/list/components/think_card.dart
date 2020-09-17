@@ -3,8 +3,8 @@ import 'package:jubjub/utils/formatters.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jubjub/views/think_list/children/think_page/think_page.dart';
-import 'package:jubjub/views/components/app_text.dart';
+import 'package:jubjub/views/widgets/app_text.dart';
+import 'package:jubjub/views/think/page/think_page.dart';
 
 class ThinkCard extends StatelessWidget {
   final Key key;

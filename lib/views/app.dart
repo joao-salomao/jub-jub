@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/app_splash_page.dart';
+import 'widgets/app_splash_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
 class App extends StatefulWidget {

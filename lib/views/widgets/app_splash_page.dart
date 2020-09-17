@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:jubjub/controllers/app_controller.dart';
-import 'package:jubjub/views/think_list/think_list.dart';
+import 'package:jubjub/views/think/list/think_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
