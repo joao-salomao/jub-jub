@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:jubjub/models/annotation_model.dart';
+import 'package:jubjub/views/widgets/app_text.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
-import 'package:jubjub/views/components/app_text.dart';
-import 'package:jubjub/views/components/app_text_form_field.dart';
-import 'package:jubjub/views/think_list/children/think_page/children/annotation/annotation_page.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/views/annotation/page/annotation_page.dart';
 
 class AnnotationCard extends StatefulWidget {
   final Key key;

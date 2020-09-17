@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'package:jubjub/views/components/app_alert_dialog.dart';
-import 'package:jubjub/views/components/app_bottom_audio_player.dart';
-import 'package:jubjub/views/components/app_text_form_field.dart';
 import 'package:mobx/mobx.dart';
+import 'annotation_file_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/utils/file_picker.dart';
@@ -12,11 +10,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
 import 'package:jubjub/controllers/annotation_form_controller.dart';
 import 'package:jubjub/controllers/app_audio_player_controller.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-
-import 'annotation_file_widget.dart';
 
 class AnnotationForm extends StatefulWidget {
   final ThinkModel think;

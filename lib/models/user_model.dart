@@ -7,8 +7,8 @@ abstract class _UserModelBase with Store {
   _UserModelBase({
     this.name,
     this.email,
-    this.photoUrl,
     this.client,
+    this.photoUrl,
   });
 
   @observable

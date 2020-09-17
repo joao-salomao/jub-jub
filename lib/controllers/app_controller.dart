@@ -56,13 +56,11 @@ abstract class _AppControllerBase with Store {
     final thinksFuture = thinkDAO.findAllOrderBy('listIndex', false);
     final annotationsFuture = annotationDAO.findAllOrderBy('listIndex', false);
     final annotationFilesFuture = annotationFileDAO.findAll();
-    final result = await Future.wait(
-      [
-        thinksFuture,
-        annotationsFuture,
-        annotationFilesFuture,
-      ],
-    );
+    final result = await Future.wait([
+      thinksFuture,
+      annotationsFuture,
+      annotationFilesFuture,
+    ]);
 
     final List<ThinkModel> thinkList = result[0];
     final List<AnnotationModel> annotations = result[1];

@@ -1,19 +1,18 @@
-import 'package:jubjub/views/components/app_alert.dart';
-import 'package:jubjub/views/components/app_alert_dialog.dart';
-import 'package:jubjub/views/components/app_bottom_audio_player.dart';
-import 'package:jubjub/views/components/app_text_form_field.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import '../components/annotation_form.dart';
 import 'package:jubjub/utils/navigation.dart';
+import '../components/annotation_file_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/think_model.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
 import 'package:jubjub/models/annotation_model.dart';
+import '../components/change_annotation_think_form.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
 import 'package:jubjub/controllers/annotation_controller.dart';
-
-import 'components/annotation_file_list.dart';
-import 'components/annotation_form.dart';
-import 'components/change_annotation_think_form.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
+import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
 
 class AnnotationPage extends StatefulWidget {
   final ThinkModel think;

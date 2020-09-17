@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
-import 'package:jubjub/views/components/app_image_viewer.dart';
+import 'package:jubjub/views/widgets/app_image_viewer.dart';
 
 class ImageWidget extends StatelessWidget {
   final AnnotationFileModel annotationFile;

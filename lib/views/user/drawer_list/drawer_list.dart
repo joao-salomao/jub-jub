@@ -1,13 +1,13 @@
+import 'drawer_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:jubjub/views/widgets/app_alert.dart';
+import 'package:jubjub/views/widgets/app_alert_dialog.dart';
+import 'package:jubjub/views/user/backup/backup_page.dart';
+import 'package:jubjub/views/widgets/app_text_form_field.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'package:jubjub/views/components/app_text_form_field.dart';
-import 'package:jubjub/views/components/app_alert.dart';
-import 'package:jubjub/views/components/app_alert_dialog.dart';
-import 'children/backup_page/backup_page.dart';
-import 'drawer_list_controller.dart';
 
 class DrawerList extends StatefulWidget {
   @override
