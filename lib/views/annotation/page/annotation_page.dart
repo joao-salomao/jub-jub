@@ -86,6 +86,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
                       AppTextFormField(
                         "Digite a senha desejada",
                         "",
+                        obscureText: true,
                         controller: passwordController,
                         cursorColor: annotation.color,
                         validator: (value) {
@@ -101,6 +102,7 @@ class _AnnotationPageState extends State<AnnotationPage> {
                       AppTextFormField(
                         "Digite a senha novamente",
                         "",
+                        obscureText: true,
                         controller: rePasswordController,
                         cursorColor: annotation.color,
                         validator: (value) {
