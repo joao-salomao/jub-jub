@@ -7,11 +7,7 @@ import 'package:jubjub/models/annotation_file_model.dart';
 
 class AnnotationFileWidget extends StatelessWidget {
   final AnnotationFileModel annotationFile;
-  final bool shouldPauseOnDispose;
-  AnnotationFileWidget(
-    this.annotationFile, {
-    this.shouldPauseOnDispose = true,
-  });
+  AnnotationFileWidget(this.annotationFile);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +16,15 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'image') {
-      return ImageWidget(annotationFile);
+      return ImageWidget(annotationFile.file, annotationFile.title);
     }
 
     if (annotationFile.type == 'video') {
-      return VideoWidget(annotationFile, shouldPauseOnDispose);
+      return VideoWidget(annotationFile.file);
     }
 
     if (annotationFile.type == 'audio') {
-      return AudioWidget(annotationFile);
+      return AudioWidget(annotationFile.fileName, annotationFile.file.path);
     }
 
     return Container(

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import '../models/backup_file_model.dart';
 import 'package:jubjub/services/backup_service.dart';
 import 'package:jubjub/models/backup_file_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
@@ -11,7 +10,7 @@ part 'backup_controller.g.dart';
 class BackupController = _BackupControllerBase with _$BackupController;
 
 abstract class _BackupControllerBase with Store {
-  final backupService = BackupService();
+  final backupService = GetIt.I<BackupService>();
   final appController = GetIt.I<AppController>();
 
   @observable
@@ -116,11 +115,11 @@ abstract class _BackupControllerBase with Store {
   }
 
   @action
-  deleteFile(BackupFile file) async {
+  deleteBackup(BackupFile file) async {
     var result = false;
     file.isDeleting = true;
     try {
-      await backupService.deleteFile(file.metaData);
+      await backupService.deleteBackup(file.metaData);
       backups.remove(file);
       result = true;
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:jubjub/custom/auth_http_client.dart';
 part 'user_model.g.dart';
 
 class UserModel = _UserModelBase with _$UserModel;
@@ -12,7 +13,7 @@ abstract class _UserModelBase with Store {
   });
 
   @observable
-  var client;
+  AuthHttpClient client;
 
   @observable
   String name;

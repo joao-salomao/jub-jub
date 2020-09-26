@@ -31,9 +31,6 @@ abstract class _AnnotationFileModelBase extends Model with Store {
   @observable
   String fileName;
 
-  @observable
-  var controller;
-
   _AnnotationFileModelBase({
     this.file,
     this.path,
@@ -65,13 +62,6 @@ abstract class _AnnotationFileModelBase extends Model with Store {
       "description": description,
       "annotation_id": annotationId
     };
-  }
-
-  @action
-  disposeController() {
-    if (controller != null) {
-      controller.dispose();
-    }
   }
 
   @action

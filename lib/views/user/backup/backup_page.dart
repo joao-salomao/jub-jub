@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,7 +14,7 @@ class BackupPage extends StatefulWidget {
 }
 
 class _BackupPageState extends State<BackupPage> {
-  final backupController = GetIt.I<BackupController>();
+  final backupController = BackupController();
 
   @override
   void initState() {
@@ -240,7 +239,7 @@ class _BackupPageState extends State<BackupPage> {
       "Deletando backup",
       "Você tem certeza ? As anotações desse backup serão permanentemente deletadas.",
       callback: () {
-        backupController.deleteFile(file).then((result) {
+        backupController.deleteBackup(file).then((result) {
           _showSnackBar(
             snackContext: context,
             content: Text(result == false

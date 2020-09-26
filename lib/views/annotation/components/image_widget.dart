@@ -1,11 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
-import 'package:jubjub/models/annotation_file_model.dart';
 import 'package:jubjub/views/widgets/app_image_viewer.dart';
 
 class ImageWidget extends StatelessWidget {
-  final AnnotationFileModel annotationFile;
-  ImageWidget(this.annotationFile);
+  final File file;
+  final String title;
+  ImageWidget(this.file, this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +14,14 @@ class ImageWidget extends StatelessWidget {
       onTap: () {
         push(
           context,
-          AppImageViewer(annotationFile),
+          AppImageViewer(file, title),
         );
       },
       child: Container(
         height: 300,
         width: double.infinity,
         child: Image.file(
-          annotationFile.file,
+          file,
           fit: BoxFit.fitWidth,
         ),
       ),

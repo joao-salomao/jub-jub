@@ -1,18 +1,17 @@
 import 'dart:io';
-import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
-import 'package:jubjub/controllers/app_controller.dart';
-import 'package:googleapis/drive/v3.dart' as googleApis;
+import 'package:googleapis/drive/v3.dart' as g;
+import 'package:jubjub/custom/auth_http_client.dart';
 
 class GoogleDriveService {
-  final _appController = GetIt.I<AppController>();
+  g.DriveApi _getDrive(AuthHttpClient client) {
+    return g.DriveApi(client);
+  }
 
-  Future upload(File file) async {
+  Future uploadFile(File file, AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
-
-      googleApis.File fileToUpload = googleApis.File();
+      final drive = _getDrive(client);
+      final g.File fileToUpload = g.File();
 
       // Add file to app folder
       // fileToUpload.parents = ["appDataFolder"];
@@ -20,7 +19,7 @@ class GoogleDriveService {
 
       var response = await drive.files.create(
         fileToUpload,
-        uploadMedia: googleApis.Media(
+        uploadMedia: g.Media(
           file.openRead(),
           file.lengthSync(),
         ),
@@ -32,9 +31,9 @@ class GoogleDriveService {
     }
   }
 
-  Future getDriveInfo() async {
+  Future getDriveInfo(AuthHttpClient client) async {
     try {
-      var drive = googleApis.DriveApi(_appController.currentUser.client);
+      final drive = _getDrive(client);
       final about = await drive.about.get($fields: '*');
 
       final limit = double.parse(about.storageQuota.limit) / 1.074e+9;
@@ -51,10 +50,9 @@ class GoogleDriveService {
     }
   }
 
-  Future deleteFile(googleApis.File file) async {
+  Future deleteFile(g.File file, AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
+      final drive = _getDrive(client);
       await drive.files.delete(file.id);
       return true;
     } catch (e) {
@@ -63,23 +61,22 @@ class GoogleDriveService {
     }
   }
 
-  Future<Stream<List<int>>> downloadGoogleDriveFile(
+  Future<Stream<List<int>>> downloadFile(
     String fileName,
     String fileId,
+    AuthHttpClient client,
   ) async {
-    var client = _appController.currentUser.client;
-    var drive = googleApis.DriveApi(client);
-    googleApis.Media file = await drive.files.get(
+    final drive = _getDrive(client);
+    g.Media file = await drive.files.get(
       fileId,
-      downloadOptions: googleApis.DownloadOptions.FullMedia,
+      downloadOptions: g.DownloadOptions.FullMedia,
     );
     return file.stream;
   }
 
-  Future getBackupsList() async {
+  Future getBackups(AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
+      final drive = _getDrive(client);
       final fileList = await drive.files.list(
         q: "mimeType = 'application/zip' and name contains ' backup-jub-jub' and trashed = false",
         orderBy: 'createdTime desc',
