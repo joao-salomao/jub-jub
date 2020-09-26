@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
+import 'package:jubjub/dao/think_dao.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
@@ -24,14 +25,14 @@ abstract class _ThinkPageControllerBase with Store {
 
   @action
   deleteThink() async {
-    await appController.thinkDAO
+    await GetIt.I<ThinkDAO>()
         .delete(think.id)
         .then((_) => appController.getData());
   }
 
   @action
   saveThink() async {
-    await appController.thinkDAO.save(think);
+    await GetIt.I<ThinkDAO>().save(think);
   }
 
   @action

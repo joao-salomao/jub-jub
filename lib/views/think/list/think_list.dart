@@ -3,9 +3,9 @@ import 'components/think_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:jubjub/controllers/think_list_controller.dart';
 import 'package:jubjub/views/user/drawer_list/drawer_list.dart';
 import 'package:jubjub/views/widgets/app_bottom_audio_player.dart';
-import 'package:jubjub/views/think/list/think_list_controller.dart';
 
 class ThinkList extends StatefulWidget {
   @override
