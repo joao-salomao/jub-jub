@@ -1,71 +1,43 @@
+import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:jubjub/models/annotation_file_model.dart';
 
 class VideoWidget extends StatefulWidget {
-  final bool shouldPauseOnDispose;
-  final AnnotationFileModel annotationFile;
-  VideoWidget(
-    this.annotationFile,
-    this.shouldPauseOnDispose,
-  );
+  final File file;
+  VideoWidget(this.file);
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  AnnotationFileModel get annotationFile => widget.annotationFile;
-  bool get shouldPauseOnDispose => widget.shouldPauseOnDispose;
-  ChewieController chewieController;
+  ChewieController _chewieController;
 
   @override
   void initState() {
-    if (annotationFile.controller == null) {
-      final controller = VideoPlayerController.file(widget.annotationFile.file);
-      annotationFile.controller = controller;
-      annotationFile.controller.initialize();
-    }
-    _setChewieController();
+    _chewieController = ChewieController(
+      videoPlayerController: VideoPlayerController.file(widget.file)
+        ..initialize(),
+      aspectRatio: 1,
+      autoPlay: false,
+      looping: true,
+    );
     super.initState();
-  }
-
-  _setChewieController() {
-    if (chewieController == null) {
-      chewieController = ChewieController(
-        videoPlayerController: annotationFile.controller,
-        aspectRatio: 1,
-        autoPlay: false,
-        looping: true,
-      );
-      return;
-    }
-    if (chewieController.videoPlayerController != annotationFile.controller) {
-      chewieController = ChewieController(
-        videoPlayerController: annotationFile.controller,
-        aspectRatio: 1,
-        autoPlay: false,
-        looping: true,
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _setChewieController();
     return Container(
       child: Chewie(
-        controller: chewieController,
+        controller: _chewieController,
       ),
     );
   }
 
   @override
   void dispose() {
-    if (shouldPauseOnDispose) {
-      chewieController.pause();
-    }
+    _chewieController.dispose();
     super.dispose();
   }
 }

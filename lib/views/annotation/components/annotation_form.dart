@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:jubjub/utils/navigation.dart';
 import 'package:jubjub/utils/file_picker.dart';
 import 'package:jubjub/models/think_model.dart';
-import 'package:video_player/video_player.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
@@ -247,10 +246,7 @@ class _AnnotationFormState extends State<AnnotationForm> {
                                           files[index].type == 'pdf'
                                       ? 80
                                       : 220,
-                                  child: AnnotationFileWidget(
-                                    files[index],
-                                    shouldPauseOnDispose: false,
-                                  ),
+                                  child: AnnotationFileWidget(files[index]),
                                 ),
                               ),
                               Expanded(
@@ -397,16 +393,9 @@ class _AnnotationFormState extends State<AnnotationForm> {
                             onPressed: () async {
                               final file = await getFile(annotationFile.type);
                               if (file == null) return;
+
                               annotationFile.file = file;
                               annotationFile.path = file.path;
-
-                              if (annotationFile.type == 'video') {
-                                annotationFile.controller.pause();
-                                annotationFile.controller =
-                                    VideoPlayerController.file(
-                                        annotationFile.file);
-                                annotationFile.controller.initialize();
-                              }
 
                               if (annotationFile.type == 'audio') {
                                 if (file.path !=
@@ -433,9 +422,6 @@ class _AnnotationFormState extends State<AnnotationForm> {
   }
 
   _removeFile(AnnotationFileModel annotationFile) {
-    if (annotationFile.controller != null) {
-      annotationFile.controller.pause();
-    }
     files.remove(annotationFile);
     deletedFiles.add(annotationFile);
   }

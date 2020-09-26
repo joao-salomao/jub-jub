@@ -130,41 +130,12 @@ mixin _$AnnotationFileModel on _AnnotationFileModelBase, Store {
     });
   }
 
-  final _$controllerAtom = Atom(name: '_AnnotationFileModelBase.controller');
-
-  @override
-  dynamic get controller {
-    _$controllerAtom.reportRead();
-    return super.controller;
-  }
-
-  @override
-  set controller(dynamic value) {
-    _$controllerAtom.reportWrite(value, super.controller, () {
-      super.controller = value;
-    });
-  }
-
   final _$setFileNameAsyncAction =
       AsyncAction('_AnnotationFileModelBase.setFileName');
 
   @override
   Future setFileName(File file) {
     return _$setFileNameAsyncAction.run(() => super.setFileName(file));
-  }
-
-  final _$_AnnotationFileModelBaseActionController =
-      ActionController(name: '_AnnotationFileModelBase');
-
-  @override
-  dynamic disposeController() {
-    final _$actionInfo = _$_AnnotationFileModelBaseActionController.startAction(
-        name: '_AnnotationFileModelBase.disposeController');
-    try {
-      return super.disposeController();
-    } finally {
-      _$_AnnotationFileModelBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override
@@ -177,8 +148,7 @@ type: ${type},
 title: ${title},
 annotationId: ${annotationId},
 description: ${description},
-fileName: ${fileName},
-controller: ${controller}
+fileName: ${fileName}
     ''';
   }
 }
