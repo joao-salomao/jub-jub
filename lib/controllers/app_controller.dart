@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:mobx/mobx.dart';
 import 'dart:convert' as convert;
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:jubjub/dao/think_dao.dart';
 import 'package:jubjub/models/user_model.dart';
@@ -17,10 +17,10 @@ part 'app_controller.g.dart';
 class AppController = _AppControllerBase with _$AppController;
 
 abstract class _AppControllerBase with Store {
-  final thinkDAO = ThinkDAO();
-  final annotationDAO = AnnotationDAO();
-  final annotationFileDAO = AnnotationFileDAO();
-  final authService = AuthService();
+  final thinkDAO = GetIt.I<ThinkDAO>();
+  final annotationDAO = GetIt.I<AnnotationDAO>();
+  final annotationFileDAO = GetIt.I<AnnotationFileDAO>();
+  final authService = GetIt.I<AuthService>();
   SharedPreferences sharedPreferences;
 
   @observable

@@ -15,9 +15,9 @@ class BackupService {
   static const String DB_BACKUP_FILE_PATH =
       '/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json';
 
-  final zipService = ZipService();
-  final driveService = GoogleDriveService();
+  final zipService = GetIt.I<ZipService>();
   final appController = GetIt.I<AppController>();
+  final driveService = GetIt.I<GoogleDriveService>();
 
   Future<String> get _temporaryDirectory async {
     return (await getTemporaryDirectory()).path;
