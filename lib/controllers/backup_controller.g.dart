@@ -148,12 +148,12 @@ mixin _$BackupController on _BackupControllerBase, Store {
     return _$restoreBackupAsyncAction.run(() => super.restoreBackup(file));
   }
 
-  final _$deleteFileAsyncAction =
-      AsyncAction('_BackupControllerBase.deleteFile');
+  final _$deleteBackupAsyncAction =
+      AsyncAction('_BackupControllerBase.deleteBackup');
 
   @override
-  Future deleteFile(BackupFile file) {
-    return _$deleteFileAsyncAction.run(() => super.deleteFile(file));
+  Future deleteBackup(BackupFile file) {
+    return _$deleteBackupAsyncAction.run(() => super.deleteBackup(file));
   }
 
   @override

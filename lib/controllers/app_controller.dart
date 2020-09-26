@@ -17,10 +17,10 @@ part 'app_controller.g.dart';
 class AppController = _AppControllerBase with _$AppController;
 
 abstract class _AppControllerBase with Store {
+  final authService = AuthService();
   final thinkDAO = GetIt.I<ThinkDAO>();
   final annotationDAO = GetIt.I<AnnotationDAO>();
   final annotationFileDAO = GetIt.I<AnnotationFileDAO>();
-  final authService = GetIt.I<AuthService>();
   SharedPreferences sharedPreferences;
 
   @observable

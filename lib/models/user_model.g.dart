@@ -12,13 +12,13 @@ mixin _$UserModel on _UserModelBase, Store {
   final _$clientAtom = Atom(name: '_UserModelBase.client');
 
   @override
-  dynamic get client {
+  AuthHttpClient get client {
     _$clientAtom.reportRead();
     return super.client;
   }
 
   @override
-  set client(dynamic value) {
+  set client(AuthHttpClient value) {
     _$clientAtom.reportWrite(value, super.client, () {
       super.client = value;
     });
