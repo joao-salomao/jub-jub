@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:jubjub/models/annotation_file_model.dart';
 
 class AppImageViewer extends StatelessWidget {
-  final AnnotationFileModel annotationFile;
-  AppImageViewer(this.annotationFile);
+  final File file;
+  final String title;
+  AppImageViewer(this.file, this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +13,11 @@ class AppImageViewer extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
-        title: Text(annotationFile.title),
+        title: Text(title),
       ),
       body: Container(
         child: PhotoView(
-          imageProvider: FileImage(annotationFile.file),
+          imageProvider: FileImage(file),
         ),
       ),
     );

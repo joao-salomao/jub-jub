@@ -16,7 +16,7 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'image') {
-      return ImageWidget(annotationFile);
+      return ImageWidget(annotationFile.file, annotationFile.title);
     }
 
     if (annotationFile.type == 'video') {
@@ -24,7 +24,7 @@ class AnnotationFileWidget extends StatelessWidget {
     }
 
     if (annotationFile.type == 'audio') {
-      return AudioWidget(annotationFile);
+      return AudioWidget(annotationFile.fileName, annotationFile.file.path);
     }
 
     return Container(
