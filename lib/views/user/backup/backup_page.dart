@@ -239,7 +239,7 @@ class _BackupPageState extends State<BackupPage> {
       "Deletando backup",
       "Você tem certeza ? As anotações desse backup serão permanentemente deletadas.",
       callback: () {
-        backupController.deleteFile(file).then((result) {
+        backupController.deleteBackup(file).then((result) {
           _showSnackBar(
             snackContext: context,
             content: Text(result == false

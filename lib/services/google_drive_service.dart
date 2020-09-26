@@ -1,18 +1,13 @@
 import 'dart:io';
-import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
-import 'package:jubjub/controllers/app_controller.dart';
+import 'package:jubjub/custom/auth_http_client.dart';
 import 'package:googleapis/drive/v3.dart' as googleApis;
 
 class GoogleDriveService {
-  final _appController = GetIt.I<AppController>();
-
-  Future upload(File file) async {
+  Future uploadFile(File file, AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
-
-      googleApis.File fileToUpload = googleApis.File();
+      final drive = googleApis.DriveApi(client);
+      final googleApis.File fileToUpload = googleApis.File();
 
       // Add file to app folder
       // fileToUpload.parents = ["appDataFolder"];
@@ -32,9 +27,9 @@ class GoogleDriveService {
     }
   }
 
-  Future getDriveInfo() async {
+  Future getDriveInfo(AuthHttpClient client) async {
     try {
-      var drive = googleApis.DriveApi(_appController.currentUser.client);
+      final drive = googleApis.DriveApi(client);
       final about = await drive.about.get($fields: '*');
 
       final limit = double.parse(about.storageQuota.limit) / 1.074e+9;
@@ -51,10 +46,9 @@ class GoogleDriveService {
     }
   }
 
-  Future deleteFile(googleApis.File file) async {
+  Future deleteFile(googleApis.File file, AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
+      final drive = googleApis.DriveApi(client);
       await drive.files.delete(file.id);
       return true;
     } catch (e) {
@@ -63,12 +57,12 @@ class GoogleDriveService {
     }
   }
 
-  Future<Stream<List<int>>> downloadGoogleDriveFile(
+  Future<Stream<List<int>>> downloadFile(
     String fileName,
     String fileId,
+    AuthHttpClient client,
   ) async {
-    var client = _appController.currentUser.client;
-    var drive = googleApis.DriveApi(client);
+    final drive = googleApis.DriveApi(client);
     googleApis.Media file = await drive.files.get(
       fileId,
       downloadOptions: googleApis.DownloadOptions.FullMedia,
@@ -76,10 +70,9 @@ class GoogleDriveService {
     return file.stream;
   }
 
-  Future getBackupsList() async {
+  Future getBackups(AuthHttpClient client) async {
     try {
-      var client = _appController.currentUser.client;
-      var drive = googleApis.DriveApi(client);
+      final drive = googleApis.DriveApi(client);
       final fileList = await drive.files.list(
         q: "mimeType = 'application/zip' and name contains ' backup-jub-jub' and trashed = false",
         orderBy: 'createdTime desc',

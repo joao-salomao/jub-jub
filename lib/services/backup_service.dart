@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:jubjub/models/think_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:jubjub/services/zip_service.dart';
+import 'package:jubjub/custom/auth_http_client.dart';
 import 'package:jubjub/models/annotation_model.dart';
 import 'package:jubjub/controllers/app_controller.dart';
 import 'package:jubjub/models/annotation_file_model.dart';
@@ -15,28 +16,33 @@ class BackupService {
   static const String DB_BACKUP_FILE_PATH =
       '/storage/emulated/0/JubJub/Files/backup-jub-jub-data.json';
 
-  final zipService = GetIt.I<ZipService>();
+  final zipService = ZipService();
+  final driveService = GoogleDriveService();
   final appController = GetIt.I<AppController>();
-  final driveService = GetIt.I<GoogleDriveService>();
+
+  AuthHttpClient get userClient => appController.currentUser.client;
 
   Future<String> get _temporaryDirectory async {
     return (await getTemporaryDirectory()).path;
   }
 
   Future getBackupsList() async {
-    return await driveService.getBackupsList();
+    return await driveService.getBackups(userClient);
   }
 
   Future getDriveInfo() async {
-    return await driveService.getDriveInfo();
+    return await driveService.getDriveInfo(userClient);
   }
 
-  Future<Stream<List<int>>> downloadFile(String fileName, String fileId) async {
-    return await driveService.downloadGoogleDriveFile(fileName, fileId);
+  Future<Stream<List<int>>> downloadGoogleDriveFile(
+    String fileName,
+    String fileId,
+  ) async {
+    return await driveService.downloadFile(fileName, fileId, userClient);
   }
 
-  deleteFile(var file) async {
-    return await driveService.deleteFile(file);
+  deleteBackup(var file) async {
+    return await driveService.deleteFile(file, userClient);
   }
 
   Future<void> _requestStorageAccessPermission() async {
@@ -51,7 +57,7 @@ class BackupService {
     final jsonFile = await _getDatabaseJsonCopyFile();
     final zipFile = await _createZipFile(jsonFile);
 
-    await driveService.upload(zipFile);
+    await driveService.uploadFile(zipFile, userClient);
 
     zipFile.delete();
     jsonFile.delete();
@@ -71,7 +77,7 @@ class BackupService {
       file = File('/storage/emulated/0/JubJub/$fileName')..createSync();
       controller.add(5);
 
-      final stream = await driveService.downloadGoogleDriveFile(fileName, id);
+      final stream = await driveService.downloadFile(fileName, id, userClient);
       controller.add(5);
 
       stream.listen((data) {
