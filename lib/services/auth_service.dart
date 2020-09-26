@@ -1,8 +1,7 @@
-import 'package:http/io_client.dart';
-import 'package:http/http.dart' as http;
 import 'package:jubjub/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jubjub/custom/auth_http_client.dart';
 
 class AuthService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -61,7 +60,7 @@ class AuthService {
       );
 
       final currentUser = await _signInFirebase(credential);
-      final client = _GoogleHttpClient(await googleSignInAccount.authHeaders);
+      final client = AuthHttpClient(await googleSignInAccount.authHeaders);
       final user = UserModel(
         client: client,
         email: currentUser.email,
@@ -80,18 +79,4 @@ class AuthService {
     _firebaseAuth.signOut();
     _googleSignIn.signOut();
   }
-}
-
-class _GoogleHttpClient extends IOClient {
-  Map<String, String> _headers;
-
-  _GoogleHttpClient(this._headers) : super();
-
-  @override
-  send(http.BaseRequest request) =>
-      super.send(request..headers.addAll(_headers));
-
-  @override
-  Future<http.Response> head(Object url, {Map<String, String> headers}) =>
-      super.head(url, headers: headers..addAll(_headers));
 }
