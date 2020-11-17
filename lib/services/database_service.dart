@@ -29,8 +29,13 @@ class DatabaseService {
       version: 1,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
+      onConfigure: _onConfigure,
     );
     return db;
+  }
+
+  Future<void> _onConfigure(Database db) async {
+    await db.execute("PRAGMA foreign_keys = ON");
   }
 
   void _onCreate(
